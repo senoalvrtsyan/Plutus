@@ -1,0 +1,14 @@
+{
+  "name": "appserver",
+  "version": "1.0.0",
+  "description": "The app server for Plutus.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hovhannes Grigoryan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}

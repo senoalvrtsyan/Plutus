@@ -1,0 +1,328 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1157945B1D79F0FB0039DAF1 /* moneybag_256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1157945A1D79F0FB0039DAF1 /* moneybag_256.png */; };
+		118704761D78AC6A00D88E6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 118704751D78AC6A00D88E6D /* main.m */; };
+		118704791D78AC6A00D88E6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 118704781D78AC6A00D88E6D /* AppDelegate.m */; };
+		1187047F1D78AC6A00D88E6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1187047D1D78AC6A00D88E6D /* Main.storyboard */; };
+		118704811D78AC6A00D88E6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 118704801D78AC6A00D88E6D /* Assets.xcassets */; };
+		118704841D78AC6A00D88E6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118704821D78AC6A00D88E6D /* LaunchScreen.storyboard */; };
+		11B275B01D7BF7E400F6433C /* LoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11B275AF1D7BF7E400F6433C /* LoginViewController.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1157945A1D79F0FB0039DAF1 /* moneybag_256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moneybag_256.png; path = ../../../Graphics/icon/moneybag_256.png; sourceTree = "<group>"; };
+		118704711D78AC6900D88E6D /* Plutus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plutus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		118704751D78AC6A00D88E6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		118704771D78AC6A00D88E6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		118704781D78AC6A00D88E6D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1187047E1D78AC6A00D88E6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		118704801D78AC6A00D88E6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		118704831D78AC6A00D88E6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		118704851D78AC6A00D88E6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		11B275AE1D7BF7E400F6433C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Views/LoginViewController.h; sourceTree = "<group>"; };
+		11B275AF1D7BF7E400F6433C /* LoginViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = LoginViewController.mm; path = Views/LoginViewController.mm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1187046E1D78AC6900D88E6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		115794561D79DD530039DAF1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1157945A1D79F0FB0039DAF1 /* moneybag_256.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		118704681D78AC6900D88E6D = {
+			isa = PBXGroup;
+			children = (
+				118704731D78AC6A00D88E6D /* Plutus */,
+				118704721D78AC6900D88E6D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		118704721D78AC6900D88E6D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				118704711D78AC6900D88E6D /* Plutus.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		118704731D78AC6A00D88E6D /* Plutus */ = {
+			isa = PBXGroup;
+			children = (
+				11B275AD1D7BF7CC00F6433C /* Views */,
+				115794561D79DD530039DAF1 /* Resources */,
+				118704771D78AC6A00D88E6D /* AppDelegate.h */,
+				118704781D78AC6A00D88E6D /* AppDelegate.m */,
+				1187047D1D78AC6A00D88E6D /* Main.storyboard */,
+				118704801D78AC6A00D88E6D /* Assets.xcassets */,
+				118704821D78AC6A00D88E6D /* LaunchScreen.storyboard */,
+				118704851D78AC6A00D88E6D /* Info.plist */,
+				118704741D78AC6A00D88E6D /* Supporting Files */,
+			);
+			path = Plutus;
+			sourceTree = "<group>";
+		};
+		118704741D78AC6A00D88E6D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				118704751D78AC6A00D88E6D /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		11B275AD1D7BF7CC00F6433C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				11B275AE1D7BF7E400F6433C /* LoginViewController.h */,
+				11B275AF1D7BF7E400F6433C /* LoginViewController.mm */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		118704701D78AC6900D88E6D /* Plutus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 118704881D78AC6A00D88E6D /* Build configuration list for PBXNativeTarget "Plutus" */;
+			buildPhases = (
+				1187046D1D78AC6900D88E6D /* Sources */,
+				1187046E1D78AC6900D88E6D /* Frameworks */,
+				1187046F1D78AC6900D88E6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Plutus;
+			productName = Plutus;
+			productReference = 118704711D78AC6900D88E6D /* Plutus.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		118704691D78AC6900D88E6D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = edu.self;
+				TargetAttributes = {
+					118704701D78AC6900D88E6D = {
+						CreatedOnToolsVersion = 7.3;
+					};
+				};
+			};
+			buildConfigurationList = 1187046C1D78AC6900D88E6D /* Build configuration list for PBXProject "Plutus" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 118704681D78AC6900D88E6D;
+			productRefGroup = 118704721D78AC6900D88E6D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				118704701D78AC6900D88E6D /* Plutus */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1187046F1D78AC6900D88E6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				118704841D78AC6A00D88E6D /* LaunchScreen.storyboard in Resources */,
+				1157945B1D79F0FB0039DAF1 /* moneybag_256.png in Resources */,
+				118704811D78AC6A00D88E6D /* Assets.xcassets in Resources */,
+				1187047F1D78AC6A00D88E6D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1187046D1D78AC6900D88E6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11B275B01D7BF7E400F6433C /* LoginViewController.mm in Sources */,
+				118704791D78AC6A00D88E6D /* AppDelegate.m in Sources */,
+				118704761D78AC6A00D88E6D /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1187047D1D78AC6A00D88E6D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1187047E1D78AC6A00D88E6D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		118704821D78AC6A00D88E6D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				118704831D78AC6A00D88E6D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		118704861D78AC6A00D88E6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		118704871D78AC6A00D88E6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		118704891D78AC6A00D88E6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Plutus/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.self.Plutus;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1187048A1D78AC6A00D88E6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Plutus/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.self.Plutus;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1187046C1D78AC6900D88E6D /* Build configuration list for PBXProject "Plutus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				118704861D78AC6A00D88E6D /* Debug */,
+				118704871D78AC6A00D88E6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		118704881D78AC6A00D88E6D /* Build configuration list for PBXNativeTarget "Plutus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				118704891D78AC6A00D88E6D /* Debug */,
+				1187048A1D78AC6A00D88E6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 118704691D78AC6900D88E6D /* Project object */;
+}
