@@ -1,5 +1,5 @@
 //
-//  ViewController.m
+//  ViewController.mm
 //  Plutus
 //
 //  Created by Hovhannes Grigoryan on 9/1/16.
@@ -10,69 +10,10 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-// Utils
+#include "Utils.h"
+#include "Theme.h"
 
-UIColor* CreateColor(int r, int g, int b, double a = 1.0)
-{
-    return [UIColor colorWithRed: (double)r/255.0 green: (double)g/255.0 blue: (double)b/255.0 alpha: a];
-}
-
-UIImage* imageWithColor(UIColor* color)
-{
-    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
-    UIGraphicsBeginImageContext(rect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, rect);
-    
-    UIImage* image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return image;
-}
-
-// Theme
-
-UIColor* brandColor1()
-{
-    return CreateColor(242, 173, 151);
-}
-
-UIColor* brandColor2()
-{
-    return CreateColor(242, 105, 104);
-}
-
-UIColor* brandColor3()
-{
-    return CreateColor(223, 226, 210);
-}
-
-UIColor* brandColor4()
-{
-    return CreateColor(108, 191, 132);
-}
-
-UIColor* brandColor5()
-{
-    return CreateColor(50, 51, 57);
-}
-
-UIColor* backgroundColor()
-{
-    return brandColor3();
-}
-
-UIColor* textColor()
-{
-    return brandColor5();
-}
-
-UIColor* whiteColor()
-{
-    return CreateColor(255, 255, 255);
-}
+#include "NameViewController.h"
 
 @interface LoginViewController ()
 
@@ -120,23 +61,11 @@ UIColor* whiteColor()
     static const int loginX = (viewW - loginW) / 2;  // Centered
     static const int loginY = logoY + logoS + 20;
     UITextField* login = [[UITextField alloc] initWithFrame: CGRectMake(loginX, loginY, loginW, controlH)];
-    // Add left padding.
-    UIView* loginPadding = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 15, controlH)];
-    login.leftView = loginPadding;
-    login.leftViewMode = UITextFieldViewModeAlways;
-    
+    theme::applyStyle(login, controlH);
     login.placeholder = @"email";
-    login.textColor = textColor();
     login.autocapitalizationType = UITextAutocapitalizationTypeNone;
     login.autocorrectionType = UITextAutocorrectionTypeNo;
-    // login.textAlignment = NSTextAlignmentCenter;
-    login.backgroundColor = whiteColor();
     login.keyboardType = UIKeyboardTypeEmailAddress;
-    // Border style.
-    login.layer.cornerRadius = 0.0f;
-    login.layer.masksToBounds = YES;
-    login.layer.borderColor = [brandColor4() CGColor];
-    login.layer.borderWidth = 1.0f;
     
     [self.view addSubview: login];
     
@@ -149,14 +78,14 @@ UIColor* whiteColor()
     password.leftViewMode = UITextFieldViewModeAlways;
 
     password.placeholder = @"password";
-    password.textColor = textColor();
+    password.textColor = theme::textColor();
     // password.textAlignment = NSTextAlignmentCenter;
     password.secureTextEntry = YES;
-    password.backgroundColor = whiteColor();
+    password.backgroundColor = theme::whiteColor();
     // Border style.
     password.layer.cornerRadius = 0.0f;
     password.layer.masksToBounds = YES;
-    password.layer.borderColor = [brandColor4() CGColor];
+    password.layer.borderColor = [theme::brandColor4() CGColor];
     password.layer.borderWidth = 1.0f;
     
     [self.view addSubview: password];
@@ -167,34 +96,45 @@ UIColor* whiteColor()
     static const int forgotY = pwdY + controlH;
     UIButton* forgot = [[UIButton alloc] initWithFrame: CGRectMake(forgotX, forgotY, forgotW, controlH)];
     [forgot setTitle: @"Forgot your password?" forState: UIControlStateNormal];
-    [forgot setTitleColor: brandColor3() forState: UIControlStateNormal];
-    [forgot setTitleColor: brandColor4() forState: UIControlStateHighlighted];
+    [forgot setTitleColor: theme::brandColor3() forState: UIControlStateNormal];
+    [forgot setTitleColor: theme::brandColor4() forState: UIControlStateHighlighted];
     forgot.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     forgot.titleLabel.font = [UIFont systemFontOfSize: forgot.titleLabel.font.pointSize - 5];
     
     [self.view addSubview: forgot];
     
-    // Take care of loing button.
+    // Take care of login button.
     static const int loginBtnW = loginW / 2 - 5;
     static const int loginBtnX = loginX + loginBtnW + 10;
     static const int loginBtnY = forgotY + controlH + 20;
     UIButton* loginBtn = [[UIButton alloc] initWithFrame: CGRectMake(loginBtnX, loginBtnY, loginBtnW, controlH)];
-    loginBtn.backgroundColor = brandColor4();
-    [loginBtn setBackgroundImage: imageWithColor(brandColor5()) forState: UIControlStateHighlighted];
+    [loginBtn addTarget: self action: @selector(loginAction) forControlEvents: UIControlEventTouchUpInside];
+    loginBtn.backgroundColor = theme::brandColor4();
+    [loginBtn setBackgroundImage: imageWithColor(theme::brandColor5()) forState: UIControlStateHighlighted];
     [loginBtn setTitle: @"Log In" forState: UIControlStateNormal];
     
     [self.view addSubview: loginBtn];
     
     // Take care of signup button.
     UIButton* signupBtn = [[UIButton alloc] initWithFrame: CGRectMake(loginX, loginBtnY, loginBtnW, controlH)];
-    signupBtn.backgroundColor = brandColor2();
-    [signupBtn setBackgroundImage: imageWithColor(brandColor5()) forState: UIControlStateHighlighted];
+    [signupBtn addTarget: self action: @selector(signupAction) forControlEvents: UIControlEventTouchUpInside];
+    signupBtn.backgroundColor = theme::brandColor2();
+    [signupBtn setBackgroundImage: imageWithColor(theme::brandColor5()) forState: UIControlStateHighlighted];
     [signupBtn setTitle: @"Sign Up" forState: UIControlStateNormal];
     
     [self.view addSubview: signupBtn];
     
     // Show the keyboard.
     [login becomeFirstResponder];
+}
+
+-(void)loginAction
+{}
+
+-(void)signupAction
+{
+    NameViewController* nameViewController = [[NameViewController alloc] init];
+    [self presentViewController: nameViewController animated: YES completion: nil];
 }
 
 @end

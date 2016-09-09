@@ -13,7 +13,11 @@
 		1187047F1D78AC6A00D88E6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1187047D1D78AC6A00D88E6D /* Main.storyboard */; };
 		118704811D78AC6A00D88E6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 118704801D78AC6A00D88E6D /* Assets.xcassets */; };
 		118704841D78AC6A00D88E6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118704821D78AC6A00D88E6D /* LaunchScreen.storyboard */; };
-		11B275B01D7BF7E400F6433C /* LoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11B275AF1D7BF7E400F6433C /* LoginViewController.mm */; };
+		11ED671E1D81AD4500DC5CEB /* LoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11ED671D1D81AD4500DC5CEB /* LoginViewController.mm */; };
+		11ED67241D81AE2100DC5CEB /* NameViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11ED67231D81AE2100DC5CEB /* NameViewController.mm */; };
+		11ED67281D81E03500DC5CEB /* Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11ED67271D81E03500DC5CEB /* Utils.mm */; };
+		11ED672C1D81E15B00DC5CEB /* Theme.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11ED672B1D81E15B00DC5CEB /* Theme.mm */; };
+		11ED672E1D81F11F00DC5CEB /* close_128.png in Resources */ = {isa = PBXBuildFile; fileRef = 11ED672D1D81F11F00DC5CEB /* close_128.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,8 +30,15 @@
 		118704801D78AC6A00D88E6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		118704831D78AC6A00D88E6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		118704851D78AC6A00D88E6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		11B275AE1D7BF7E400F6433C /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Views/LoginViewController.h; sourceTree = "<group>"; };
-		11B275AF1D7BF7E400F6433C /* LoginViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = LoginViewController.mm; path = Views/LoginViewController.mm; sourceTree = "<group>"; };
+		11ED671C1D81AD4500DC5CEB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Views/Login/LoginViewController.h; sourceTree = "<group>"; };
+		11ED671D1D81AD4500DC5CEB /* LoginViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = LoginViewController.mm; path = Views/Login/LoginViewController.mm; sourceTree = "<group>"; };
+		11ED67221D81AE2100DC5CEB /* NameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NameViewController.h; path = Views/Signup/NameViewController.h; sourceTree = "<group>"; };
+		11ED67231D81AE2100DC5CEB /* NameViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NameViewController.mm; path = Views/Signup/NameViewController.mm; sourceTree = "<group>"; };
+		11ED67261D81E03500DC5CEB /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = Utils/Utils.h; sourceTree = "<group>"; };
+		11ED67271D81E03500DC5CEB /* Utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Utils.mm; path = Utils/Utils.mm; sourceTree = "<group>"; };
+		11ED672A1D81E15B00DC5CEB /* Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Theme.h; path = Theme/Theme.h; sourceTree = "<group>"; };
+		11ED672B1D81E15B00DC5CEB /* Theme.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Theme.mm; path = Theme/Theme.mm; sourceTree = "<group>"; };
+		11ED672D1D81F11F00DC5CEB /* close_128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_128.png; path = ../../../Graphics/icon/close_128.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +55,7 @@
 		115794561D79DD530039DAF1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				11ED672D1D81F11F00DC5CEB /* close_128.png */,
 				1157945A1D79F0FB0039DAF1 /* moneybag_256.png */,
 			);
 			name = Resources;
@@ -68,6 +80,8 @@
 		118704731D78AC6A00D88E6D /* Plutus */ = {
 			isa = PBXGroup;
 			children = (
+				11ED67291D81E14E00DC5CEB /* Theme */,
+				11ED67251D81E01F00DC5CEB /* Utils */,
 				11B275AD1D7BF7CC00F6433C /* Views */,
 				115794561D79DD530039DAF1 /* Resources */,
 				118704771D78AC6A00D88E6D /* AppDelegate.h */,
@@ -92,10 +106,46 @@
 		11B275AD1D7BF7CC00F6433C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				11B275AE1D7BF7E400F6433C /* LoginViewController.h */,
-				11B275AF1D7BF7E400F6433C /* LoginViewController.mm */,
+				11ED670F1D81ACC600DC5CEB /* Signup */,
+				11ED670E1D81ACC000DC5CEB /* Login */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		11ED670E1D81ACC000DC5CEB /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				11ED671C1D81AD4500DC5CEB /* LoginViewController.h */,
+				11ED671D1D81AD4500DC5CEB /* LoginViewController.mm */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		11ED670F1D81ACC600DC5CEB /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+				11ED67221D81AE2100DC5CEB /* NameViewController.h */,
+				11ED67231D81AE2100DC5CEB /* NameViewController.mm */,
+			);
+			name = Signup;
+			sourceTree = "<group>";
+		};
+		11ED67251D81E01F00DC5CEB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				11ED67261D81E03500DC5CEB /* Utils.h */,
+				11ED67271D81E03500DC5CEB /* Utils.mm */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		11ED67291D81E14E00DC5CEB /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				11ED672A1D81E15B00DC5CEB /* Theme.h */,
+				11ED672B1D81E15B00DC5CEB /* Theme.mm */,
+			);
+			name = Theme;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,6 +205,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11ED672E1D81F11F00DC5CEB /* close_128.png in Resources */,
 				118704841D78AC6A00D88E6D /* LaunchScreen.storyboard in Resources */,
 				1157945B1D79F0FB0039DAF1 /* moneybag_256.png in Resources */,
 				118704811D78AC6A00D88E6D /* Assets.xcassets in Resources */,
@@ -169,7 +220,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11B275B01D7BF7E400F6433C /* LoginViewController.mm in Sources */,
+				11ED671E1D81AD4500DC5CEB /* LoginViewController.mm in Sources */,
+				11ED67281D81E03500DC5CEB /* Utils.mm in Sources */,
+				11ED67241D81AE2100DC5CEB /* NameViewController.mm in Sources */,
+				11ED672C1D81E15B00DC5CEB /* Theme.mm in Sources */,
 				118704791D78AC6A00D88E6D /* AppDelegate.m in Sources */,
 				118704761D78AC6A00D88E6D /* main.m in Sources */,
 			);
