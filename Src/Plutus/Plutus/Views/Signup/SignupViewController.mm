@@ -174,8 +174,36 @@
 
 -(void)nextAction
 {
-    EmailViewController* emailViewController = [[EmailViewController alloc] init];
-    [self.navigationController pushViewController: emailViewController animated: YES];
+    UsernameViewController* vc = [[UsernameViewController alloc] init];
+    [self.navigationController pushViewController: vc animated: YES];
+}
+
+-(BOOL)validateInput
+{
+    return validateName(super.textField.text);
+}
+
+@end
+
+@interface UsernameViewController ()
+@end
+
+@implementation UsernameViewController
+
+-(NSString*)labelText
+{
+    return @"Choose a unique username";
+}
+
+-(NSString*)textFieldPlaceholder
+{
+    return @"username";
+}
+
+-(void)nextAction
+{
+    EmailViewController* vc = [[EmailViewController alloc] init];
+    [self.navigationController pushViewController: vc animated: YES];
 }
 
 -(BOOL)validateInput
@@ -202,8 +230,8 @@
 
 -(void)nextAction
 {
-    PasswordViewController* passwordViewController = [[PasswordViewController alloc] init];
-    [self.navigationController pushViewController: passwordViewController animated: YES];
+    PasswordViewController* vc = [[PasswordViewController alloc] init];
+    [self.navigationController pushViewController: vc animated: YES];
 }
 
 -(BOOL)validateInput

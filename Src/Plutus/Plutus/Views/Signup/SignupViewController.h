@@ -25,6 +25,9 @@
 @interface NameViewController : SignupViewControllerBase
 @end
 
+@interface UsernameViewController : SignupViewControllerBase
+@end
+
 @interface EmailViewController : SignupViewControllerBase
 @end
 
