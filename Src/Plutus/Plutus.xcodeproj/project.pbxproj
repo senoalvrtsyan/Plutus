@@ -11,6 +11,7 @@
 		1161BE611D85278100D5A28A /* arrow_256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1161BE601D85278100D5A28A /* arrow_256.png */; };
 		1161BE641D8551AF00D5A28A /* SignupViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1161BE631D8551AF00D5A28A /* SignupViewController.mm */; };
 		1161BE6A1D855A3800D5A28A /* ProfileViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1161BE691D855A3800D5A28A /* ProfileViewController.mm */; };
+		1161BE6E1D858B1400D5A28A /* SearchViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1161BE6D1D858B1400D5A28A /* SearchViewController.mm */; };
 		118704761D78AC6A00D88E6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 118704751D78AC6A00D88E6D /* main.m */; };
 		118704791D78AC6A00D88E6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 118704781D78AC6A00D88E6D /* AppDelegate.m */; };
 		1187047F1D78AC6A00D88E6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1187047D1D78AC6A00D88E6D /* Main.storyboard */; };
@@ -29,6 +30,8 @@
 		1161BE631D8551AF00D5A28A /* SignupViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SignupViewController.mm; path = Views/Signup/SignupViewController.mm; sourceTree = "<group>"; };
 		1161BE681D855A3800D5A28A /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = Views/Profile/ProfileViewController.h; sourceTree = "<group>"; };
 		1161BE691D855A3800D5A28A /* ProfileViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ProfileViewController.mm; path = Views/Profile/ProfileViewController.mm; sourceTree = "<group>"; };
+		1161BE6C1D858B1400D5A28A /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = Views/Search/SearchViewController.h; sourceTree = "<group>"; };
+		1161BE6D1D858B1400D5A28A /* SearchViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SearchViewController.mm; path = Views/Search/SearchViewController.mm; sourceTree = "<group>"; };
 		118704711D78AC6900D88E6D /* Plutus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plutus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		118704751D78AC6A00D88E6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		118704771D78AC6A00D88E6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -97,6 +100,15 @@
 			name = Profile;
 			sourceTree = "<group>";
 		};
+		1161BE6B1D858AF500D5A28A /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				1161BE6C1D858B1400D5A28A /* SearchViewController.h */,
+				1161BE6D1D858B1400D5A28A /* SearchViewController.mm */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
 		118704681D78AC6900D88E6D = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +149,7 @@
 		11B275AD1D7BF7CC00F6433C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				1161BE6B1D858AF500D5A28A /* Search */,
 				1161BE671D855A2500D5A28A /* Profile */,
 				11ED670F1D81ACC600DC5CEB /* Signup */,
 				11ED670E1D81ACC000DC5CEB /* Login */,
@@ -257,6 +270,7 @@
 				11ED671E1D81AD4500DC5CEB /* LoginViewController.mm in Sources */,
 				1161BE6A1D855A3800D5A28A /* ProfileViewController.mm in Sources */,
 				11ED67281D81E03500DC5CEB /* Utils.mm in Sources */,
+				1161BE6E1D858B1400D5A28A /* SearchViewController.mm in Sources */,
 				11ED672C1D81E15B00DC5CEB /* Theme.mm in Sources */,
 				118704791D78AC6A00D88E6D /* AppDelegate.m in Sources */,
 				118704761D78AC6A00D88E6D /* main.m in Sources */,

@@ -15,6 +15,7 @@
 
 #include "SignupViewController.h"
 #include "ProfileViewController.h"
+#include "SearchViewController.h"
 
 @interface LoginViewController ()
 
@@ -124,7 +125,9 @@
 
 -(void)loginAction
 {
-    ProfileViewController* vc = [[ProfileViewController alloc] init];
+    //ProfileViewController* vc = [[ProfileViewController alloc] init];
+    SearchViewController* vc = [[SearchViewController alloc] init];
+    
     [self presentViewController: vc animated: YES completion: nil];
 }
 
