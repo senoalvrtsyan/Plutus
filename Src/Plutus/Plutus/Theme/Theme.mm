@@ -54,6 +54,16 @@ UIColor* whiteColor()
     return [UIColor whiteColor];
 }
     
+UIColor* lightGrayColor()
+{
+    return [UIColor lightGrayColor];
+}
+
+UIColor* grayColor()
+{
+    return [UIColor grayColor];
+}
+    
 void applyStyle(UITextField* textField)
 {
     // Add left padding.

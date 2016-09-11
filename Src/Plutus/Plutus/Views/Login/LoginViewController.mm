@@ -1,5 +1,5 @@
 //
-//  ViewController.mm
+//  LoginViewController.mm
 //  Plutus
 //
 //  Created by Hovhannes Grigoryan on 9/1/16.
@@ -14,6 +14,7 @@
 #include "Theme.h"
 
 #include "SignupViewController.h"
+#include "ProfileViewController.h"
 
 @interface LoginViewController ()
 
@@ -92,8 +93,8 @@
     static const int forgotY = pwdY + controlH;
     UIButton* forgot = [[UIButton alloc] initWithFrame: CGRectMake(forgotX, forgotY, forgotW, controlH)];
     [forgot setTitle: @"Forgot your password?" forState: UIControlStateNormal];
-    [forgot setTitleColor: theme::brandColor3() forState: UIControlStateNormal];
-    [forgot setTitleColor: theme::brandColor4() forState: UIControlStateHighlighted];
+    [forgot setTitleColor: theme::lightGrayColor() forState: UIControlStateNormal];
+    [forgot setTitleColor: theme::grayColor() forState: UIControlStateHighlighted];
     forgot.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     forgot.titleLabel.font = [UIFont systemFontOfSize: forgot.titleLabel.font.pointSize - 5];
     
@@ -123,16 +124,16 @@
 
 -(void)loginAction
 {
-    
+    ProfileViewController* vc = [[ProfileViewController alloc] init];
+    [self presentViewController: vc animated: YES completion: nil];
 }
 
 -(void)signupAction
 {
     [_login resignFirstResponder];
     
-    NameViewController* nameViewController = [[NameViewController alloc] init];
-    [self.navigationController pushViewController: nameViewController animated: YES];
-    // [self presentViewController: nameViewController animated: YES completion: nil];
+    NameViewController* vc = [[NameViewController alloc] init];
+    [self.navigationController pushViewController: vc animated: YES];
 }
 
 @end

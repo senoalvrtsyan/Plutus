@@ -1,5 +1,5 @@
 //
-//  LoginViewController.h
+//  ProfileViewController.h
 //  Plutus
 //
 //  Created by Hovhannes Grigoryan on 9/1/16.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UIViewController
-
-@property UITextField* login;
+@interface ProfileViewController : UIViewController
 
 @end

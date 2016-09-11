@@ -23,6 +23,8 @@ namespace theme
     UIColor* backgroundColor();
     UIColor* textColor();
     UIColor* whiteColor();
+    UIColor* lightGrayColor();
+    UIColor* grayColor();
     
     // Utils
     

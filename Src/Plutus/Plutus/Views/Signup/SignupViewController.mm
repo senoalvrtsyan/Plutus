@@ -82,7 +82,7 @@
     static const int labelY = logoY + logoS + 20;
     static const int labelX = (viewW - labelW) / 2; // Centered
     UILabel* label = [[UILabel alloc] initWithFrame: CGRectMake(labelX, labelY, labelW, controlH)];
-    label.textColor = [UIColor lightGrayColor];
+    label.textColor = theme::lightGrayColor();
     label.text = [self labelText];
     
     [self.view addSubview: label];
