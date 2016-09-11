@@ -13,7 +13,7 @@
 #include "Utils.h"
 #include "Theme.h"
 
-#include "NameViewController.h"
+#include "SignupViewController.h"
 
 @interface LoginViewController ()
 
@@ -21,7 +21,7 @@
 
 @implementation LoginViewController
 
-- (void)viewDidLoad
+-(void)viewDidLoad
 {
     [super viewDidLoad];
     
@@ -30,6 +30,14 @@
     
     // Create the view contorls.
     [self createControls];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear: animated];
+    
+    // Show the keyboard.
+    [_login becomeFirstResponder];
 }
 
 -(void)didReceiveMemoryWarning
@@ -60,33 +68,21 @@
     static const int loginW = viewW - 80;
     static const int loginX = (viewW - loginW) / 2;  // Centered
     static const int loginY = logoY + logoS + 20;
-    UITextField* login = [[UITextField alloc] initWithFrame: CGRectMake(loginX, loginY, loginW, controlH)];
-    theme::applyStyle(login, controlH);
-    login.placeholder = @"email";
-    login.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    login.autocorrectionType = UITextAutocorrectionTypeNo;
-    login.keyboardType = UIKeyboardTypeEmailAddress;
+    _login = [[UITextField alloc] initWithFrame: CGRectMake(loginX, loginY, loginW, controlH)];
+    theme::applyStyle(_login);
+    _login.placeholder = @"email";
+    _login.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    _login.autocorrectionType = UITextAutocorrectionTypeNo;
+    _login.keyboardType = UIKeyboardTypeEmailAddress;
     
-    [self.view addSubview: login];
+    [self.view addSubview: _login];
     
     // Take care of passowrd field.
     static const int pwdY = loginY + controlH + 10;
     UITextField* password = [[UITextField alloc] initWithFrame: CGRectMake(loginX, pwdY, loginW, controlH)];
-    // Add left padding.
-    UIView* pwdPadding = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 15, controlH)];
-    password.leftView = pwdPadding;
-    password.leftViewMode = UITextFieldViewModeAlways;
-
+    theme::applyStyle(password);
     password.placeholder = @"password";
-    password.textColor = theme::textColor();
-    // password.textAlignment = NSTextAlignmentCenter;
     password.secureTextEntry = YES;
-    password.backgroundColor = theme::whiteColor();
-    // Border style.
-    password.layer.cornerRadius = 0.0f;
-    password.layer.masksToBounds = YES;
-    password.layer.borderColor = [theme::brandColor4() CGColor];
-    password.layer.borderWidth = 1.0f;
     
     [self.view addSubview: password];
     
@@ -123,18 +119,20 @@
     [signupBtn setTitle: @"Sign Up" forState: UIControlStateNormal];
     
     [self.view addSubview: signupBtn];
-    
-    // Show the keyboard.
-    [login becomeFirstResponder];
 }
 
 -(void)loginAction
-{}
+{
+    
+}
 
 -(void)signupAction
 {
+    [_login resignFirstResponder];
+    
     NameViewController* nameViewController = [[NameViewController alloc] init];
-    [self presentViewController: nameViewController animated: YES completion: nil];
+    [self.navigationController pushViewController: nameViewController animated: YES];
+    // [self presentViewController: nameViewController animated: YES completion: nil];
 }
 
 @end

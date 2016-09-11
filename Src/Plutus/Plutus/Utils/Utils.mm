@@ -13,7 +13,7 @@ namespace ios
 namespace utils
 {
 
-UIColor* CreateColor(int r, int g, int b, double a /*= 1.0*/)
+UIColor* createColor(int r, int g, int b, double a /*= 1.0*/)
 {
     return [UIColor colorWithRed: (double)r/255.0 green: (double)g/255.0 blue: (double)b/255.0 alpha: a];
 }
@@ -32,6 +32,21 @@ UIImage* imageWithColor(UIColor* color)
         
     return image;
 }
-        
+    
+bool validateName(NSString* name)
+{
+    return [name length];
+}
+
+bool validateEmail(NSString* email)
+{
+    return [email rangeOfString: @"@"].location != NSNotFound;
+}
+    
+bool validatePassword(NSString* pwd)
+{
+    return [pwd length];
+}
+    
 }
 }

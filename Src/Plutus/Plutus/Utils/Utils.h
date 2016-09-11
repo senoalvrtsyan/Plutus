@@ -14,10 +14,14 @@ namespace ios
 namespace utils
 {
     
-UIColor* CreateColor(int r, int g, int b, double a = 1.0);
+UIColor* createColor(int r, int g, int b, double a = 1.0);
     
 UIImage* imageWithColor(UIColor* color);
-    
+
+bool validateName(NSString* name);
+bool validateEmail(NSString* email);
+bool validatePassword(NSString* pwd);
+
 }
 using namespace utils;
 

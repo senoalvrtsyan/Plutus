@@ -26,7 +26,7 @@ namespace theme
     
     // Utils
     
-    void applyStyle(UITextField* textField, int height);
+    void applyStyle(UITextField* textField);
 }
 }
 using namespace ios;

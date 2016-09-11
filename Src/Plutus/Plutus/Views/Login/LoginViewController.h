@@ -10,6 +10,6 @@
 
 @interface LoginViewController : UIViewController
 
+@property UITextField* login;
 
 @end
-

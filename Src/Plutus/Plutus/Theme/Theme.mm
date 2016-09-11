@@ -16,27 +16,27 @@ namespace theme
 {
 UIColor* brandColor1()
 {
-    return CreateColor(242, 173, 151);
+    return createColor(242, 173, 151);
 }
     
 UIColor* brandColor2()
 {
-    return CreateColor(242, 105, 104);
+    return createColor(242, 105, 104);
 }
     
 UIColor* brandColor3()
 {
-    return CreateColor(223, 226, 210);
+    return createColor(223, 226, 210);
 }
     
 UIColor* brandColor4()
 {
-    return CreateColor(108, 191, 132);
+    return createColor(108, 191, 132);
 }
     
 UIColor* brandColor5()
 {
-    return CreateColor(50, 51, 57);
+    return createColor(50, 51, 57);
 }
     
 UIColor* backgroundColor()
@@ -54,10 +54,10 @@ UIColor* whiteColor()
     return [UIColor whiteColor];
 }
     
-void applyStyle(UITextField* textField, int height)
+void applyStyle(UITextField* textField)
 {
     // Add left padding.
-    UIView* padding = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 15, height)];
+    UIView* padding = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 15, textField.frame.size.height)];
     textField.leftView = padding;
     textField.leftViewMode = UITextFieldViewModeAlways;
     // Set text color
