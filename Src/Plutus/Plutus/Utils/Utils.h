@@ -10,7 +10,6 @@
 
 namespace ios
 {
-
 namespace utils
 {
     
@@ -21,7 +20,7 @@ UIImage* imageWithColor(UIColor* color);
 bool validateName(NSString* name);
 bool validateEmail(NSString* email);
 bool validatePassword(NSString* pwd);
-
+    
 }
 using namespace utils;
 

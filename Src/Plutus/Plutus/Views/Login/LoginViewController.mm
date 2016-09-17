@@ -10,12 +10,13 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#include "Utils.h"
-#include "Theme.h"
+#import "Utils.h"
+#import "Theme.h"
 
-#include "SignupViewController.h"
-#include "ProfileViewController.h"
-#include "SearchViewController.h"
+#import "SignupViewController.h"
+#import "ProfileViewController.h"
+#import "SearchViewController.h"
+#import "HistoryViewController.h"
 
 @interface LoginViewController ()
 
@@ -126,9 +127,11 @@
 -(void)loginAction
 {
     //ProfileViewController* vc = [[ProfileViewController alloc] init];
-    SearchViewController* vc = [[SearchViewController alloc] init];
+    //SearchViewController* vc = [[SearchViewController alloc] init];
     
-    [self presentViewController: vc animated: YES completion: nil];
+    //[self presentViewController: vc animated: YES completion: nil];
+    
+    [self showTabBarController];
 }
 
 -(void)signupAction
@@ -137,6 +140,71 @@
     
     NameViewController* vc = [[NameViewController alloc] init];
     [self.navigationController pushViewController: vc animated: YES];
+}
+
+void configTabBarItem(UITabBarController* tabBar, int index, NSString* name, NSString* icon)
+{
+    static const auto imgInsets     = UIEdgeInsetsMake(6, 0, -6, 0);
+    static const auto titleOffset   = UIOffsetMake(0, 20);
+    
+    [[tabBar.tabBar.items objectAtIndex: index] setImage: [[UIImage imageNamed: icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    [[tabBar.tabBar.items objectAtIndex: index] setSelectedImage: [UIImage imageNamed: icon]];
+    [[tabBar.tabBar.items objectAtIndex: index] setTitle: name];
+    [[tabBar.tabBar.items objectAtIndex: index] setImageInsets: imgInsets];
+    [[tabBar.tabBar.items objectAtIndex: index] setTitlePositionAdjustment: titleOffset];
+}
+
+-(void)showTabBarController
+{
+    // Create tab bar controller.
+    UITabBarController* tabBar = [[UITabBarController alloc] init];
+    
+    // Set tab bar style.
+    [[UITabBar appearance] setTintColor: theme::brandColor2()];
+    // [[UITabBar appearance] setBarTintColor: theme::brandColor1()];
+    
+    // Profile
+    // {
+    ProfileViewController* profileVC = [[ProfileViewController alloc] init];
+    
+    UINavigationController* profileNC = [[UINavigationController alloc] initWithRootViewController: profileVC];
+    //SetNavBarStyle(navControllerMap.navigationBar);
+    // }
+    
+    // Search
+    // {
+    SearchViewController* searchVC = [[SearchViewController alloc] init];
+    
+    UINavigationController* searchNC = [[UINavigationController alloc] initWithRootViewController: searchVC];
+    //SetNavBarStyle(navControllerMap.navigationBar);
+    // }
+    
+    // History
+    // {
+    HistoryViewController* historyVC = [[HistoryViewController alloc] init];
+    
+    UINavigationController* historyNC = [[UINavigationController alloc] initWithRootViewController: historyVC];
+    //SetNavBarStyle(navControllerMap.navigationBar);
+    // }
+    
+    // Add to tab bar.
+    NSArray* controllers = [NSArray arrayWithObjects: profileNC, searchNC, historyNC, nil];
+    tabBar.viewControllers = controllers;
+    
+    // Config items.
+    configTabBarItem(tabBar, 0, @"Profile",  @"wallet");
+    configTabBarItem(tabBar, 1, @"Profile2", @"paper-plane");
+    configTabBarItem(tabBar, 2, @"Profile3", @"clipboard");
+    
+    // Set initial view.
+    tabBar.selectedIndex = 0;
+    
+    // Take care of nav bar title style.
+    NSDictionary* navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                               theme::grayColor(), NSForegroundColorAttributeName, nil];
+    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+    
+    [self presentViewController: tabBar animated: YES completion: nil];
 }
 
 @end

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		113FF74E1D89CE8D00138593 /* clipboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 113FF74B1D89CE8D00138593 /* clipboard@2x.png */; };
+		113FF7501D89CE8D00138593 /* paper-plane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 113FF74D1D89CE8D00138593 /* paper-plane@2x.png */; };
+		113FF7541D89D03500138593 /* wallet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 113FF7531D89D03500138593 /* wallet@2x.png */; };
 		1157945B1D79F0FB0039DAF1 /* moneybag_256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1157945A1D79F0FB0039DAF1 /* moneybag_256.png */; };
 		1161BE611D85278100D5A28A /* arrow_256.png in Resources */ = {isa = PBXBuildFile; fileRef = 1161BE601D85278100D5A28A /* arrow_256.png */; };
 		1161BE641D8551AF00D5A28A /* SignupViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1161BE631D8551AF00D5A28A /* SignupViewController.mm */; };
@@ -17,6 +20,11 @@
 		1187047F1D78AC6A00D88E6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1187047D1D78AC6A00D88E6D /* Main.storyboard */; };
 		118704811D78AC6A00D88E6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 118704801D78AC6A00D88E6D /* Assets.xcassets */; };
 		118704841D78AC6A00D88E6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 118704821D78AC6A00D88E6D /* LaunchScreen.storyboard */; };
+		11A650781D8AF825009D56F2 /* TransferViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11A650771D8AF825009D56F2 /* TransferViewController.mm */; };
+		11A6507C1D8B0C82009D56F2 /* CommonViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11A6507B1D8B0C82009D56F2 /* CommonViewController.mm */; };
+		11A650801D8B1155009D56F2 /* HistoryViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11A6507F1D8B1155009D56F2 /* HistoryViewController.mm */; };
+		11A650821D8B22B5009D56F2 /* arrow-right2.png in Resources */ = {isa = PBXBuildFile; fileRef = 11A650811D8B22B5009D56F2 /* arrow-right2.png */; };
+		11A650841D8B30C6009D56F2 /* moneybag_gray_256.png in Resources */ = {isa = PBXBuildFile; fileRef = 11A650831D8B30C6009D56F2 /* moneybag_gray_256.png */; };
 		11ED671E1D81AD4500DC5CEB /* LoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11ED671D1D81AD4500DC5CEB /* LoginViewController.mm */; };
 		11ED67281D81E03500DC5CEB /* Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11ED67271D81E03500DC5CEB /* Utils.mm */; };
 		11ED672C1D81E15B00DC5CEB /* Theme.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11ED672B1D81E15B00DC5CEB /* Theme.mm */; };
@@ -24,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		113FF74B1D89CE8D00138593 /* clipboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clipboard@2x.png"; path = "../../../Graphics/icon/clipboard@2x.png"; sourceTree = "<group>"; };
+		113FF74D1D89CE8D00138593 /* paper-plane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "paper-plane@2x.png"; path = "../../../Graphics/icon/paper-plane@2x.png"; sourceTree = "<group>"; };
+		113FF7531D89D03500138593 /* wallet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet@2x.png"; path = "../../../Graphics/icon/wallet@2x.png"; sourceTree = "<group>"; };
 		1157945A1D79F0FB0039DAF1 /* moneybag_256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moneybag_256.png; path = ../../../Graphics/icon/moneybag_256.png; sourceTree = "<group>"; };
 		1161BE601D85278100D5A28A /* arrow_256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = arrow_256.png; path = ../../../Graphics/icon/arrow_256.png; sourceTree = "<group>"; };
 		1161BE621D8551AF00D5A28A /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignupViewController.h; path = Views/Signup/SignupViewController.h; sourceTree = "<group>"; };
@@ -40,6 +51,14 @@
 		118704801D78AC6A00D88E6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		118704831D78AC6A00D88E6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		118704851D78AC6A00D88E6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		11A650761D8AF825009D56F2 /* TransferViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransferViewController.h; path = Views/Transfer/TransferViewController.h; sourceTree = "<group>"; };
+		11A650771D8AF825009D56F2 /* TransferViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TransferViewController.mm; path = Views/Transfer/TransferViewController.mm; sourceTree = "<group>"; };
+		11A6507A1D8B0C82009D56F2 /* CommonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonViewController.h; path = Views/Common/CommonViewController.h; sourceTree = "<group>"; };
+		11A6507B1D8B0C82009D56F2 /* CommonViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = CommonViewController.mm; path = Views/Common/CommonViewController.mm; sourceTree = "<group>"; };
+		11A6507E1D8B1155009D56F2 /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryViewController.h; path = Views/History/HistoryViewController.h; sourceTree = "<group>"; };
+		11A6507F1D8B1155009D56F2 /* HistoryViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HistoryViewController.mm; path = Views/History/HistoryViewController.mm; sourceTree = "<group>"; };
+		11A650811D8B22B5009D56F2 /* arrow-right2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-right2.png"; path = "../../../Graphics/icon/arrow-right2.png"; sourceTree = "<group>"; };
+		11A650831D8B30C6009D56F2 /* moneybag_gray_256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moneybag_gray_256.png; path = ../../../Graphics/icon/moneybag_gray_256.png; sourceTree = "<group>"; };
 		11ED671C1D81AD4500DC5CEB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Views/Login/LoginViewController.h; sourceTree = "<group>"; };
 		11ED671D1D81AD4500DC5CEB /* LoginViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = LoginViewController.mm; path = Views/Login/LoginViewController.mm; sourceTree = "<group>"; };
 		11ED67261D81E03500DC5CEB /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utils.h; path = Utils/Utils.h; sourceTree = "<group>"; };
@@ -63,6 +82,11 @@
 		115794561D79DD530039DAF1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				11A650831D8B30C6009D56F2 /* moneybag_gray_256.png */,
+				11A650811D8B22B5009D56F2 /* arrow-right2.png */,
+				113FF7531D89D03500138593 /* wallet@2x.png */,
+				113FF74B1D89CE8D00138593 /* clipboard@2x.png */,
+				113FF74D1D89CE8D00138593 /* paper-plane@2x.png */,
 				1161BE601D85278100D5A28A /* arrow_256.png */,
 				11ED672D1D81F11F00DC5CEB /* close_128.png */,
 				1157945A1D79F0FB0039DAF1 /* moneybag_256.png */,
@@ -146,9 +170,39 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		11A650751D8AF7FE009D56F2 /* Transfer */ = {
+			isa = PBXGroup;
+			children = (
+				11A650761D8AF825009D56F2 /* TransferViewController.h */,
+				11A650771D8AF825009D56F2 /* TransferViewController.mm */,
+			);
+			name = Transfer;
+			sourceTree = "<group>";
+		};
+		11A650791D8B0C67009D56F2 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				11A6507A1D8B0C82009D56F2 /* CommonViewController.h */,
+				11A6507B1D8B0C82009D56F2 /* CommonViewController.mm */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		11A6507D1D8B1143009D56F2 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				11A6507E1D8B1155009D56F2 /* HistoryViewController.h */,
+				11A6507F1D8B1155009D56F2 /* HistoryViewController.mm */,
+			);
+			name = History;
+			sourceTree = "<group>";
+		};
 		11B275AD1D7BF7CC00F6433C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				11A6507D1D8B1143009D56F2 /* History */,
+				11A650791D8B0C67009D56F2 /* Common */,
+				11A650751D8AF7FE009D56F2 /* Transfer */,
 				1161BE6B1D858AF500D5A28A /* Search */,
 				1161BE671D855A2500D5A28A /* Profile */,
 				11ED670F1D81ACC600DC5CEB /* Signup */,
@@ -250,12 +304,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				113FF7501D89CE8D00138593 /* paper-plane@2x.png in Resources */,
+				113FF7541D89D03500138593 /* wallet@2x.png in Resources */,
 				11ED672E1D81F11F00DC5CEB /* close_128.png in Resources */,
 				1161BE611D85278100D5A28A /* arrow_256.png in Resources */,
 				118704841D78AC6A00D88E6D /* LaunchScreen.storyboard in Resources */,
 				1157945B1D79F0FB0039DAF1 /* moneybag_256.png in Resources */,
+				113FF74E1D89CE8D00138593 /* clipboard@2x.png in Resources */,
 				118704811D78AC6A00D88E6D /* Assets.xcassets in Resources */,
 				1187047F1D78AC6A00D88E6D /* Main.storyboard in Resources */,
+				11A650841D8B30C6009D56F2 /* moneybag_gray_256.png in Resources */,
+				11A650821D8B22B5009D56F2 /* arrow-right2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,7 +330,10 @@
 				1161BE6A1D855A3800D5A28A /* ProfileViewController.mm in Sources */,
 				11ED67281D81E03500DC5CEB /* Utils.mm in Sources */,
 				1161BE6E1D858B1400D5A28A /* SearchViewController.mm in Sources */,
+				11A6507C1D8B0C82009D56F2 /* CommonViewController.mm in Sources */,
 				11ED672C1D81E15B00DC5CEB /* Theme.mm in Sources */,
+				11A650801D8B1155009D56F2 /* HistoryViewController.mm in Sources */,
+				11A650781D8AF825009D56F2 /* TransferViewController.mm in Sources */,
 				118704791D78AC6A00D88E6D /* AppDelegate.m in Sources */,
 				118704761D78AC6A00D88E6D /* main.m in Sources */,
 			);

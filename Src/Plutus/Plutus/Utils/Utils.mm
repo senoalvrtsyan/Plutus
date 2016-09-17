@@ -6,7 +6,7 @@
 //  Copyright © 2016 edu.self. All rights reserved.
 //
 
-#include "Utils.h"
+#import "Utils.h"
 
 namespace ios
 {
@@ -47,6 +47,6 @@ bool validatePassword(NSString* pwd)
 {
     return [pwd length];
 }
-    
+
 }
 }

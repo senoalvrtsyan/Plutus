@@ -25,6 +25,7 @@ namespace theme
     UIColor* whiteColor();
     UIColor* lightGrayColor();
     UIColor* grayColor();
+    UIColor* placeholderTextColor();
     
     // Utils
     

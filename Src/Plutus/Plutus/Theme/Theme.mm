@@ -6,9 +6,9 @@
 //  Copyright © 2016 edu.self. All rights reserved.
 //
 
-#include "Theme.h"
+#import "Theme.h"
 
-#include "Utils.h"
+#import "Utils.h"
 
 namespace ios
 {
@@ -62,6 +62,11 @@ UIColor* lightGrayColor()
 UIColor* grayColor()
 {
     return [UIColor grayColor];
+}
+    
+UIColor* placeholderTextColor()
+{
+    return createColor(199, 199, 205);
 }
     
 void applyStyle(UITextField* textField)

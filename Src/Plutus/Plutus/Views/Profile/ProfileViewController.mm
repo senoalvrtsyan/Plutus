@@ -8,8 +8,8 @@
 
 #import "ProfileViewController.h"
 
-#include "Utils.h"
-#include "Theme.h"
+#import "Utils.h"
+#import "Theme.h"
 
 @interface ProfileViewController ()
 
@@ -21,6 +21,8 @@
 {
     [super viewDidLoad];
     
+    self.title = @"Balance";
+    
     // Set background color of the view.
     self.view.backgroundColor = theme::whiteColor();
     
@@ -31,6 +33,12 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear: animated];
+    
+    /*
+    [self initBalanceAnimated: _debitBalance withValue: 64000.00];
+    [self initBalanceAnimated: _creditBalance withValue: 256000.00];
+    [self initBalanceAnimated: _creditLimit withValue: 400000.00];
+     */
 }
 
 -(void)didReceiveMemoryWarning
@@ -104,13 +112,13 @@
     static const int debitBalanceW = viewW - 80;
     static const int debitBalanceX = (viewW - debitBalanceW) / 2; // Centered
     static const int debitBalanceY = debitNumberY + 50;
-    UILabel* debitBalance = [[UILabel alloc] initWithFrame: CGRectMake(debitBalanceX, debitBalanceY, debitBalanceW, controlH)];
-    debitBalance.text = @"78,500.00 AMD";
-    debitBalance.textColor = theme::brandColor4();
-    debitBalance.font = [UIFont boldSystemFontOfSize: name.font.pointSize + 12];
-    debitBalance.textAlignment = NSTextAlignmentCenter;
+    _debitBalance = [[UILabel alloc] initWithFrame: CGRectMake(debitBalanceX, debitBalanceY, debitBalanceW, controlH)];
+    _debitBalance.text = @"54,320.00 AMD";
+    _debitBalance.textColor = theme::brandColor4();
+    _debitBalance.font = [UIFont boldSystemFontOfSize: name.font.pointSize + 12];
+    _debitBalance.textAlignment = NSTextAlignmentCenter;
     
-    [self.view addSubview: debitBalance];
+    [self.view addSubview: _debitBalance];
     
     // Take care of credit account.
     static const int creditLabelY = debitBalanceY + 80;
@@ -132,23 +140,53 @@
     
     // Take care of credit limit.
     static const int creditLimitY = creditLabelY + 18;
-    UILabel* creditLimit = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, creditLimitY, debitBalanceW, controlH)];
-    creditLimit.text = @"Limit: 400,000.00 AMD";
-    creditLimit.textColor = theme::grayColor();
-    creditLimit.font = [UIFont systemFontOfSize: name.font.pointSize - 7];
-    creditLimit.textAlignment = NSTextAlignmentRight;
+    _creditLimit = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, creditLimitY, debitBalanceW, controlH)];
+    _creditLimit.text = @"Limit: 400,000.00 AMD";
+    _creditLimit.textColor = theme::grayColor();
+    _creditLimit.font = [UIFont systemFontOfSize: name.font.pointSize - 7];
+    _creditLimit.textAlignment = NSTextAlignmentRight;
     
-    [self.view addSubview: creditLimit];
+    [self.view addSubview: _creditLimit];
     
     // Take care of credit balance.
     static const int creditBalanceY = creditLabelY + 55;
-    UILabel* creditBalance = [[UILabel alloc] initWithFrame: CGRectMake(debitBalanceX, creditBalanceY, debitBalanceW, controlH)];
-    creditBalance.text = @"250,400.00 AMD";
-    creditBalance.textColor = theme::brandColor4();
-    creditBalance.font = [UIFont boldSystemFontOfSize: name.font.pointSize + 12];
-    creditBalance.textAlignment = NSTextAlignmentCenter;
+    _creditBalance = [[UILabel alloc] initWithFrame: CGRectMake(debitBalanceX, creditBalanceY, debitBalanceW, controlH)];
+    _creditBalance.text = @"276,000.00 AMD";
+    _creditBalance.textColor = theme::brandColor4();
+    _creditBalance.font = [UIFont boldSystemFontOfSize: name.font.pointSize + 12];
+    _creditBalance.textAlignment = NSTextAlignmentCenter;
     
-    [self.view addSubview: creditBalance];
+    [self.view addSubview: _creditBalance];
+}
+
+-(void)initBalanceAnimated:(UILabel*)textField withValue:(double)value
+{
+    double val = [textField.text doubleValue];
+    
+    const int step = value / 200;
+    
+    if(val < value)
+    {
+        NSNumber* dblNum = [NSNumber numberWithDouble: val + step];
+        val = [dblNum doubleValue];
+
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        numberFormatter.locale = [NSLocale currentLocale];// this ensures the right separator behavior
+        numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+        numberFormatter.usesGroupingSeparator = YES;
+        [numberFormatter setMaximumFractionDigits: 2];
+        [numberFormatter setMinimumFractionDigits: 2];
+        
+        textField.text = [dblNum stringValue];// [numberFormatter stringFromNumber: dblNum];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self initBalanceAnimated: textField withValue: value];
+        });
+    }
+    else
+    {
+        textField.text = [[NSNumber numberWithDouble: value] stringValue];
+    }
 }
 
 @end

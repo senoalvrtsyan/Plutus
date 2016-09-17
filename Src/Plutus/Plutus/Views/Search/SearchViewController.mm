@@ -8,8 +8,10 @@
 
 #import "SearchViewController.h"
 
-#include "Utils.h"
-#include "Theme.h"
+#import "Utils.h"
+#import "Theme.h"
+
+#import "TransferViewController.h"
 
 @interface SearchViewController ()
 
@@ -21,18 +23,24 @@
 {
     [super viewDidLoad];
     
+    self.title = @"Transfer";
+    
     // Set background color of the view.
     self.view.backgroundColor = theme::whiteColor();
     
     // Create the view contorls.
     [self createControls];
+        
+    // Close keyboard on tap outside.
+    UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
+    [self.view addGestureRecognizer: tap];
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear: animated];
     
-    [_textField becomeFirstResponder];
+    //[_textField becomeFirstResponder];
 }
 
 -(void)didReceiveMemoryWarning
@@ -118,7 +126,13 @@
 
 -(void)searchAction
 {
-    
+    TransferViewController* vc = [[TransferViewController alloc] init];
+    [self.navigationController pushViewController: vc animated: YES];
+}
+
+-(void)dismissKeyboard
+{
+    [_textField resignFirstResponder];
 }
 
 @end
