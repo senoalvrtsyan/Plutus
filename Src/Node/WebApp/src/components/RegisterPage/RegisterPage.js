@@ -11,15 +11,10 @@ import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './RegisterPage.scss';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Dialog from 'material-ui/Dialog';
-import RaisedButton from 'material-ui/RaisedButton';
-import Avatar from 'material-ui/Avatar';
-import TextField from 'material-ui/TextField';
-import Paper from 'material-ui/Paper';
+import {Dialog, RaisedButton, Avatar, TextField, Paper} from 'material-ui';
 import {green500} from 'material-ui/styles/colors';
 
 const title = 'New User Registration';
-
 
 class RequestDialog extends Component {
 
@@ -41,16 +36,19 @@ class RequestDialog extends Component {
           <div>
               <Dialog
               title="Request payment"
+              titleStyle={{textAlign : 'center', color : '#616161', fontWeight : 'bold'}}
               actions={[
                   <RaisedButton
                     label="Cancel"
-                    secondary={true}
+                    backgroundColor = {'EF5350'}
                     onTouchTap={this.handleClose}
                   />,
                   <RaisedButton
                     label="Request"
-                    primary={true}
-                    style={{}}
+                    primary={false}
+                    backgroundColor={'#2ecc71'}
+                    labelColor = {'#FFFFFF'}
+                    style={{backgroundColor : green500,}}
                     onTouchTap={this.handleClose}
                   />,
               ]}
@@ -61,29 +59,31 @@ class RequestDialog extends Component {
           >
 
                 <Paper zDepth={0} rounded = {false} style = {{marginLeft : 30, marginRight : 30,}}>
-                      <br />
+                      
 
                       <Avatar
                           src='http://lylesmoviefiles.com/wp-content/uploads/2015/06/emily-ratajkowski-no-bra.jpg'
                           size={100}
                           backgroundColor='rgba(0,0,0,0)'
-                          style={{border: 0, marginLeft : 300,}}
+                          style={{border: 0, marginLeft : '43%'}}
                         />
                         <br />
 
-                        <h3 style = {{marginLeft : 250,}}>Emily Ratajkowski</h3>
-                        <h4 style = {{marginLeft : 318,}}>@emulik</h4> <br />
+                        <h4 style = {{textAlign : 'center', color : green500,}}>Emily Ratajkowski</h4>
+                        <h5 style = {{textAlign : 'center', color : green500,}}>@emulik</h5> 
 
                       <TextField
                           hintText="AMD"
                           floatingLabelText="Amount you want to request"
-                          floatingLabelFixed={true}
+                          floatingLabelFocusStyle = {{color : green500,}}
+                          underlineFocusStyle = {{borderColor : green500,}}
+                          floatingLabelFixed={false}
                           style = {{marginLeft : 235,}} />
                       <br />
                       <TextField
                           hintText="Notes/Comments (Optional)"
-                          style = {{marginLeft : 235,}} />
-                      <br />
+                          style = {{marginLeft : 235,}}
+                          underlineFocusStyle = {{borderColor : green500,}}/>
                       <br />
                 </Paper>
             </Dialog>
