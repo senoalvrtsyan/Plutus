@@ -243,7 +243,7 @@ namespace
         // [self.view addSubview: _account];
         
         // Add picker.
-        static const int pickerH = 2 * controlH;
+        static const int pickerH = 3 * controlH;
         static const int pickerY = amountY + controlH - 1;
         _picker = [[UIPickerView alloc] initWithFrame: CGRectMake(amountX, pickerY, amountW, pickerH)];
         _picker.delegate = self;
@@ -291,18 +291,22 @@ namespace
     return 2;
 }
 
--(NSString*)pickerView:(UIPickerView*)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+-(NSAttributedString*)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
+    NSString* title = @"";
+    
     if(row == 0)
     {
-        return @"012458944033";
+        title = @"012458944033";
     }
     else if(row == 1)
     {
-        return @"243956029876";
+        title = @"243956029876";
     }
     
-    return @"";
+    NSAttributedString* attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName: theme::textColor()}];
+    
+    return attString;
 }
 
 -(void)setAcc:(NSString*)acc

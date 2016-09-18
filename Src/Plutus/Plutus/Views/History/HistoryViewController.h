@@ -11,5 +11,8 @@
 #import "CommonViewController.h"
 
 @interface HistoryViewController : CommonViewController
+    <UITableViewDataSource, UITableViewDelegate>
+
+@property UITableView* tableView;
 
 @end

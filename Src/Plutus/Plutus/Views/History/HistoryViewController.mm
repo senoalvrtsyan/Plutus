@@ -8,6 +8,8 @@
 
 #import "HistoryViewController.h"
 
+#import "HistoryTableViewCell.h"
+
 #import "Utils.h"
 #import "Theme.h"
 
@@ -37,7 +39,38 @@
 
 -(void)createControls
 {
+    static const int viewW = self.view.frame.size.width;
+    static const int tableX = 0;
+    static const int tabley = 0;
+    static const int tableH = self.view.frame.size.height;
+    _tableView = [[UITableView alloc] initWithFrame: CGRectMake(tableX, tabley, viewW, tableH)];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    
+    [self.view addSubview: _tableView];
+}
 
+-(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return 10;
+}
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString* ucid = @"histCellUId";
+    
+    // Try to get the cell.
+    HistoryTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier: ucid];
+    
+    // If there is no ready one, create it.
+    if(cell == nil)
+    {
+        cell = [[HistoryTableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier: ucid];
+    }
+    
+    [cell setPayment];
+
+    return cell;
 }
 
 @end
