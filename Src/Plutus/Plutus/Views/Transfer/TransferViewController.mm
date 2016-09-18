@@ -8,6 +8,7 @@
 
 #import "TransferViewController.h"
 
+#import "Constants.h"
 #import "Utils.h"
 #import "Theme.h"
 
@@ -16,11 +17,6 @@
 @end
 
 @implementation TransferViewController
-
-namespace
-{
-    const int controlH = 40;
-}
 
 -(void)viewDidLoad
 {
@@ -102,7 +98,6 @@ namespace
 -(void)createControls
 {
     static const int viewW = self.view.frame.size.width;
-    static const int logoS = 70;
 
     static const int logoY = 90;
     static const int nameW = viewW - 80;
@@ -172,7 +167,6 @@ namespace
     
     // Animated arrows.
     {
-        static const int arrowS = 30;
         static const int arrowY = nameY - 20;
         
         static const int arrow2X = (viewW - arrowS) / 2;

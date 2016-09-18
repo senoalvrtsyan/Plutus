@@ -25,6 +25,9 @@
 		11A650801D8B1155009D56F2 /* HistoryViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11A6507F1D8B1155009D56F2 /* HistoryViewController.mm */; };
 		11A650821D8B22B5009D56F2 /* arrow-right2.png in Resources */ = {isa = PBXBuildFile; fileRef = 11A650811D8B22B5009D56F2 /* arrow-right2.png */; };
 		11A650841D8B30C6009D56F2 /* moneybag_gray_256.png in Resources */ = {isa = PBXBuildFile; fileRef = 11A650831D8B30C6009D56F2 /* moneybag_gray_256.png */; };
+		11C353B61D8E8CBD0046E097 /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11C353B41D8E8CBD0046E097 /* Constants.cpp */; };
+		11C353B81D8EAB030046E097 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C353B71D8EAB030046E097 /* arrow-left.png */; };
+		11C353BA1D8EAC2A0046E097 /* arrow-right2_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C353B91D8EAC2A0046E097 /* arrow-right2_red.png */; };
 		11EB976D1D8D97F700B536EB /* HistoryTableViewCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11EB976C1D8D97F700B536EB /* HistoryTableViewCell.mm */; };
 		11ED671E1D81AD4500DC5CEB /* LoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11ED671D1D81AD4500DC5CEB /* LoginViewController.mm */; };
 		11ED67281D81E03500DC5CEB /* Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11ED67271D81E03500DC5CEB /* Utils.mm */; };
@@ -60,6 +63,10 @@
 		11A6507F1D8B1155009D56F2 /* HistoryViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HistoryViewController.mm; path = Views/History/HistoryViewController.mm; sourceTree = "<group>"; };
 		11A650811D8B22B5009D56F2 /* arrow-right2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-right2.png"; path = "../../../Graphics/icon/arrow-right2.png"; sourceTree = "<group>"; };
 		11A650831D8B30C6009D56F2 /* moneybag_gray_256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = moneybag_gray_256.png; path = ../../../Graphics/icon/moneybag_gray_256.png; sourceTree = "<group>"; };
+		11C353B41D8E8CBD0046E097 /* Constants.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Constants.cpp; path = Utils/Constants.cpp; sourceTree = "<group>"; };
+		11C353B51D8E8CBD0046E097 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utils/Constants.h; sourceTree = "<group>"; };
+		11C353B71D8EAB030046E097 /* arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-left.png"; path = "../../../Graphics/icon/arrow-left.png"; sourceTree = "<group>"; };
+		11C353B91D8EAC2A0046E097 /* arrow-right2_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-right2_red.png"; path = "../../../Graphics/icon/arrow-right2_red.png"; sourceTree = "<group>"; };
 		11EB976B1D8D97F700B536EB /* HistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryTableViewCell.h; path = Views/History/HistoryTableViewCell.h; sourceTree = "<group>"; };
 		11EB976C1D8D97F700B536EB /* HistoryTableViewCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HistoryTableViewCell.mm; path = Views/History/HistoryTableViewCell.mm; sourceTree = "<group>"; };
 		11ED671C1D81AD4500DC5CEB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Views/Login/LoginViewController.h; sourceTree = "<group>"; };
@@ -85,6 +92,8 @@
 		115794561D79DD530039DAF1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				11C353B91D8EAC2A0046E097 /* arrow-right2_red.png */,
+				11C353B71D8EAB030046E097 /* arrow-left.png */,
 				11A650831D8B30C6009D56F2 /* moneybag_gray_256.png */,
 				11A650811D8B22B5009D56F2 /* arrow-right2.png */,
 				113FF7531D89D03500138593 /* wallet@2x.png */,
@@ -237,6 +246,8 @@
 		11ED67251D81E01F00DC5CEB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				11C353B41D8E8CBD0046E097 /* Constants.cpp */,
+				11C353B51D8E8CBD0046E097 /* Constants.h */,
 				11ED67261D81E03500DC5CEB /* Utils.h */,
 				11ED67271D81E03500DC5CEB /* Utils.mm */,
 			);
@@ -313,6 +324,8 @@
 				113FF7541D89D03500138593 /* wallet@2x.png in Resources */,
 				11ED672E1D81F11F00DC5CEB /* close_128.png in Resources */,
 				1161BE611D85278100D5A28A /* arrow_256.png in Resources */,
+				11C353BA1D8EAC2A0046E097 /* arrow-right2_red.png in Resources */,
+				11C353B81D8EAB030046E097 /* arrow-left.png in Resources */,
 				118704841D78AC6A00D88E6D /* LaunchScreen.storyboard in Resources */,
 				1157945B1D79F0FB0039DAF1 /* moneybag_256.png in Resources */,
 				113FF74E1D89CE8D00138593 /* clipboard@2x.png in Resources */,
@@ -331,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1161BE641D8551AF00D5A28A /* SignupViewController.mm in Sources */,
+				11C353B61D8E8CBD0046E097 /* Constants.cpp in Sources */,
 				11ED671E1D81AD4500DC5CEB /* LoginViewController.mm in Sources */,
 				1161BE6A1D855A3800D5A28A /* ProfileViewController.mm in Sources */,
 				11ED67281D81E03500DC5CEB /* Utils.mm in Sources */,

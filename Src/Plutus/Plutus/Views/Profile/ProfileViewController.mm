@@ -8,6 +8,7 @@
 
 #import "ProfileViewController.h"
 
+#import "Constants.h"
 #import "Utils.h"
 #import "Theme.h"
 
@@ -50,8 +51,6 @@
 -(void)createControls
 {
     static const int viewW = self.view.frame.size.width;
-    static const int controlH = 40;
-    static const int logoS = 70;
     
     // Take care of the logo.
     static const int logoY = 70;

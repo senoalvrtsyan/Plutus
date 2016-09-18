@@ -12,4 +12,10 @@
 
 -(void)setPayment;
 
+@property UIImageView* side;
+@property UILabel* username;
+@property UILabel* userAccount;
+@property UILabel* userAccountType;
+@property UILabel* amount;
+
 @end

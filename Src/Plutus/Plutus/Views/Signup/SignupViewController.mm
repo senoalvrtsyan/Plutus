@@ -8,6 +8,7 @@
 
 #import "SignupViewController.h"
 
+#import "Constants.h"
 #import "Theme.h"
 #import "Utils.h"
 
@@ -45,10 +46,7 @@
 {
     static const int viewW = self.view.frame.size.width;
     static const int viewH = self.view.frame.size.height;
-    static const int keyboardH = 216; // Hardcode this for now.
     static const int availibleH = viewH - keyboardH;
-    static const int controlH = 40;
-    static const int logoS = 70;
     static const int contentH = logoS + 20 + controlH + 5 + controlH;
     
     // Take care of close view button - "X"

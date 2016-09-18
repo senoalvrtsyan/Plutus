@@ -10,6 +10,7 @@
 
 #import "HistoryTableViewCell.h"
 
+#import "Constants.h"
 #import "Utils.h"
 #import "Theme.h"
 
@@ -46,6 +47,7 @@
     _tableView = [[UITableView alloc] initWithFrame: CGRectMake(tableX, tabley, viewW, tableH)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
+    _tableView.allowsSelection = NO;
     
     [self.view addSubview: _tableView];
 }
@@ -53,6 +55,11 @@
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 10;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return historyCellH;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
