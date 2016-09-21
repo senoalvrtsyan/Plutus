@@ -13,6 +13,10 @@ import s from './App.scss';
 import Header from '../Header';
 import Feedback from '../Feedback';
 import Footer from '../Footer';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -20,9 +24,12 @@ injectTapEventPlugin();
 const muiTheme = getMuiTheme({
   fontFamily: 'Roboto, sans-serif',
   palette: {
-    secondary1Color: "#F26968",
-    secondary2Color: "#F26968",
-    secondary3Color: "#F26968",
+    primary1Color: "#6CBF84",
+    primary2Color: "#6CBF84",
+    primary3Color: "#6CBF84",
+    secondary1Color: "F26968",
+    secondary2Color: "F26968",
+    secondary3Color: "F26968",
   },
 });
 
