@@ -12,6 +12,8 @@
 #import "Theme.h"
 #import "Utils.h"
 
+#include "Service.h"
+
 @interface SignupViewControllerBase ()
 
 @end
@@ -202,6 +204,8 @@
 
 -(void)nextAction
 {
+    super.user._username = ToStdString(super.textField.text);
+    
     EmailViewController* vc = [[EmailViewController alloc] init];
     [self.navigationController pushViewController: vc animated: YES];
 }
@@ -230,6 +234,8 @@
 
 -(void)nextAction
 {
+    super.user._email = ToStdString(super.textField.text);
+    
     PasswordViewController* vc = [[PasswordViewController alloc] init];
     [self.navigationController pushViewController: vc animated: YES];
 }
@@ -263,7 +269,19 @@
 
 -(void)nextAction
 {
+    super.user._password = ToStdString(super.textField.text);
     
+    // Cool now we have user object constucted, try to sign-up with service.
+    if(Service::Instance().SignUp(super.user))
+    {
+        // Awesome, set the user and show the maintab controller itself.
+        Service::Instance().SetUser(super.user);
+        showTabBarController(self);
+    }
+    else
+    {
+        
+    }
 }
 
 -(BOOL)validateInput

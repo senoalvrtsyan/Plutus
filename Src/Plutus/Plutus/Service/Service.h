@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include "User.h"
+
 namespace ios
 {
 
@@ -15,6 +17,22 @@ namespace ios
 class Service
 {
 public:
+    static Service& Instance();
+    
+    Service();
+    
+    // Call after login/signup.
+    void SetUser(const User& user);
+    
+    // Tell us who is the user.
+    User& GetUser();
+    
+    bool SignUp(const User& user);
+    bool SignIn(const User& user);
+    
+private:
+    // Autentificated user.
+    User _user;
 };
 
 }

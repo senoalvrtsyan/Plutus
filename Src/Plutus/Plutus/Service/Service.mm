@@ -10,5 +10,50 @@
 
 namespace ios
 {
+
+Service& Service::Instance()
+{
+    static Service service;
+    return service;
+}
+
+Service::Service()
+{}
+
+void Service::SetUser(const User& user)
+{
+    _user = user;
+}
+    
+User& Service::GetUser()
+{
+    return _user;
+}
+
+
+bool Service::SignUp(const User& user)
+{
+    if(user._username.empty() ||
+       user._password.empty() ||
+       user._name.empty() ||
+       user._email.empty())
+    {
+        return false;
+    }
+    
+    // TODO: implement.
+    return true;
+}
+
+bool Service::SignIn(const User& user)
+{
+    if(user._username.empty() || user._password.empty())
+    {
+        return false;
+    }
+
+    // TODO: implement.
+    return true;
+}
     
 }

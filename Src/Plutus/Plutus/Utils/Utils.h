@@ -27,6 +27,10 @@ UIImage* imageWithColor(UIColor* color);
 bool validateName(NSString* name);
 bool validateEmail(NSString* email);
 bool validatePassword(NSString* pwd);
+
+// Shows main tab controller after login, or signup.
+void showTabBarController(UIViewController* vc);
+void configTabBarItem(UITabBarController* tabBar, int index, NSString* name, NSString* icon);
     
 }
 using namespace utils;

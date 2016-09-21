@@ -14,6 +14,8 @@
 #import "Utils.h"
 #import "Theme.h"
 
+#include "Service.h"
+
 #import "SignupViewController.h"
 #import "ProfileViewController.h"
 #import "SearchViewController.h"
@@ -80,12 +82,12 @@
     
     // Take care of passowrd field.
     static const int pwdY = loginY + controlH + 10;
-    UITextField* password = [[UITextField alloc] initWithFrame: CGRectMake(loginX, pwdY, loginW, controlH)];
-    theme::applyStyle(password);
-    password.placeholder = @"password";
-    password.secureTextEntry = YES;
+    _password = [[UITextField alloc] initWithFrame: CGRectMake(loginX, pwdY, loginW, controlH)];
+    theme::applyStyle(_password);
+    _password.placeholder = @"password";
+    _password.secureTextEntry = YES;
     
-    [self.view addSubview: password];
+    [self.view addSubview: _password];
     
     // Take care of forgot password.
     static const int forgotW = loginW;
@@ -124,12 +126,20 @@
 
 -(void)loginAction
 {
-    //ProfileViewController* vc = [[ProfileViewController alloc] init];
-    //SearchViewController* vc = [[SearchViewController alloc] init];
+    // Try to login with credentials.
+    User user;
+    user._username = ToStdString(_login.text);
+    user._password = ToStdString(_password.text);
     
-    //[self presentViewController: vc animated: YES completion: nil];
-    
-    [self showTabBarController];
+    if(Service::Instance().SignIn(user))
+    {
+        Service::Instance().SetUser(user);
+        showTabBarController(self);
+    }
+    else
+    {
+        // TODO: show alert
+    }
 }
 
 -(void)signupAction
@@ -138,71 +148,6 @@
     
     NameViewController* vc = [[NameViewController alloc] init];
     [self.navigationController pushViewController: vc animated: YES];
-}
-
-void configTabBarItem(UITabBarController* tabBar, int index, NSString* name, NSString* icon)
-{
-    static const auto imgInsets     = UIEdgeInsetsMake(6, 0, -6, 0);
-    static const auto titleOffset   = UIOffsetMake(0, 20);
-    
-    [[tabBar.tabBar.items objectAtIndex: index] setImage: [[UIImage imageNamed: icon] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [[tabBar.tabBar.items objectAtIndex: index] setSelectedImage: [UIImage imageNamed: icon]];
-    [[tabBar.tabBar.items objectAtIndex: index] setTitle: name];
-    [[tabBar.tabBar.items objectAtIndex: index] setImageInsets: imgInsets];
-    [[tabBar.tabBar.items objectAtIndex: index] setTitlePositionAdjustment: titleOffset];
-}
-
--(void)showTabBarController
-{
-    // Create tab bar controller.
-    UITabBarController* tabBar = [[UITabBarController alloc] init];
-    
-    // Set tab bar style.
-    [[UITabBar appearance] setTintColor: theme::brandColor2()];
-    // [[UITabBar appearance] setBarTintColor: theme::brandColor1()];
-    
-    // Profile
-    // {
-    ProfileViewController* profileVC = [[ProfileViewController alloc] init];
-    
-    UINavigationController* profileNC = [[UINavigationController alloc] initWithRootViewController: profileVC];
-    //SetNavBarStyle(navControllerMap.navigationBar);
-    // }
-    
-    // Search
-    // {
-    SearchViewController* searchVC = [[SearchViewController alloc] init];
-    
-    UINavigationController* searchNC = [[UINavigationController alloc] initWithRootViewController: searchVC];
-    //SetNavBarStyle(navControllerMap.navigationBar);
-    // }
-    
-    // History
-    // {
-    HistoryViewController* historyVC = [[HistoryViewController alloc] init];
-    
-    UINavigationController* historyNC = [[UINavigationController alloc] initWithRootViewController: historyVC];
-    //SetNavBarStyle(navControllerMap.navigationBar);
-    // }
-    
-    // Add to tab bar.
-    NSArray* controllers = [NSArray arrayWithObjects: profileNC, searchNC, historyNC, nil];
-    tabBar.viewControllers = controllers;
-    
-    // Config items.
-    configTabBarItem(tabBar, 0, @"Profile",  @"wallet");
-    configTabBarItem(tabBar, 1, @"Profile2", @"paper-plane");
-    configTabBarItem(tabBar, 2, @"Profile3", @"clipboard");
-    
-    // Set initial view.
-    tabBar.selectedIndex = 0;
-    
-    // Take care of nav bar title style.
-    NSDictionary* navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                               theme::grayColor(), NSForegroundColorAttributeName, nil];
-    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
-    
-    [self presentViewController: tabBar animated: YES completion: nil];
 }
 
 @end

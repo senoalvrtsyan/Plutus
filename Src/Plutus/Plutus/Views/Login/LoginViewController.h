@@ -11,5 +11,6 @@
 @interface LoginViewController : UIViewController
 
 @property UITextField* login;
+@property UITextField* password;
 
 @end
