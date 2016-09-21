@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#include "User.h"
+
 @interface SignupViewControllerBase : UIViewController
     <UITextFieldDelegate>
 
@@ -19,6 +21,8 @@
 -(BOOL)validateInput;
 
 @property UITextField* textField;
+
+@property User user;
 
 @end
 

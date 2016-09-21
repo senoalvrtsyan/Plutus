@@ -172,6 +172,8 @@
 
 -(void)nextAction
 {
+    super.user._name = ToStdString(super.textField.text);
+    
     UsernameViewController* vc = [[UsernameViewController alloc] init];
     [self.navigationController pushViewController: vc animated: YES];
 }
