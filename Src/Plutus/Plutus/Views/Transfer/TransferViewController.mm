@@ -8,6 +8,8 @@
 
 #import "TransferViewController.h"
 
+#include <sstream>
+
 #import "Constants.h"
 #import "Utils.h"
 #import "Theme.h"
@@ -201,6 +203,7 @@
         _amount.textAlignment = NSTextAlignmentCenter;
         _amount.placeholder = @"Amount to transfer";
         _amount.keyboardType = UIKeyboardTypeDecimalPad;
+        _amount.font = [UIFont boldSystemFontOfSize: _amount.font.pointSize];
         
         // Add done button for the keyboard.
         UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, viewW, controlH)];
@@ -266,6 +269,8 @@
 -(void)doneWithNumberPad
 {
     [_amount resignFirstResponder];
+    
+    _amount.text = ToCurrencyNSString(_amount.text);
 }
 
 -(void)accountAction
@@ -332,7 +337,40 @@
 
 -(void)transferAction
 {
+    if([_amount.text length] == 0)
+    {
+        return;
+    }
     
+    std::ostringstream oss;
+    oss << "Transfering " << ToStdString(_amount.text) << " from credit account(100100101) to @johnny";
+    
+    UIAlertController* alert = [UIAlertController
+                                 alertControllerWithTitle:@"Transfer confirmation"
+                                 message: ToNSString(oss.str())
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* noButton = [UIAlertAction
+                               actionWithTitle: @"Cancel"
+                               style: UIAlertActionStyleDefault
+                               handler: ^(UIAlertAction* action) {
+                                   //Handle no, thanks button
+                               }];
+    
+    UIAlertAction* yesButton = [UIAlertAction
+                                actionWithTitle: self.title
+                                style: UIAlertActionStyleDefault
+                                handler: ^(UIAlertAction * action) {
+                                    //Handle your yes please button action here
+                                }];
+
+    [alert addAction:noButton];
+    [alert addAction:yesButton];
+    
+    [self presentViewController: alert animated: YES completion: nil];
+    
+    // iOS bug, need to do this here.
+    [alert.view setTintColor: theme::brandColor4()];
 }
 
 @end
