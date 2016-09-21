@@ -1,5 +1,5 @@
 //
-//  Service.h
+//  Constants.h
 //  Plutus
 //
 //  Created by Hovhannes Grigoryan on 9/1/16.
