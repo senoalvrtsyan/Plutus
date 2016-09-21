@@ -53,7 +53,7 @@
     static const int viewW = self.view.frame.size.width;
     
     // Take care of the logo.
-    static const int logoY = 100;
+    static const int logoY = 70;
     static const int logoX = (viewW - logoS) / 2; // Centered
     UIImageView* logo = [[UIImageView alloc] initWithFrame: CGRectMake(logoX, logoY, logoS, logoS)];
     logo.image = [UIImage imageNamed: @"moneybag_256"];
@@ -63,7 +63,7 @@
     // Take care of ful name.
     static const int nameW = viewW - 80;
     static const int nameX = (viewW - nameW) / 2; // Centered;;
-    static const int nameY = logoY + logoS - 10;
+    static const int nameY = logoY + logoS + 10;
     UILabel* name = [[UILabel alloc] initWithFrame: CGRectMake(nameX, nameY, nameW, controlH)];
     name.text = @"Ken Block";
     name.textColor = theme::textColor();
@@ -88,15 +88,10 @@
     static const int debitLabelW = viewW - 80;
     static const int debitLabelX = 20;
     static const int debitLabelY = usernameY + 90;
-    static const int separatorDist = 10;
-    
-    // Add a separator line.
-    [self addSeparatorLine: debitLabelY - separatorDist];
-    
     UILabel* debitLabel = [[UILabel alloc] initWithFrame: CGRectMake(debitLabelX, debitLabelY, debitLabelW, controlH)];
     debitLabel.text = @"Debit";
     debitLabel.textColor = theme::grayColor();
-    debitLabel.font = [UIFont systemFontOfSize: name.font.pointSize - 3]; // A bit big.
+    debitLabel.font = [UIFont systemFontOfSize: name.font.pointSize]; // A bit big.
     
     [self.view addSubview: debitLabel];
     
@@ -124,17 +119,12 @@
     
     [self.view addSubview: _debitBalance];
     
-    
     // Take care of credit account.
     static const int creditLabelY = debitBalanceY + 80;
-    
-    // Add a separator line.
-    [self addSeparatorLine: creditLabelY - separatorDist];
-    
     UILabel* creditLabel = [[UILabel alloc] initWithFrame: CGRectMake(debitLabelX, creditLabelY, debitLabelW, controlH)];
     creditLabel.text = @"Credit";
     creditLabel.textColor = theme::grayColor();
-    creditLabel.font = debitLabel.font;
+    creditLabel.font = [UIFont systemFontOfSize: name.font.pointSize]; // A bit big.
     
     [self.view addSubview: creditLabel];
     
@@ -166,23 +156,6 @@
     _creditBalance.textAlignment = NSTextAlignmentCenter;
     
     [self.view addSubview: _creditBalance];
-}
-
--(void)addSeparatorLine:(int)y
-{
-    static const int viewW = self.view.frame.size.width;
-    
-    const int w = viewW - 20;
-    const int x = (viewW - w) / 2;
-    UIView* separatorLine = [[UIView alloc] initWithFrame: CGRectMake(x, y, w, 1)];
-
-    // Border style.
-    separatorLine.layer.cornerRadius = 0.0f;
-    separatorLine.layer.masksToBounds = YES;
-    separatorLine.layer.borderColor = [theme::lightGrayColor() CGColor];
-    separatorLine.layer.borderWidth = 1.0f;
-    
-    [self.view addSubview: separatorLine];
 }
 
 -(void)initBalanceAnimated:(UILabel*)textField withValue:(double)value

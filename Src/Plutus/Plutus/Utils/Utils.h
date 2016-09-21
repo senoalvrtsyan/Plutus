@@ -8,18 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#include <string>
-
 namespace ios
 {
 namespace utils
 {
-
-std::string ToStdString(NSString* str);
-NSString* ToNSString(const std::string& str);
-NSString* ToCurrencyNSString(const NSString* str);
-std::string ToCurrencyStdString(const NSString* str);
-
+    
 UIColor* createColor(int r, int g, int b, double a = 1.0);
     
 UIImage* imageWithColor(UIColor* color);
