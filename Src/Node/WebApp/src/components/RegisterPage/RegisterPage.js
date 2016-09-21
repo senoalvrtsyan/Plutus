@@ -11,10 +11,15 @@ import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './RegisterPage.scss';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {Dialog, RaisedButton, Avatar, TextField, Paper} from 'material-ui';
+import {Dialog, RaisedButton, Avatar, TextField, Paper, Checkbox} from 'material-ui';
 import {green500} from 'material-ui/styles/colors';
 
 const title = 'New User Registration';
+
+const style = {
+  marginTop: 20,
+  padding: '0 12px',
+};
 
 class RequestDialog extends Component {
 
@@ -32,39 +37,75 @@ class RequestDialog extends Component {
 
   render() {
     return (
-      <MuiThemeProvider>
-          <div>
-              <Dialog
+        <div>
+            <h3 style = {{textAlign : 'center', color : '#616161', fontWeight : 'bold'}}>Please sign up</h3>
+            <Paper zDepth={2} style={style}>
+                <TextField 
+                    floatingLabelText="Company name"
+                    type="text"
+                    underlineShow={true}
+                    fullWidth={true}
+                />
+                <TextField 
+                    floatingLabelText="Email address"
+                    type="text"
+                    underlineShow={true}
+                    fullWidth={true}
+                />
+                <TextField 
+                    floatingLabelText="Password"
+                    type="text"
+                    underlineShow={true}
+                    fullWidth={true}
+                />
+                <TextField 
+                    floatingLabelText="Confirm password"
+                    type="text"
+                    underlineShow={true}
+                    fullWidth={true}
+                />
+                <br />
+                <br />
+                <Checkbox label="I have read and agree to the terms and conditions." />
+                <RaisedButton
+                    label="Sign up"
+                    primary={true}
+                    fullWidth={true}
+                />,
+            </Paper>
+       
+       
+        
+        
+        
+        
+        
+            <Dialog
               title="Request payment"
               titleStyle={{textAlign : 'center', color : '#616161', fontWeight : 'bold'}}
               actions={[
                   <RaisedButton
                     label="Cancel"
-                    backgroundColor = {'EF5350'}
                     onTouchTap={this.handleClose}
                   />,
                   <RaisedButton
                     label="Request"
-                    primary={false}
-                    backgroundColor={'#2ecc71'}
+                    primary={true}
                     labelColor = {'#FFFFFF'}
-                    style={{backgroundColor : green500,}}
                     onTouchTap={this.handleClose}
                   />,
               ]}
+              actionsContainerStyle = {{ alignItems: 'center',}}
               autoScrollBodyContent={false}
               modal={true}
-              open={true}
+              open={false}
               onRequestClose={this.handleClose}
-          >
+              >
 
                 <Paper zDepth={0} rounded = {false} style = {{marginLeft : 30, marginRight : 30,}}>
-                      
-
                       <Avatar
                           src='http://lylesmoviefiles.com/wp-content/uploads/2015/06/emily-ratajkowski-no-bra.jpg'
                           size={100}
-                          backgroundColor='rgba(0,0,0,0)'
                           style={{border: 0, marginLeft : '43%'}}
                         />
                         <br />
@@ -75,20 +116,20 @@ class RequestDialog extends Component {
                       <TextField
                           hintText="AMD"
                           floatingLabelText="Amount you want to request"
-                          floatingLabelFocusStyle = {{color : green500,}}
-                          underlineFocusStyle = {{borderColor : green500,}}
                           floatingLabelFixed={false}
                           style = {{marginLeft : 235,}} />
                       <br />
                       <TextField
                           hintText="Notes/Comments (Optional)"
-                          style = {{marginLeft : 235,}}
-                          underlineFocusStyle = {{borderColor : green500,}}/>
+                          style = {{marginLeft : 235,}}/>
                       <br />
                 </Paper>
             </Dialog>
+        
+        
+        
+        
         </div>
-      </MuiThemeProvider>
     );
   }
 }

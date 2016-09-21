@@ -10,23 +10,52 @@
 import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './LoginPage.scss';
-import { Form, FormControl, Checkbox, Button, FormGroup } from 'react-bootstrap';
+
+import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import Checkbox from 'material-ui/Checkbox';
 
 const title = 'Log In';
 
-class LoginForm extends Component {
+const style = {
+  marginTop: 20,
+  padding: '0 12px',
+};
 
+class LoginForm extends Component {
   render() {
     return (
-      <Form>
-        <h2>Please log in</h2>
-        <FormGroup bsSize="large">
-          <FormControl type="email" placeholder="Email"/>
-          <FormControl type="password" placeholder="Password" bsSize="large"/>
-        </FormGroup>
-        <Checkbox> Remember me </Checkbox>
-        <Button type="submit"  bsSize="large" block> Log in </Button>
-      </Form>
+    <div>    
+    <h3 style = {{textAlign : 'center', color : '#616161', fontWeight : 'bold'}}>Please sign up</h3> 
+    <Paper zDepth={2} style={style}>
+          <TextField 
+            floatingLabelText="Email address" 
+            type="text"
+            underlineShow={true}
+            fullWidth={true}
+          />
+          <TextField 
+            floatingLabelText="Password" 
+            type="password"
+            underlineShow={true}
+            fullWidth={true}
+          />
+          <Checkbox
+            label="Remember me"
+            style={{
+              marginTop: 2,
+              marginBottom: 10,
+            }}
+          />
+          <RaisedButton 
+            label="Log in" 
+            fullWidth={true}
+            primary={true}
+            style={{marginBottom: 12,}}
+          />
+    </Paper>
+    </div>    
     );
   }
 }

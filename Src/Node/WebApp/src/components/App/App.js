@@ -13,6 +13,18 @@ import s from './App.scss';
 import Header from '../Header';
 import Feedback from '../Feedback';
 import Footer from '../Footer';
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
+
+const muiTheme = getMuiTheme({
+  fontFamily: 'Roboto, sans-serif',
+  palette: {
+    secondary1Color: "#F26968",
+    secondary2Color: "#F26968",
+    secondary3Color: "#F26968",
+  },
+});
 
 class App extends Component {
 
@@ -55,12 +67,14 @@ class App extends Component {
 
   render() {
     return !this.props.error ? (
+    <MuiThemeProvider muiTheme={muiTheme}>
       <div>
         <Header />
         {this.props.children}
         <Feedback />
         <Footer />
       </div>
+    </MuiThemeProvider>
     ) : this.props.children;
   }
 
