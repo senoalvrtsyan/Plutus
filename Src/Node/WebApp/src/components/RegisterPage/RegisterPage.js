@@ -16,6 +16,7 @@ import {green500} from 'material-ui/styles/colors';
 
 const title = 'New User Registration';
 
+
 const style = {
   marginTop: 20,
   padding: '0 12px',
