@@ -28,6 +28,7 @@
 		11C353B61D8E8CBD0046E097 /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11C353B41D8E8CBD0046E097 /* Constants.cpp */; };
 		11C353B81D8EAB030046E097 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C353B71D8EAB030046E097 /* arrow-left.png */; };
 		11C353BA1D8EAC2A0046E097 /* arrow-right2_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C353B91D8EAC2A0046E097 /* arrow-right2_red.png */; };
+		11D5A9B31D929030002A15EF /* Service.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11D5A9B21D929030002A15EF /* Service.mm */; };
 		11EB976D1D8D97F700B536EB /* HistoryTableViewCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11EB976C1D8D97F700B536EB /* HistoryTableViewCell.mm */; };
 		11ED671E1D81AD4500DC5CEB /* LoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11ED671D1D81AD4500DC5CEB /* LoginViewController.mm */; };
 		11ED67281D81E03500DC5CEB /* Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11ED67271D81E03500DC5CEB /* Utils.mm */; };
@@ -67,6 +68,8 @@
 		11C353B51D8E8CBD0046E097 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utils/Constants.h; sourceTree = "<group>"; };
 		11C353B71D8EAB030046E097 /* arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-left.png"; path = "../../../Graphics/icon/arrow-left.png"; sourceTree = "<group>"; };
 		11C353B91D8EAC2A0046E097 /* arrow-right2_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-right2_red.png"; path = "../../../Graphics/icon/arrow-right2_red.png"; sourceTree = "<group>"; };
+		11D5A9B01D928F87002A15EF /* Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
+		11D5A9B21D929030002A15EF /* Service.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Service.mm; sourceTree = "<group>"; };
 		11EB976B1D8D97F700B536EB /* HistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HistoryTableViewCell.h; path = Views/History/HistoryTableViewCell.h; sourceTree = "<group>"; };
 		11EB976C1D8D97F700B536EB /* HistoryTableViewCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HistoryTableViewCell.mm; path = Views/History/HistoryTableViewCell.mm; sourceTree = "<group>"; };
 		11ED671C1D81AD4500DC5CEB /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Views/Login/LoginViewController.h; sourceTree = "<group>"; };
@@ -164,6 +167,7 @@
 		118704731D78AC6A00D88E6D /* Plutus */ = {
 			isa = PBXGroup;
 			children = (
+				11D5A9AE1D928F87002A15EF /* Service */,
 				1161BE661D8559FF00D5A28A /* App */,
 				1161BE651D8559EE00D5A28A /* Profile */,
 				11ED67291D81E14E00DC5CEB /* Theme */,
@@ -223,6 +227,15 @@
 				11ED670E1D81ACC000DC5CEB /* Login */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		11D5A9AE1D928F87002A15EF /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				11D5A9B21D929030002A15EF /* Service.mm */,
+				11D5A9B01D928F87002A15EF /* Service.h */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		11ED670E1D81ACC000DC5CEB /* Login */ = {
@@ -346,6 +359,7 @@
 				1161BE641D8551AF00D5A28A /* SignupViewController.mm in Sources */,
 				11C353B61D8E8CBD0046E097 /* Constants.cpp in Sources */,
 				11ED671E1D81AD4500DC5CEB /* LoginViewController.mm in Sources */,
+				11D5A9B31D929030002A15EF /* Service.mm in Sources */,
 				1161BE6A1D855A3800D5A28A /* ProfileViewController.mm in Sources */,
 				11ED67281D81E03500DC5CEB /* Utils.mm in Sources */,
 				11EB976D1D8D97F700B536EB /* HistoryTableViewCell.mm in Sources */,
