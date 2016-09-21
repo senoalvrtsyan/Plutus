@@ -9,6 +9,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 typedef unsigned long IdType;
 
@@ -39,6 +40,10 @@ public:
     std::string _passport;
     Coordinate  _coordinate;
 };
+
+bool operator==(const User& o1, const User& o2);
+    
+typedef std::vector<User> Users;
 
 }
 using namespace common;

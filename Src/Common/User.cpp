@@ -19,4 +19,9 @@ Coordinate::Coordinate(long latitude, long longitude)
 User::User()
 {}
     
+bool operator==(const User& o1, const User& o2)
+{
+    return o1._userId == o2._userId;
+}
+
 }

@@ -12,6 +12,8 @@
 #import "Utils.h"
 #import "Theme.h"
 
+#include "Service.h"
+
 @interface ProfileViewController ()
 
 @end
@@ -65,7 +67,7 @@
     static const int nameX = (viewW - nameW) / 2; // Centered;;
     static const int nameY = logoY + logoS - 10;
     UILabel* name = [[UILabel alloc] initWithFrame: CGRectMake(nameX, nameY, nameW, controlH)];
-    name.text = @"Ken Block";
+    name.text = ToNSString(Service::Instance().GetUser()._name);
     name.textColor = theme::textColor();
     name.font = [UIFont boldSystemFontOfSize: name.font.pointSize];
     name.textAlignment = NSTextAlignmentCenter;
@@ -77,7 +79,8 @@
     static const int usernameX = (viewW - nameW) / 2; // Centered;
     static const int usernameY = nameY + 20;
     UILabel* username = [[UILabel alloc] initWithFrame: CGRectMake(usernameX, usernameY, usernameW, controlH)];
-    username.text = @"@ken";
+    username.text = @"@";
+    username.text = [username.text stringByAppendingString: ToNSString(Service::Instance().GetUser()._username)];
     username.textColor = theme::lightGrayColor();
     username.font = [UIFont systemFontOfSize: name.font.pointSize - 2]; // A bit smaller font
     username.textAlignment = NSTextAlignmentCenter;
@@ -166,6 +169,24 @@
     _creditBalance.textAlignment = NSTextAlignmentCenter;
     
     [self.view addSubview: _creditBalance];
+    
+    // Add settings button to navigation bar
+    {
+        UIImage* gear = [UIImage imageNamed:@"cogs"];
+        CGRect frameimg = CGRectMake(0, 0, 22, 22);
+        UIButton* settingsButton = [[UIButton alloc] initWithFrame: frameimg];
+        [settingsButton setBackgroundImage: gear forState: UIControlStateNormal];
+        [settingsButton addTarget: self action: @selector(settingsAction)
+                 forControlEvents: UIControlEventTouchUpInside];
+        
+        UIBarButtonItem* settingsButtonItem = [[UIBarButtonItem alloc] initWithCustomView: settingsButton];
+        self.navigationItem.leftBarButtonItem = settingsButtonItem;
+    }
+}
+
+-(void)settingsAction
+{
+    
 }
 
 -(void)addSeparatorLine:(int)y

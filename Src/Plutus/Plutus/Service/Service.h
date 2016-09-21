@@ -27,12 +27,15 @@ public:
     // Tell us who is the user.
     User& GetUser();
     
-    bool SignUp(const User& user);
+    bool SignUp(User& user);
     bool SignIn(const User& user);
     
 private:
     // Autentificated user.
     User _user;
+    
+    // TODO: remove.
+    Users _users;
 };
 
 }

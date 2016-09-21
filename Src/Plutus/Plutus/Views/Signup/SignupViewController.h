@@ -20,6 +20,9 @@
 -(void)nextAction;
 -(BOOL)validateInput;
 
+-(void)SetUser:(User)user;
+-(User)GetUser;
+
 @property UITextField* textField;
 
 @property User user;

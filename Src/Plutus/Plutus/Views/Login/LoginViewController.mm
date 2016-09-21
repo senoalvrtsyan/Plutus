@@ -67,16 +67,16 @@
     
     [self.view addSubview: logo];
     
-    // Take care of login field. Expecting email right now.
+    // Take care of login field. Expecting username right now.
     static const int loginW = viewW - 80;
     static const int loginX = (viewW - loginW) / 2;  // Centered
     static const int loginY = logoY + logoS + 20;
     _login = [[UITextField alloc] initWithFrame: CGRectMake(loginX, loginY, loginW, controlH)];
     theme::applyStyle(_login);
-    _login.placeholder = @"email";
+    _login.placeholder = @"username";
     _login.autocapitalizationType = UITextAutocapitalizationTypeNone;
     _login.autocorrectionType = UITextAutocorrectionTypeNo;
-    _login.keyboardType = UIKeyboardTypeEmailAddress;
+    _login.keyboardType = UIKeyboardTypeDefault;
     
     [self.view addSubview: _login];
     

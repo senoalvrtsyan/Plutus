@@ -94,12 +94,22 @@
     _textField = [[UITextField alloc] initWithFrame: CGRectMake(textFieldX, textFieldY, textFieldW, controlH)];
     theme::applyStyle(_textField);
     _textField.placeholder = [self textFieldPlaceholder];
-    _textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    _textField.autocapitalizationType = UITextAutocapitalizationTypeWords; // TODO: ask each view
     _textField.autocorrectionType = UITextAutocorrectionTypeNo;
     _textField.returnKeyType = [self returnKeyType];
     _textField.delegate = self;
     
     [self.view addSubview: _textField];
+}
+
+-(void)SetUser:(User)user
+{
+    _user = user;
+}
+
+-(User)GetUser
+{
+    return _user;
 }
 
 -(NSString*)labelText
@@ -174,9 +184,11 @@
 
 -(void)nextAction
 {
-    super.user._name = ToStdString(super.textField.text);
+    User user = [super GetUser];
+    user._name = ToStdString(super.textField.text);
     
     UsernameViewController* vc = [[UsernameViewController alloc] init];
+    vc.user = user;
     [self.navigationController pushViewController: vc animated: YES];
 }
 
@@ -204,9 +216,11 @@
 
 -(void)nextAction
 {
-    super.user._username = ToStdString(super.textField.text);
+    User user = [super GetUser];
+    user._username = ToStdString(super.textField.text);
     
     EmailViewController* vc = [[EmailViewController alloc] init];
+    vc.user = user;
     [self.navigationController pushViewController: vc animated: YES];
 }
 
@@ -234,9 +248,11 @@
 
 -(void)nextAction
 {
-    super.user._email = ToStdString(super.textField.text);
+    User user = [super GetUser];
+    user._email = ToStdString(super.textField.text);
     
     PasswordViewController* vc = [[PasswordViewController alloc] init];
+    vc.user = user;
     [self.navigationController pushViewController: vc animated: YES];
 }
 
@@ -269,18 +285,27 @@
 
 -(void)nextAction
 {
-    super.user._password = ToStdString(super.textField.text);
+    User user = [super GetUser];
+    user._password = ToStdString(super.textField.text);
     
     // Cool now we have user object constucted, try to sign-up with service.
-    if(Service::Instance().SignUp(super.user))
+    if(Service::Instance().SignUp(user))
     {
-        // Awesome, set the user and show the maintab controller itself.
-        Service::Instance().SetUser(super.user);
-        showTabBarController(self);
+        // No matter what, login here.
+        if(Service::Instance().SignIn(user))
+        {
+            // Awesome, set the user and show the maintab controller itself.
+            Service::Instance().SetUser(user);
+            showTabBarController(self);
+        }
+        else
+        {
+            // TODO: alert.
+        }
     }
     else
     {
-        
+        // TODO: alert.
     }
 }
 

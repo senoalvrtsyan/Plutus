@@ -30,8 +30,7 @@ User& Service::GetUser()
     return _user;
 }
 
-
-bool Service::SignUp(const User& user)
+bool Service::SignUp(User& user)
 {
     if(user._username.empty() ||
        user._password.empty() ||
@@ -40,6 +39,11 @@ bool Service::SignUp(const User& user)
     {
         return false;
     }
+    
+    // Init user id.
+    user._userId = _users.size() + 1;
+    
+    _users.push_back(user);
     
     // TODO: implement.
     return true;
@@ -51,9 +55,19 @@ bool Service::SignIn(const User& user)
     {
         return false;
     }
-
-    // TODO: implement.
+    
     return true;
+    
+    // TODO: implement.
+    for(const auto& user: _users)
+    {
+        if(user._name == user._name && user._password == user._password)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
     
 }
