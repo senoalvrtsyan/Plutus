@@ -172,7 +172,7 @@
     
     // Add settings button to navigation bar
     {
-        UIImage* gear = [UIImage imageNamed:@"cogs"];
+        UIImage* gear = [UIImage imageNamed:@"cog"];
         CGRect frameimg = CGRectMake(0, 0, 22, 22);
         UIButton* settingsButton = [[UIButton alloc] initWithFrame: frameimg];
         [settingsButton setBackgroundImage: gear forState: UIControlStateNormal];
