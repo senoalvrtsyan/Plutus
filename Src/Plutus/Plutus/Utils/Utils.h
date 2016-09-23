@@ -10,6 +10,8 @@
 
 #include <string>
 
+#include "Account.h"
+
 namespace ios
 {
 namespace utils
@@ -19,6 +21,8 @@ std::string ToStdString(NSString* str);
 NSString* ToNSString(const std::string& str);
 NSString* ToCurrencyNSString(const NSString* str);
 std::string ToCurrencyStdString(const NSString* str);
+    
+std::string ToStdString(Account::PriceType value);
 
 UIColor* createColor(int r, int g, int b, double a = 1.0);
     

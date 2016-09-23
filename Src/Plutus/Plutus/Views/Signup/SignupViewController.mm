@@ -94,7 +94,7 @@
     _textField = [[UITextField alloc] initWithFrame: CGRectMake(textFieldX, textFieldY, textFieldW, controlH)];
     theme::applyStyle(_textField);
     _textField.placeholder = [self textFieldPlaceholder];
-    _textField.autocapitalizationType = UITextAutocapitalizationTypeWords; // TODO: ask each view
+    _textField.autocapitalizationType = [self textFieldAutocapitalizationType];
     _textField.autocorrectionType = UITextAutocorrectionTypeNo;
     _textField.returnKeyType = [self returnKeyType];
     _textField.delegate = self;
@@ -125,6 +125,11 @@
 -(UIReturnKeyType)returnKeyType
 {
     return UIReturnKeyNext;
+}
+
+-(UITextAutocapitalizationType)textFieldAutocapitalizationType
+{
+    return UITextAutocapitalizationTypeNone;
 }
 
 -(void)nextAction
@@ -195,6 +200,11 @@
 -(BOOL)validateInput
 {
     return validateName(super.textField.text);
+}
+
+-(UITextAutocapitalizationType)textFieldAutocapitalizationType
+{
+    return UITextAutocapitalizationTypeWords;
 }
 
 @end

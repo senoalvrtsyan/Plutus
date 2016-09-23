@@ -14,6 +14,8 @@
 #import "Utils.h"
 #import "Theme.h"
 
+#include "Service.h"
+
 @interface TransferViewController ()
 
 @end
@@ -119,7 +121,7 @@
         // Take care of full name.
         static const int nameX = viewW / 5 - nameW / 2;
         UILabel* name = [[UILabel alloc] initWithFrame: CGRectMake(nameX, nameY, nameW, controlH)];
-        name.text = @"Ken Block";
+        name.text = ToNSString(Service::Instance().GetUser()._name);
         name.textColor = theme::textColor();
         name.font = [UIFont boldSystemFontOfSize: name.font.pointSize];
         name.textAlignment = NSTextAlignmentCenter;
@@ -129,7 +131,7 @@
         // Take care of username.
         static const int usernameX = viewW / 5 - usernameW / 2;
         UILabel* username = [[UILabel alloc] initWithFrame: CGRectMake(usernameX, usernameY, usernameW, controlH)];
-        username.text = @"@ken";
+        username.text = ToNSString(Service::Instance().GetUser()._username);
         username.textColor = theme::lightGrayColor();
         username.font = [UIFont systemFontOfSize: name.font.pointSize - 2]; // A bit smaller font
         username.textAlignment = NSTextAlignmentCenter;
@@ -294,14 +296,8 @@
 {
     NSString* title = @"";
     
-    if(row == 0)
-    {
-        title = @"012458944033";
-    }
-    else if(row == 1)
-    {
-        title = @"243956029876";
-    }
+    const auto& accs = Service::Instance().GetAccounts();
+    title = ToNSString(accs[row]._accountId);
     
     NSAttributedString* attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName: theme::textColor()}];
     
@@ -320,14 +316,8 @@
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if(row == 0)
-    {
-        [self setAcc: @"012458944033"];
-    }
-    else if(row == 1)
-    {
-        [self setAcc: @"243956029876"];
-    }
+    const auto& accs = Service::Instance().GetAccounts();
+    [self setAcc: ToNSString(accs[row]._accountId)];
 }
 
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component

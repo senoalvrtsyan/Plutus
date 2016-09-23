@@ -9,6 +9,7 @@
 #pragma once
 
 #include "User.h"
+#include "Account.h"
 
 namespace ios
 {
@@ -27,6 +28,9 @@ public:
     // Tell us who is the user.
     User& GetUser();
     
+    Accounts GetAccounts();
+    Account GetAccount(Account::Type type);
+    
     bool SignUp(User& user);
     bool SignIn(const User& user);
     
@@ -34,8 +38,9 @@ private:
     // Autentificated user.
     User _user;
     
-    // TODO: remove.
+    // TODO: TMP data storages.
     Users _users;
+    AccountsMap _accounts;
 };
 
 }

@@ -16,6 +16,7 @@
 -(NSString*)labelText;
 -(NSString*)textFieldPlaceholder;
 -(UIReturnKeyType)returnKeyType;
+-(UITextAutocapitalizationType)textFieldAutocapitalizationType;
 
 -(void)nextAction;
 -(BOOL)validateInput;

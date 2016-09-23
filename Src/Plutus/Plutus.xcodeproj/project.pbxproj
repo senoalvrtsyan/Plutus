@@ -16,6 +16,8 @@
 		1161BE6A1D855A3800D5A28A /* ProfileViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1161BE691D855A3800D5A28A /* ProfileViewController.mm */; };
 		1161BE6E1D858B1400D5A28A /* SearchViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1161BE6D1D858B1400D5A28A /* SearchViewController.mm */; };
 		116FC8BB1D958F3100F4291C /* cog.png in Resources */ = {isa = PBXBuildFile; fileRef = 116FC8BA1D958F3100F4291C /* cog.png */; };
+		116FC8BF1D959E4400F4291C /* SettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 116FC8BE1D959E4400F4291C /* SettingsViewController.mm */; };
+		116FC8C21D95A0E000F4291C /* Account.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 116FC8C01D95A0E000F4291C /* Account.cpp */; };
 		118704761D78AC6A00D88E6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 118704751D78AC6A00D88E6D /* main.m */; };
 		118704791D78AC6A00D88E6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 118704781D78AC6A00D88E6D /* AppDelegate.m */; };
 		1187047F1D78AC6A00D88E6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1187047D1D78AC6A00D88E6D /* Main.storyboard */; };
@@ -51,6 +53,11 @@
 		1161BE6C1D858B1400D5A28A /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = Views/Search/SearchViewController.h; sourceTree = "<group>"; };
 		1161BE6D1D858B1400D5A28A /* SearchViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SearchViewController.mm; path = Views/Search/SearchViewController.mm; sourceTree = "<group>"; };
 		116FC8BA1D958F3100F4291C /* cog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cog.png; path = ../../../Graphics/icon/cog.png; sourceTree = "<group>"; };
+		116FC8BD1D959E4400F4291C /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		116FC8BE1D959E4400F4291C /* SettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SettingsViewController.mm; sourceTree = "<group>"; };
+		116FC8C01D95A0E000F4291C /* Account.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Account.cpp; sourceTree = "<group>"; };
+		116FC8C11D95A0E000F4291C /* Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Account.h; sourceTree = "<group>"; };
+		116FC8C31D95A11400F4291C /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
 		118704711D78AC6900D88E6D /* Plutus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plutus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		118704751D78AC6A00D88E6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		118704771D78AC6A00D88E6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -147,6 +154,16 @@
 			name = Search;
 			sourceTree = "<group>";
 		};
+		116FC8BC1D959E4400F4291C /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				116FC8BD1D959E4400F4291C /* SettingsViewController.h */,
+				116FC8BE1D959E4400F4291C /* SettingsViewController.mm */,
+			);
+			name = Settings;
+			path = Views/Settings;
+			sourceTree = "<group>";
+		};
 		118704681D78AC6900D88E6D = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +234,7 @@
 		11B275AD1D7BF7CC00F6433C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				116FC8BC1D959E4400F4291C /* Settings */,
 				11A6507D1D8B1143009D56F2 /* History */,
 				11A650791D8B0C67009D56F2 /* Common */,
 				11A650751D8AF7FE009D56F2 /* Transfer */,
@@ -240,6 +258,9 @@
 		11D5A9B41D92912C002A15EF /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				116FC8C31D95A11400F4291C /* Types.h */,
+				116FC8C01D95A0E000F4291C /* Account.cpp */,
+				116FC8C11D95A0E000F4291C /* Account.h */,
 				11D5A9B51D92912C002A15EF /* User.cpp */,
 				11D5A9B61D92912C002A15EF /* User.h */,
 			);
@@ -367,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1161BE641D8551AF00D5A28A /* SignupViewController.mm in Sources */,
+				116FC8BF1D959E4400F4291C /* SettingsViewController.mm in Sources */,
 				11C353B61D8E8CBD0046E097 /* Constants.cpp in Sources */,
 				11ED671E1D81AD4500DC5CEB /* LoginViewController.mm in Sources */,
 				11D5A9B31D929030002A15EF /* Service.mm in Sources */,
@@ -381,6 +403,7 @@
 				11A650781D8AF825009D56F2 /* TransferViewController.mm in Sources */,
 				118704791D78AC6A00D88E6D /* AppDelegate.m in Sources */,
 				118704761D78AC6A00D88E6D /* main.m in Sources */,
+				116FC8C21D95A0E000F4291C /* Account.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

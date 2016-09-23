@@ -11,7 +11,7 @@
 #include <string>
 #include <vector>
 
-typedef unsigned long IdType;
+#include "Types.h"
 
 namespace common
 {
@@ -28,9 +28,11 @@ public:
 class User
 {
 public:
+    typedef IdType Id;
+    
     User();
     
-    IdType      _userId;
+    Id          _userId;
     std::string _name;
     std::string _username;
     std::string _email;

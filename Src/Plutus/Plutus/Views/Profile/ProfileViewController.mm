@@ -8,6 +8,8 @@
 
 #import "ProfileViewController.h"
 
+#include <sstream>
+
 #import "Constants.h"
 #import "Utils.h"
 #import "Theme.h"
@@ -108,7 +110,7 @@
     static const int debitNumberX = viewW - debitNumberW - 20;
     static const int debitNumberY = debitLabelY;
     UILabel* debitNumber = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, debitNumberY, debitNumberW, controlH)];
-    debitNumber.text = @"777100547001";
+    debitNumber.text = ToNSString(Service::Instance().GetAccount(Account::Debit)._accountId);
     debitNumber.textColor = theme::textColor();
     debitNumber.font = [UIFont systemFontOfSize: name.font.pointSize]; // A bit big.
     debitNumber.textAlignment = NSTextAlignmentRight;
@@ -120,7 +122,7 @@
     static const int debitBalanceX = (viewW - debitBalanceW) / 2; // Centered
     static const int debitBalanceY = debitNumberY + 50;
     _debitBalance = [[UILabel alloc] initWithFrame: CGRectMake(debitBalanceX, debitBalanceY, debitBalanceW, controlH)];
-    _debitBalance.text = @"54,320.00 AMD";
+    _debitBalance.text = ToCurrencyNSString(ToNSString(ToStdString(Service::Instance().GetAccount(Account::Debit)._balance)));
     _debitBalance.textColor = theme::brandColor4();
     _debitBalance.font = [UIFont boldSystemFontOfSize: name.font.pointSize + 12];
     _debitBalance.textAlignment = NSTextAlignmentCenter;
@@ -143,7 +145,7 @@
     
     // Take care of debit account number.
     UILabel* creditNumber = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, creditLabelY, debitNumberW, controlH)];
-    creditNumber.text = @"555200547001";
+    creditNumber.text = ToNSString(Service::Instance().GetAccount(Account::Credit)._accountId);
     creditNumber.textColor = theme::textColor();
     creditNumber.font = [UIFont systemFontOfSize: name.font.pointSize];
     creditNumber.textAlignment = NSTextAlignmentRight;
@@ -153,7 +155,10 @@
     // Take care of credit limit.
     static const int creditLimitY = creditLabelY + 18;
     _creditLimit = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, creditLimitY, debitBalanceW, controlH)];
-    _creditLimit.text = @"Limit: 400,000.00 AMD";
+    NSString* val = ToCurrencyNSString(ToNSString(ToStdString(Service::Instance().GetAccount(Account::Credit)._limit)));
+    std::stringstream oss;
+    oss << "Limit: " << ToStdString(val);
+    _creditLimit.text = ToNSString(oss.str());
     _creditLimit.textColor = theme::grayColor();
     _creditLimit.font = [UIFont systemFontOfSize: name.font.pointSize - 7];
     _creditLimit.textAlignment = NSTextAlignmentRight;
@@ -163,7 +168,7 @@
     // Take care of credit balance.
     static const int creditBalanceY = creditLabelY + 55;
     _creditBalance = [[UILabel alloc] initWithFrame: CGRectMake(debitBalanceX, creditBalanceY, debitBalanceW, controlH)];
-    _creditBalance.text = @"276,000.00 AMD";
+    _creditBalance.text = ToCurrencyNSString(ToNSString(ToStdString(Service::Instance().GetAccount(Account::Credit)._balance)));
     _creditBalance.textColor = theme::brandColor4();
     _creditBalance.font = [UIFont boldSystemFontOfSize: name.font.pointSize + 12];
     _creditBalance.textAlignment = NSTextAlignmentCenter;
@@ -173,7 +178,7 @@
     // Add settings button to navigation bar
     {
         UIImage* gear = [UIImage imageNamed:@"cog"];
-        CGRect frameimg = CGRectMake(0, 0, 22, 22);
+        CGRect frameimg = CGRectMake(0, 0, 20, 20);
         UIButton* settingsButton = [[UIButton alloc] initWithFrame: frameimg];
         [settingsButton setBackgroundImage: gear forState: UIControlStateNormal];
         [settingsButton addTarget: self action: @selector(settingsAction)

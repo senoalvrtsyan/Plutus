@@ -7,6 +7,9 @@
 //
 
 #import "Utils.h"
+
+#include <sstream>
+
 #import "Theme.h"
 #import "ProfileViewController.h"
 #import "SearchViewController.h"
@@ -53,6 +56,16 @@ std::string ToCurrencyStdString(const NSString* str)
     return ToStdString(ToCurrencyNSString(str));
 }
 
+std::string ToStdString(Account::PriceType value)
+{
+    std::stringstream ss;
+    ss << value;
+    
+    std::string res;
+    ss >> res;
+    return res;
+}
+    
 UIColor* createColor(int r, int g, int b, double a /*= 1.0*/)
 {
     return [UIColor colorWithRed: (double)r/255.0 green: (double)g/255.0 blue: (double)b/255.0 alpha: a];
