@@ -17,6 +17,19 @@ Coordinate::Coordinate(long latitude, long longitude)
 {}
 
 User::User()
+    : _userId(0)
+{}
+
+User::User(Id userId,
+     std::string name,
+     std::string username,
+     std::string email,
+     std::string password)
+    : _userId(userId)
+    , _name(name)
+    , _username(username)
+    , _email(email)
+    , _password(password)
 {}
     
 bool operator==(const User& o1, const User& o2)

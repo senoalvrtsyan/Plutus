@@ -31,6 +31,13 @@ public:
     typedef IdType Id;
     
     User();
+    User(Id userId,
+         std::string name,
+         std::string username,
+         std::string email,
+         std::string password);
+    
+    bool empty() { return _userId == 0; }
     
     Id          _userId;
     std::string _name;

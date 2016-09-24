@@ -21,11 +21,18 @@ std::string ToStdString(NSString* str);
 NSString* ToNSString(const std::string& str);
 NSString* ToCurrencyNSString(const NSString* str);
 std::string ToCurrencyStdString(const NSString* str);
+std::string removeCurrencyFormat(const std::string& str);
     
 std::string ToStdString(Account::PriceType value);
 
-UIColor* createColor(int r, int g, int b, double a = 1.0);
+std::string ToStdString(const Account::Type type);
+// 100100100 -> Debit: 100100100
+std::string ToStdString(const Account& account);
+
+std::string atUsername(const std::string& str);
     
+UIColor* createColor(int r, int g, int b, double a = 1.0);
+
 UIImage* imageWithColor(UIColor* color);
 
 bool validateName(NSString* name);

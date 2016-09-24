@@ -9,6 +9,7 @@
 #import "Utils.h"
 
 #include <sstream>
+#include <algorithm>
 
 #import "Theme.h"
 #import "ProfileViewController.h"
@@ -55,6 +56,30 @@ std::string ToCurrencyStdString(const NSString* str)
 {
     return ToStdString(ToCurrencyNSString(str));
 }
+    
+std::string removeCurrencyFormat(const std::string& str)
+{
+    std::string res = str;
+
+    // Remove ','
+    auto p =res.find(',');
+    while(p != std::string::npos)
+    {
+        res.erase(p, 1);
+        p = res.find(',');
+    }
+    
+    // Remove currency mark.
+    const auto pos = res.find_last_of(' ');
+    if(pos != std::string::npos)
+    {
+        return res.substr(0, pos);
+    }
+    else
+    {
+        return res;
+    }
+}
 
 std::string ToStdString(Account::PriceType value)
 {
@@ -64,6 +89,36 @@ std::string ToStdString(Account::PriceType value)
     std::string res;
     ss >> res;
     return res;
+}
+
+std::string ToStdString(const Account::Type type)
+{
+    if(type == Account::Debit)
+    {
+        return "Debit";
+    }
+    else if(type == Account::Credit)
+    {
+        return "Credit";
+    }
+    else
+    {
+        return "";
+    }
+}
+    
+std::string ToStdString(const Account& account)
+{
+    std::string res = ToStdString(account._type);
+    res += ": ";
+    res += account._accountId;
+    return res;
+}
+    
+std::string atUsername(const std::string& str)
+{
+    std::string res = "@";
+    return res + str;
 }
     
 UIColor* createColor(int r, int g, int b, double a /*= 1.0*/)

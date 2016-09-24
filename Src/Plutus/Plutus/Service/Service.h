@@ -22,6 +22,8 @@ public:
     
     Service();
     
+    void populateTestData();
+    
     // Call after login/signup.
     void SetUser(const User& user);
     
@@ -33,6 +35,9 @@ public:
     
     bool SignUp(User& user);
     bool SignIn(const User& user);
+    
+    bool Exists(std::string& username);
+    User Find(std::string& username);
     
 private:
     // Autentificated user.

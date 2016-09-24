@@ -81,8 +81,7 @@
     static const int usernameX = (viewW - nameW) / 2; // Centered;
     static const int usernameY = nameY + 20;
     UILabel* username = [[UILabel alloc] initWithFrame: CGRectMake(usernameX, usernameY, usernameW, controlH)];
-    username.text = @"@";
-    username.text = [username.text stringByAppendingString: ToNSString(Service::Instance().GetUser()._username)];
+    username.text = ToNSString(atUsername(Service::Instance().GetUser()._username));
     username.textColor = theme::lightGrayColor();
     username.font = [UIFont systemFontOfSize: name.font.pointSize - 2]; // A bit smaller font
     username.textAlignment = NSTextAlignmentCenter;
@@ -99,7 +98,7 @@
     [self addSeparatorLine: debitLabelY - separatorDist];
     
     UILabel* debitLabel = [[UILabel alloc] initWithFrame: CGRectMake(debitLabelX, debitLabelY, debitLabelW, controlH)];
-    debitLabel.text = @"Debit";
+    debitLabel.text = ToNSString(ToStdString(Account::Debit));
     debitLabel.textColor = theme::grayColor();
     debitLabel.font = [UIFont systemFontOfSize: name.font.pointSize - 3]; // A bit big.
     
@@ -137,7 +136,7 @@
     [self addSeparatorLine: creditLabelY - separatorDist];
     
     UILabel* creditLabel = [[UILabel alloc] initWithFrame: CGRectMake(debitLabelX, creditLabelY, debitLabelW, controlH)];
-    creditLabel.text = @"Credit";
+    creditLabel.text = ToNSString(ToStdString(Account::Credit));
     creditLabel.textColor = theme::grayColor();
     creditLabel.font = debitLabel.font;
     

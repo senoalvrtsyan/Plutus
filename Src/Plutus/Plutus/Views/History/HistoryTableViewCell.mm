@@ -10,8 +10,9 @@
 
 #import "Utils.h"
 #import "Theme.h"
-
 #import "Constants.h"
+
+#include "Account.h"
 
 @interface HistoryTableViewCell ()
 

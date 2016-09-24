@@ -104,34 +104,34 @@
     static const int viewW = self.view.frame.size.width;
 
     static const int logoY = 90;
-    static const int nameW = viewW - 80;
+    static const int nameW = viewW / 2 - 12;
     static const int usernameW = viewW - 80;
     static const int nameY = logoY + logoS;
     static const int usernameY = nameY + 20;
     
     // First avatar.
     {
+        // Take care of full name.
+        static const int nameX = 4;
+        UILabel* name = [[UILabel alloc] initWithFrame: CGRectMake(nameX, nameY, nameW, controlH)];
+        name.text = ToNSString(Service::Instance().GetUser()._name);
+        name.textColor = theme::textColor();
+        name.font = [UIFont boldSystemFontOfSize: name.font.pointSize - 3];
+        name.textAlignment = NSTextAlignmentCenter;
+        
+        [self.view addSubview: name];
+        
         // Take care of the logo.
-        static const int logoX = viewW / 5 - logoS / 2;
+        static const int logoX = nameX + nameW / 2 - logoS / 2;
         UIImageView* logo = [[UIImageView alloc] initWithFrame: CGRectMake(logoX, logoY, logoS, logoS)];
         logo.image = [UIImage imageNamed: @"moneybag_256"];
         
         [self.view addSubview: logo];
         
-        // Take care of full name.
-        static const int nameX = viewW / 5 - nameW / 2;
-        UILabel* name = [[UILabel alloc] initWithFrame: CGRectMake(nameX, nameY, nameW, controlH)];
-        name.text = ToNSString(Service::Instance().GetUser()._name);
-        name.textColor = theme::textColor();
-        name.font = [UIFont boldSystemFontOfSize: name.font.pointSize];
-        name.textAlignment = NSTextAlignmentCenter;
-        
-        [self.view addSubview: name];
-        
         // Take care of username.
-        static const int usernameX = viewW / 5 - usernameW / 2;
+        static const int usernameX = nameX + nameW / 2 - usernameW / 2;
         UILabel* username = [[UILabel alloc] initWithFrame: CGRectMake(usernameX, usernameY, usernameW, controlH)];
-        username.text = ToNSString(Service::Instance().GetUser()._username);
+        username.text = ToNSString(atUsername(Service::Instance().GetUser()._username));
         username.textColor = theme::lightGrayColor();
         username.font = [UIFont systemFontOfSize: name.font.pointSize - 2]; // A bit smaller font
         username.textAlignment = NSTextAlignmentCenter;
@@ -141,27 +141,27 @@
     
     // Second avatar.
     {
+        // Take care of full name.
+        static const int nameX = viewW - nameW - 4;
+        UILabel* name = [[UILabel alloc] initWithFrame: CGRectMake(nameX, nameY, nameW, controlH)];
+        name.text = ToNSString(_user._name);
+        name.textColor = theme::textColor();
+        name.font = [UIFont boldSystemFontOfSize: name.font.pointSize - 3];
+        name.textAlignment = NSTextAlignmentCenter;
+        
+        [self.view addSubview: name];
+        
         // Take care of the logo.
-        static const int logoX = 4 * viewW / 5 - logoS / 2;
+        static const int logoX = nameX + nameW / 2 - logoS / 2;
         UIImageView* logo = [[UIImageView alloc] initWithFrame: CGRectMake(logoX, logoY, logoS, logoS)];
         logo.image = [UIImage imageNamed: @"moneybag_gray_256"];
         
         [self.view addSubview: logo];
         
-        // Take care of full name.
-        static const int nameX = 4 * viewW / 5 - nameW / 2;
-        UILabel* name = [[UILabel alloc] initWithFrame: CGRectMake(nameX, nameY, nameW, controlH)];
-        name.text = @"John Snow";
-        name.textColor = theme::textColor();
-        name.font = [UIFont boldSystemFontOfSize: name.font.pointSize];
-        name.textAlignment = NSTextAlignmentCenter;
-        
-        [self.view addSubview: name];
-        
         // Take care of username.
-        static const int usernameX = 4 * viewW / 5 - usernameW / 2;
+        static const int usernameX = nameX + nameW / 2 - usernameW / 2;
         UILabel* username = [[UILabel alloc] initWithFrame: CGRectMake(usernameX, usernameY, usernameW, controlH)];
-        username.text = @"@johnny";
+        username.text = ToNSString(atUsername(_user._username));
         username.textColor = theme::lightGrayColor();
         username.font = [UIFont systemFontOfSize: name.font.pointSize - 2]; // A bit smaller font
         username.textAlignment = NSTextAlignmentCenter;
@@ -171,7 +171,7 @@
     
     // Animated arrows.
     {
-        static const int arrowY = nameY - 20;
+        static const int arrowY = logoY + logoS / 2 - arrowS / 2;
         
         static const int arrow2X = (viewW - arrowS) / 2;
         _arrow2 = [[UIImageView alloc] initWithFrame: CGRectMake(arrow2X, arrowY, arrowS, arrowS)];
@@ -206,6 +206,7 @@
         _amount.placeholder = @"Amount to transfer";
         _amount.keyboardType = UIKeyboardTypeDecimalPad;
         _amount.font = [UIFont boldSystemFontOfSize: _amount.font.pointSize];
+        _amount.delegate = self;
         
         // Add done button for the keyboard.
         UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, viewW, controlH)];
@@ -227,20 +228,6 @@
     static const int accountY = amountY + controlH + 15;
     // Choose the account.
     {
-        _account = [[UIButton alloc] initWithFrame: CGRectMake(amountX, accountY, amountW, controlH)];
-        [_account addTarget: self action: @selector(accountAction) forControlEvents: UIControlEventTouchUpInside];
-        [_account setTitleColor: theme::placeholderTextColor() forState: UIControlStateNormal];
-        [_account setTitleColor: theme::whiteColor() forState: UIControlStateHighlighted];
-        [_account setBackgroundImage: imageWithColor(theme::grayColor()) forState: UIControlStateHighlighted];
-        [_account setTitle: @"Choose account" forState: UIControlStateNormal];
-        // Border style.
-        _account.layer.cornerRadius = 0.0f;
-        _account.layer.masksToBounds = YES;
-        _account.layer.borderColor = [theme::brandColor4() CGColor];
-        _account.layer.borderWidth = 1.0f;
-        
-        // [self.view addSubview: _account];
-        
         // Add picker.
         static const int pickerH = 3 * controlH;
         static const int pickerY = amountY + controlH - 1;
@@ -297,32 +284,32 @@
     NSString* title = @"";
     
     const auto& accs = Service::Instance().GetAccounts();
-    title = ToNSString(accs[row]._accountId);
+    title = ToNSString(ToStdString(accs[row]));
     
     NSAttributedString* attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName: theme::textColor()}];
     
     return attString;
 }
 
--(void)setAcc:(NSString*)acc
-{
-    if([_account.titleLabel.text isEqualToString: @"Choose account"])
-    {
-        [_account setTitleColor: theme::textColor() forState: UIControlStateNormal];
-    }
-    
-    [_account setTitle: acc forState: UIControlStateNormal];
-}
-
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    const auto& accs = Service::Instance().GetAccounts();
-    [self setAcc: ToNSString(accs[row]._accountId)];
+    //const auto& accs = Service::Instance().GetAccounts();
+    //accs[row]._accountId;
 }
 
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
     return controlH;
+}
+
+-(void)textFieldDidBeginEditing:(UITextField*)textField
+{
+    textField.text = ToNSString(removeCurrencyFormat(ToStdString(textField.text)));
+}
+
+-(void)SetUser:(User)user
+{
+    _user = user;
 }
 
 -(void)transferAction

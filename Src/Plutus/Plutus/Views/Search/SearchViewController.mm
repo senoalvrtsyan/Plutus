@@ -12,6 +12,8 @@
 #import "Utils.h"
 #import "Theme.h"
 
+#include "Service.h"
+
 #import "TransferViewController.h"
 
 @interface SearchViewController ()
@@ -78,6 +80,7 @@
     _textField.autocorrectionType = UITextAutocorrectionTypeNo;
     _textField.returnKeyType = UIReturnKeySearch;
     [_textField addTarget: self action:@selector(textFieldDidChange) forControlEvents:UIControlEventEditingChanged];
+    _textField.delegate = self;
     
     [self.view addSubview: _textField];
     
@@ -103,30 +106,26 @@
 
 -(BOOL)userExists
 {
-    if([_textField.text isEqualToString: @"ken"])
-    {
-        return YES;
-    }
-    else if([_textField.text isEqualToString: @"hov"])
-    {
-        return YES;
-    }
-    else if([_textField.text isEqualToString: @"kor"])
-    {
-        return YES;
-    }
-    else if([_textField.text isEqualToString: @"seno"])
-    {
-        return YES;
-    }
-    
-    return NO;
+    std::string username = ToStdString(_textField.text);
+    return Service::Instance().Exists(username);
 }
 
 -(void)searchAction
 {
     TransferViewController* vc = [[TransferViewController alloc] init];
+    std::string str = ToStdString(_textField.text);
+    [vc setUser: Service::Instance().Find(str)];
     [self.navigationController pushViewController: vc animated: YES];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField*)textField
+{
+    if(_actionBtn.enabled)
+    {
+        [self searchAction];
+        return YES;
+    }
+    return NO;
 }
 
 -(void)dismissKeyboard

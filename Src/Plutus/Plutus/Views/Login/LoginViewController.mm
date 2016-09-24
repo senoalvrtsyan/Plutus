@@ -133,7 +133,6 @@
     
     if(Service::Instance().SignIn(user))
     {
-        Service::Instance().SetUser(user);
         showTabBarController(self);
     }
     else

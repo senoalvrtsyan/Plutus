@@ -10,8 +10,12 @@
 
 #import "CommonViewController.h"
 
+#include "User.h"
+
 @interface TransferViewController : CommonViewController
-    <UIPickerViewDelegate, UIPickerViewDataSource>
+    <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
+
+-(void)SetUser:(User)user;
 
 @property UIImageView* arrow1;
 @property UIImageView* arrow2;
@@ -19,9 +23,10 @@
 
 @property UITextField* amount;
 
-@property UIButton* account;
 @property UIPickerView* picker;
 
 @property NSTimer* timer;
+
+@property User user;
 
 @end

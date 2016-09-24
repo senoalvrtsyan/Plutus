@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SearchViewController : UIViewController
+    <UITextFieldDelegate>
 
 @property UITextField* textField;
 @property UIButton* actionBtn;
