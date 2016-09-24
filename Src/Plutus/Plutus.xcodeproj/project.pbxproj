@@ -31,6 +31,7 @@
 		11C353B61D8E8CBD0046E097 /* Constants.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11C353B41D8E8CBD0046E097 /* Constants.cpp */; };
 		11C353B81D8EAB030046E097 /* arrow-left.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C353B71D8EAB030046E097 /* arrow-left.png */; };
 		11C353BA1D8EAC2A0046E097 /* arrow-right2_red.png in Resources */ = {isa = PBXBuildFile; fileRef = 11C353B91D8EAC2A0046E097 /* arrow-right2_red.png */; };
+		11CDFB641D9680D7001A9B48 /* Payment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11CDFB621D9680D7001A9B48 /* Payment.cpp */; };
 		11D5A9B31D929030002A15EF /* Service.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11D5A9B21D929030002A15EF /* Service.mm */; };
 		11D5A9B71D92912C002A15EF /* User.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11D5A9B51D92912C002A15EF /* User.cpp */; };
 		11EB976D1D8D97F700B536EB /* HistoryTableViewCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11EB976C1D8D97F700B536EB /* HistoryTableViewCell.mm */; };
@@ -78,6 +79,8 @@
 		11C353B51D8E8CBD0046E097 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = Utils/Constants.h; sourceTree = "<group>"; };
 		11C353B71D8EAB030046E097 /* arrow-left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-left.png"; path = "../../../Graphics/icon/arrow-left.png"; sourceTree = "<group>"; };
 		11C353B91D8EAC2A0046E097 /* arrow-right2_red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-right2_red.png"; path = "../../../Graphics/icon/arrow-right2_red.png"; sourceTree = "<group>"; };
+		11CDFB621D9680D7001A9B48 /* Payment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Payment.cpp; sourceTree = "<group>"; };
+		11CDFB631D9680D7001A9B48 /* Payment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Payment.h; sourceTree = "<group>"; };
 		11D5A9B01D928F87002A15EF /* Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
 		11D5A9B21D929030002A15EF /* Service.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Service.mm; sourceTree = "<group>"; };
 		11D5A9B51D92912C002A15EF /* User.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = User.cpp; sourceTree = "<group>"; };
@@ -258,6 +261,8 @@
 		11D5A9B41D92912C002A15EF /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				11CDFB621D9680D7001A9B48 /* Payment.cpp */,
+				11CDFB631D9680D7001A9B48 /* Payment.h */,
 				116FC8C31D95A11400F4291C /* Types.h */,
 				116FC8C01D95A0E000F4291C /* Account.cpp */,
 				116FC8C11D95A0E000F4291C /* Account.h */,
@@ -403,6 +408,7 @@
 				11A650781D8AF825009D56F2 /* TransferViewController.mm in Sources */,
 				118704791D78AC6A00D88E6D /* AppDelegate.m in Sources */,
 				118704761D78AC6A00D88E6D /* main.m in Sources */,
+				11CDFB641D9680D7001A9B48 /* Payment.cpp in Sources */,
 				116FC8C21D95A0E000F4291C /* Account.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

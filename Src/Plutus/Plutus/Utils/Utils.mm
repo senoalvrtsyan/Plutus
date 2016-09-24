@@ -81,7 +81,7 @@ std::string removeCurrencyFormat(const std::string& str)
     }
 }
 
-std::string ToStdString(Account::PriceType value)
+std::string ToStdString(PriceType value)
 {
     std::stringstream ss;
     ss << value;

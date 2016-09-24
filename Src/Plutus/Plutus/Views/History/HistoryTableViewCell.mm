@@ -13,6 +13,7 @@
 #import "Constants.h"
 
 #include "Account.h"
+#include "Service.h"
 
 @interface HistoryTableViewCell ()
 
@@ -47,18 +48,16 @@
     static const int datetimeLabelY = 8;
     UILabel* datetimeLabel = [[UILabel alloc] initWithFrame: CGRectMake(datetimeLabelX, datetimeLabelY, datetimeLabelW, datetimeLabelH)];
     datetimeLabel.textAlignment = NSTextAlignmentRight;
-    datetimeLabel.text = @"18/09/2016 13:00:45";
+    datetimeLabel.text = @"18/09/2016 13:00:45"; // TODO
     datetimeLabel.font = [UIFont systemFontOfSize: datetimeLabel.font.pointSize - 6];
     datetimeLabel.textColor = theme::grayColor();
     
     [self addSubview: datetimeLabel];
     
     // Take care of my account.
-    self.textLabel.text = @"100100101";
     self.textLabel.textColor = theme::textColor();
     
     // Take care of my account type.
-    self.detailTextLabel.text = @"Debit";
     self.detailTextLabel.textColor = theme::grayColor();
     self.detailTextLabel.font = [UIFont systemFontOfSize: datetimeLabel.font.pointSize - 1];
     
@@ -77,7 +76,6 @@
     
     // Take care of username
     _username = [[UILabel alloc] init];
-    _username.text = @"@johnny";
     _username.textAlignment = NSTextAlignmentRight;
     _username.textColor = theme::grayColor();
     _username.font = [UIFont systemFontOfSize: _username.font.pointSize - 1];
@@ -86,7 +84,6 @@
     
     // Take care of user account.
     _userAccount = [[UILabel alloc] init];
-    _userAccount.text = @"100100102";
     _userAccount.textColor = self.textLabel.textColor;
     _userAccount.font = self.textLabel.font;
     _userAccount.textAlignment = NSTextAlignmentRight;
@@ -95,7 +92,6 @@
     
     // Take care of user account type.
     _userAccountType = [[UILabel alloc] init];
-    _userAccountType.text = @"Credit";
     _userAccountType.textColor = theme::grayColor();
     _userAccountType.font = self.detailTextLabel.font;
     _userAccountType.textAlignment = NSTextAlignmentRight;
@@ -104,7 +100,6 @@
     
     // Take care of amount.
     _amount = [[UILabel alloc] init];
-    _amount.text = @"50,000.00 AMD";
     _amount.textColor = send ? theme::grayColor() : theme::brandColor4();
     _amount.font = [UIFont boldSystemFontOfSize: _amount.font.pointSize + 2];
     _amount.textAlignment = NSTextAlignmentCenter;
@@ -151,9 +146,17 @@
     [_userAccountType setFrame: CGRectMake(userAccountX, myAccTypeY, myAccW, myAccTypeH)];
 }
 
--(void)setPayment
+-(void)setPayment:(const Payment&)payment
 {
+    _payment = payment;
     
+    self.textLabel.text = ToNSString(_payment._sender._accountId);
+    self.detailTextLabel.text = ToNSString(ToStdString(_payment._sender._type));
+    
+    _username.text = ToNSString(atUsername(Service::Instance().Find(_payment._receiver)._username));
+    _userAccount.text = ToNSString(_payment._receiver._accountId);
+    _userAccountType.text = ToNSString(ToStdString(_payment._receiver._type));
+    _amount.text = ToCurrencyNSString(ToNSString(ToStdString(_payment._amount)));
 }
 
 @end

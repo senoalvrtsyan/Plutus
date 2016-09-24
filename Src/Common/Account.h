@@ -22,7 +22,6 @@ class Account
 {
 public:
     typedef std::string Id;
-    typedef double PriceType;
     
     enum Type
     {

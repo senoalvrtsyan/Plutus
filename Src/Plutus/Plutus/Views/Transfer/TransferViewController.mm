@@ -225,7 +225,6 @@
         [self.view addSubview: _amount];
     }
     
-    static const int accountY = amountY + controlH + 15;
     // Choose the account.
     {
         // Add picker.

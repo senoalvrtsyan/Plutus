@@ -23,7 +23,7 @@ NSString* ToCurrencyNSString(const NSString* str);
 std::string ToCurrencyStdString(const NSString* str);
 std::string removeCurrencyFormat(const std::string& str);
     
-std::string ToStdString(Account::PriceType value);
+std::string ToStdString(PriceType value);
 
 std::string ToStdString(const Account::Type type);
 // 100100100 -> Debit: 100100100

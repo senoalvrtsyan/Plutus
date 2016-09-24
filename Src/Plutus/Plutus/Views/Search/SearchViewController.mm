@@ -113,8 +113,8 @@
 -(void)searchAction
 {
     TransferViewController* vc = [[TransferViewController alloc] init];
-    std::string str = ToStdString(_textField.text);
-    [vc setUser: Service::Instance().Find(str)];
+    std::string username = ToStdString(_textField.text);
+    [vc setUser: Service::Instance().Find(username)];
     [self.navigationController pushViewController: vc animated: YES];
 }
 

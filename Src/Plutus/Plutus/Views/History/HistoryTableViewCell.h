@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#include "Payment.h"
+
 @interface HistoryTableViewCell : UITableViewCell
 
 -(void)setPayment;
@@ -17,5 +19,9 @@
 @property UILabel* userAccount;
 @property UILabel* userAccountType;
 @property UILabel* amount;
+
+@property Payment payment;
+
+-(void)setPayment:(const Payment&)payment;
 
 @end

@@ -10,6 +10,7 @@
 
 #include "User.h"
 #include "Account.h"
+#include "Payment.h"
 
 namespace ios
 {
@@ -36,8 +37,12 @@ public:
     bool SignUp(User& user);
     bool SignIn(const User& user);
     
-    bool Exists(std::string& username);
-    User Find(std::string& username);
+    bool Exists(const std::string& username);
+    User Find(const std::string& username);
+    User Find(User::Id userId);
+    User Find(const Account accId);
+    
+    Payments GetPayments();
     
 private:
     // Autentificated user.
@@ -46,6 +51,7 @@ private:
     // TODO: TMP data storages.
     Users _users;
     AccountsMap _accounts;
+    Payments _payments;
 };
 
 }

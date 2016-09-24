@@ -14,6 +14,8 @@
 #import "Utils.h"
 #import "Theme.h"
 
+#include "Service.h"
+
 @interface HistoryViewController ()
 
 @end
@@ -54,7 +56,7 @@
 
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return Service::Instance().GetPayments().size();
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -75,7 +77,8 @@
         cell = [[HistoryTableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier: ucid];
     }
     
-    [cell setPayment];
+    Payment pay = Service::Instance().GetPayments()[indexPath.row];
+    [cell setPayment: pay];
 
     return cell;
 }

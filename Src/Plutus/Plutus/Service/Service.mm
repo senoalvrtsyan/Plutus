@@ -49,6 +49,18 @@ void Service::populateTestData()
     _accounts[user1._userId] = accs1;
     _accounts[user2._userId] = accs2;
     _accounts[user3._userId] = accs3;
+    
+    Payment pay1(1, acc11, acc21, 15000);
+    Payment pay2(2, acc12, acc31, 25000);
+    Payment pay3(3, acc11, acc22, 5000);
+    Payment pay4(4, acc21, acc31, 15000);
+    Payment pay5(5, acc32, acc11, 15000);
+    
+    _payments.push_back(pay1);
+    _payments.push_back(pay2);
+    _payments.push_back(pay3);
+    _payments.push_back(pay4);
+    _payments.push_back(pay5);
 }
 
 Service::Service()
@@ -170,7 +182,7 @@ bool Service::SignIn(const User& user)
     return false;
 }
     
-bool Service::Exists(std::string& username)
+bool Service::Exists(const std::string& username)
 {
     for(const auto& user : _users)
     {
@@ -182,7 +194,7 @@ bool Service::Exists(std::string& username)
     return false;
 }
     
-User Service::Find(std::string& username)
+User Service::Find(const std::string& username)
 {
     for(const auto& user : _users)
     {
@@ -194,4 +206,50 @@ User Service::Find(std::string& username)
     return User();
 }
     
+User Service::Find(User::Id userId)
+{
+    for(const auto& user : _users)
+    {
+        if(user._userId == userId)
+        {
+            return user;
+        }
+    }
+    return User();
+}
+    
+User Service::Find(const Account acc)
+{
+    for(const auto& item : _accounts)
+    {
+        Accounts accs = item.second;
+        for(const auto& item2 : accs)
+        {
+            if(item2._accountId == acc._accountId)
+            {
+                return Find(item.first);
+            }
+        }
+    }
+    return User();
+}
+    
+Payments Service::GetPayments()
+{
+    Payments res;
+    
+    for(const auto& pay : _payments)
+    {
+        for(const auto& acc : GetAccounts())
+        {
+            if(pay._sender == acc)
+            {
+                res.push_back(pay);
+            }
+        }
+    }
+    
+    return res;
+}
+
 }

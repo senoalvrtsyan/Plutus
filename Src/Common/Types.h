@@ -15,6 +15,7 @@ namespace common
 {
 
 typedef unsigned long IdType;
+typedef double PriceType;
 
 }
 using namespace common;
