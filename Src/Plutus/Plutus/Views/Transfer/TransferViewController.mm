@@ -319,7 +319,15 @@
     }
     
     std::ostringstream oss;
-    oss << "Transfering " << ToStdString(_amount.text) << " from credit account(100100101) to @johnny";
+    oss << "Transfering " << ToStdString(_amount.text) << " from ";
+    // Add account type
+    const int row = [_picker selectedRowInComponent: 0];
+    const Account selectedAcc = Service::Instance().GetAccounts()[row];
+    oss <<  ToStdString(selectedAcc._type);
+    oss << ": ";
+    // Add account number.
+    oss << selectedAcc._accountId;
+    oss << " to " << _user._name;
     
     UIAlertController* alert = [UIAlertController
                                  alertControllerWithTitle:@"Transfer confirmation"
@@ -338,6 +346,17 @@
                                 style: UIAlertActionStyleDefault
                                 handler: ^(UIAlertAction * action) {
                                     //Handle your yes please button action here
+                                    // TODO: check balance on transfer.
+                                    if(Service::Instance().MakePayment(selectedAcc, _user, ToPrice(removeCurrencyFormat(ToStdString(_amount.text)))))
+                                    {
+                                        _amount.text = @"";
+                                        // msgbox::inform ok
+                                        AlertOk(self, @"Success", @"Your payment was a success.");
+                                    }
+                                    else
+                                    {
+                                        AlertOk(self, @"Failure", @"Your payment was a failure.");
+                                    }
                                 }];
 
     [alert addAction:noButton];

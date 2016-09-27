@@ -32,6 +32,8 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear: animated];
+    
+    [_tableView reloadData];
 }
 
 -(void)didReceiveMemoryWarning
@@ -56,7 +58,8 @@
 
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return Service::Instance().GetPayments().size();
+    auto res = Service::Instance().GetPayments().size();
+    return res;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

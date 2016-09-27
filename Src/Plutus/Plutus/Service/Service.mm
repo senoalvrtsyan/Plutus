@@ -251,5 +251,45 @@ Payments Service::GetPayments()
     
     return res;
 }
+    
+bool Service::MakePayment(const Account& account, const User& user, PriceType amount)
+{
+    // Find accounts for the users.
+    auto it = _accounts.find(account._userId);
+    auto it2 = _accounts.find(user._userId);
+    
+    if(it != _accounts.end() && it2 != _accounts.end())
+    {
+        Accounts& accs = it->second;
+        for(Account& acc : accs)
+        {
+            if(acc == account)
+            {
+                // Deduce from balance.
+                acc._balance -= amount;
+    
+                // Add to balance.
+                Accounts& accs = it2->second;
+                for(Account& acc2 : accs)
+                {
+                    // Always transfer tod ebit.
+                    if(acc2._type == Account::Debit)
+                    {
+                        acc2._balance += amount;
+                        
+                        _payments.push_back(Payment(_payments.size(), acc, acc2, amount));
+                        // Record the payment.
+                        return true;
+                    }
+                }
+                
+                // Reverting the payemnt here.
+                acc._balance += amount;
+                return false;
+            }
+        }
+    }
+    return false;
+}
 
 }

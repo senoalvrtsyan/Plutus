@@ -44,6 +44,8 @@ public:
     
     Payments GetPayments();
     
+    bool MakePayment(const Account& account, const User& user, PriceType amount);
+    
 private:
     // Autentificated user.
     User _user;

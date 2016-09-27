@@ -43,7 +43,7 @@ NSString* ToCurrencyNSString(const NSString* str)
     NSString* output = [nf stringFromNumber: someNumber];
     
     // Remove currency sign
-    NSCharacterSet *setToRemove = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789,."] invertedSet];
+    NSCharacterSet *setToRemove = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789,.-"] invertedSet];
     output = [[output componentsSeparatedByCharactersInSet: setToRemove] componentsJoinedByString:@""];
 
     // Add AMD at the end, hardcode for now since we are in Armenia.
@@ -91,6 +91,17 @@ std::string ToStdString(PriceType value)
     return res;
 }
 
+PriceType ToPrice(const std::string& str)
+{
+    PriceType res;
+    
+    std::stringstream ss;
+    ss << str;
+    ss >> res;
+    
+    return res;
+}
+    
 std::string ToStdString(const Account::Type type)
 {
     if(type == Account::Debit)
@@ -105,6 +116,17 @@ std::string ToStdString(const Account::Type type)
     {
         return "";
     }
+}
+    
+Account::Id ToAccountId(const std::string& accountStr)
+{
+    const auto pos = accountStr.find(" ");
+    if(pos != std::string::npos)
+    {
+        return accountStr.substr(pos + 1);
+    }
+    
+    return Account::Id();
 }
     
 std::string ToStdString(const Account& account)
@@ -219,6 +241,28 @@ void configTabBarItem(UITabBarController* tabBar, int index, NSString* name, NSS
     [[tabBar.tabBar.items objectAtIndex: index] setTitle: name];
     [[tabBar.tabBar.items objectAtIndex: index] setImageInsets: imgInsets];
     [[tabBar.tabBar.items objectAtIndex: index] setTitlePositionAdjustment: titleOffset];
+}
+    
+void AlertOk(UIViewController* vc, NSString* title, NSString* text)
+{
+    UIAlertController* alert = [UIAlertController
+                                alertControllerWithTitle: title
+                                message: text
+                                preferredStyle:UIAlertControllerStyleAlert];
+
+    UIAlertAction* okButton = [UIAlertAction
+                                actionWithTitle: @"Ok"
+                                style: UIAlertActionStyleDefault
+                                handler: ^(UIAlertAction * action) {
+                                    //Handle your yes please button action here
+                                }];
+    
+    [alert addAction: okButton];
+    
+    [vc presentViewController: alert animated: YES completion: nil];
+    
+    // iOS bug, need to do this here.
+    [alert.view setTintColor: theme::brandColor4()];
 }
     
 }

@@ -39,11 +39,7 @@
 {
     [super viewDidAppear: animated];
     
-    /*
-    [self initBalanceAnimated: _debitBalance withValue: 64000.00];
-    [self initBalanceAnimated: _creditBalance withValue: 256000.00];
-    [self initBalanceAnimated: _creditLimit withValue: 400000.00];
-     */
+    [self updateData];
 }
 
 -(void)didReceiveMemoryWarning
@@ -121,8 +117,8 @@
     static const int debitBalanceX = (viewW - debitBalanceW) / 2; // Centered
     static const int debitBalanceY = debitNumberY + 50;
     _debitBalance = [[UILabel alloc] initWithFrame: CGRectMake(debitBalanceX, debitBalanceY, debitBalanceW, controlH)];
-    _debitBalance.text = ToCurrencyNSString(ToNSString(ToStdString(Service::Instance().GetAccount(Account::Debit)._balance)));
-    _debitBalance.textColor = theme::brandColor4();
+    _debitBalance.text = @"--";
+    _debitBalance.textColor = theme::grayColor();
     _debitBalance.font = [UIFont boldSystemFontOfSize: name.font.pointSize + 12];
     _debitBalance.textAlignment = NSTextAlignmentCenter;
     
@@ -167,8 +163,8 @@
     // Take care of credit balance.
     static const int creditBalanceY = creditLabelY + 55;
     _creditBalance = [[UILabel alloc] initWithFrame: CGRectMake(debitBalanceX, creditBalanceY, debitBalanceW, controlH)];
-    _creditBalance.text = ToCurrencyNSString(ToNSString(ToStdString(Service::Instance().GetAccount(Account::Credit)._balance)));
-    _creditBalance.textColor = theme::brandColor4();
+    _creditBalance.text = @"--";
+    _creditBalance.textColor = theme::grayColor();
     _creditBalance.font = [UIFont boldSystemFontOfSize: name.font.pointSize + 12];
     _creditBalance.textAlignment = NSTextAlignmentCenter;
     
@@ -186,6 +182,12 @@
         UIBarButtonItem* settingsButtonItem = [[UIBarButtonItem alloc] initWithCustomView: settingsButton];
         self.navigationItem.leftBarButtonItem = settingsButtonItem;
     }
+}
+
+-(void)updateData
+{
+    _debitBalance.text  = ToCurrencyNSString(ToNSString(ToStdString(Service::Instance().GetAccount(Account::Debit )._balance)));
+    _creditBalance.text = ToCurrencyNSString(ToNSString(ToStdString(Service::Instance().GetAccount(Account::Credit)._balance)));
 }
 
 -(void)settingsAction
