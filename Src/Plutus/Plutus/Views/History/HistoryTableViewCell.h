@@ -12,8 +12,6 @@
 
 @interface HistoryTableViewCell : UITableViewCell
 
--(void)setPayment;
-
 @property UIImageView* side;
 @property UILabel* username;
 @property UILabel* userAccount;
@@ -22,6 +20,6 @@
 
 @property Payment payment;
 
--(void)setPayment:(const Payment&)payment;
+-(void)SetPayment:(const Payment&)payment;
 
 @end

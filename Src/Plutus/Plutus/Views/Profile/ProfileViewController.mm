@@ -33,6 +33,10 @@
     
     // Create the view contorls.
     [self createControls];
+    
+    // Start notification center.
+    _notificationCenter = [[NotificationCenter alloc] init];
+    _notificationCenter.parent = self;
 }
 
 -(void)viewDidAppear:(BOOL)animated

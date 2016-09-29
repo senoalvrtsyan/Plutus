@@ -146,7 +146,7 @@
     [_userAccountType setFrame: CGRectMake(userAccountX, myAccTypeY, myAccW, myAccTypeH)];
 }
 
--(void)setPayment:(const Payment&)payment
+-(void)SetPayment:(const Payment&)payment
 {
     _payment = payment;
     

@@ -16,17 +16,19 @@
     <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
 -(void)SetUser:(User)user;
+-(void)SetAmount:(PriceType)amount;
 
 @property UIImageView* arrow1;
 @property UIImageView* arrow2;
 @property UIImageView* arrow3;
 
-@property UITextField* amount;
+@property UITextField* amountTextField;
 
 @property UIPickerView* picker;
 
 @property NSTimer* timer;
 
 @property User user;
+@property PriceType amount;
 
 @end

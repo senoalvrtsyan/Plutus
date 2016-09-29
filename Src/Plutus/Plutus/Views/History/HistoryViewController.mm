@@ -81,7 +81,7 @@
     }
     
     Payment pay = Service::Instance().GetPayments()[indexPath.row];
-    [cell setPayment: pay];
+    [cell SetPayment: pay];
 
     return cell;
 }

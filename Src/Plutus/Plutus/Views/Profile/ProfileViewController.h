@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "NotificationCenter.h"
+
 @interface ProfileViewController : UIViewController
 
 @property UILabel* debitBalance;
 @property UILabel* creditBalance;
 @property UILabel* creditLimit;
+
+@property NotificationCenter* notificationCenter;
 
 @end

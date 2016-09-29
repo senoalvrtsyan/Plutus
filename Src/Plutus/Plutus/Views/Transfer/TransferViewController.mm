@@ -59,7 +59,7 @@
 
 -(void)dismissKeyboard
 {
-    [_amount resignFirstResponder];
+    [_amountTextField resignFirstResponder];
 }
 
 -(void)animateArrows
@@ -200,13 +200,17 @@
     static const int amountX = (viewW - amountW) / 2;
     // Ammount
     {
-        _amount = [[UITextField alloc] initWithFrame: CGRectMake(amountX, amountY, amountW, controlH)];
-        theme::applyStyle(_amount);
-        _amount.textAlignment = NSTextAlignmentCenter;
-        _amount.placeholder = @"Amount to transfer";
-        _amount.keyboardType = UIKeyboardTypeDecimalPad;
-        _amount.font = [UIFont boldSystemFontOfSize: _amount.font.pointSize];
-        _amount.delegate = self;
+        _amountTextField = [[UITextField alloc] initWithFrame: CGRectMake(amountX, amountY, amountW, controlH)];
+        theme::applyStyle(_amountTextField);
+        _amountTextField.textAlignment = NSTextAlignmentCenter;
+        _amountTextField.placeholder = @"Amount to transfer";
+        _amountTextField.keyboardType = UIKeyboardTypeDecimalPad;
+        _amountTextField.font = [UIFont boldSystemFontOfSize: _amountTextField.font.pointSize];
+        _amountTextField.delegate = self;
+        if(_amount!= 0)
+        {
+            _amountTextField.text = ToCurrencyNSString(ToNSString(ToStdString(_amount)));
+        }
         
         // Add done button for the keyboard.
         UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, viewW, controlH)];
@@ -220,16 +224,16 @@
         
         numberToolbar.items = @[spacer, doneButton];
         [numberToolbar sizeToFit];
-        _amount.inputAccessoryView = numberToolbar;
+        _amountTextField.inputAccessoryView = numberToolbar;
         
-        [self.view addSubview: _amount];
+        [self.view addSubview: _amountTextField];
     }
     
+    static const int pickerH = 3 * controlH;
+    static const int pickerY = amountY + controlH - 1;
     // Choose the account.
     {
         // Add picker.
-        static const int pickerH = 3 * controlH;
-        static const int pickerY = amountY + controlH - 1;
         _picker = [[UIPickerView alloc] initWithFrame: CGRectMake(amountX, pickerY, amountW, pickerH)];
         _picker.delegate = self;
         _picker.dataSource = self;
@@ -243,7 +247,7 @@
     // Approve button.
     {
         // Push transfer button to bottom.
-        static const int transferY = self.tabBarController.tabBar.frame.origin.y - controlH - 15;
+        static const int transferY = pickerY + pickerH + controlH;
         UIButton* transfer = [[UIButton alloc] initWithFrame: CGRectMake(amountX, transferY, amountW, controlH)];
         [transfer addTarget: self action: @selector(transferAction) forControlEvents: UIControlEventTouchUpInside];
         transfer.backgroundColor = theme::brandColor4();
@@ -256,14 +260,14 @@
 
 -(void)doneWithNumberPad
 {
-    [_amount resignFirstResponder];
+    [_amountTextField resignFirstResponder];
     
-    _amount.text = ToCurrencyNSString(_amount.text);
+    _amountTextField.text = ToCurrencyNSString(_amountTextField.text);
 }
 
 -(void)accountAction
 {
-    [_amount resignFirstResponder];
+    [_amountTextField resignFirstResponder];
     
     _picker.hidden = NO;
 }
@@ -311,15 +315,20 @@
     _user = user;
 }
 
+-(void)SetAmount:(PriceType)amount
+{
+    _amount = amount;
+}
+
 -(void)transferAction
 {
-    if([_amount.text length] == 0)
+    if([_amountTextField.text length] == 0)
     {
         return;
     }
     
     std::ostringstream oss;
-    oss << "Transfering " << ToStdString(_amount.text) << " from ";
+    oss << "Transfering " << ToStdString(_amountTextField.text) << " from ";
     // Add account type
     const int row = [_picker selectedRowInComponent: 0];
     const Account selectedAcc = Service::Instance().GetAccounts()[row];
@@ -347,9 +356,9 @@
                                 handler: ^(UIAlertAction * action) {
                                     //Handle your yes please button action here
                                     // TODO: check balance on transfer.
-                                    if(Service::Instance().MakePayment(selectedAcc, _user, ToPrice(removeCurrencyFormat(ToStdString(_amount.text)))))
+                                    if(Service::Instance().MakePayment(selectedAcc, _user, ToPrice(removeCurrencyFormat(ToStdString(_amountTextField.text)))))
                                     {
-                                        _amount.text = @"";
+                                        _amountTextField.text = @"";
                                         // msgbox::inform ok
                                         AlertOk(self, @"Success", @"Your payment was a success.");
                                     }

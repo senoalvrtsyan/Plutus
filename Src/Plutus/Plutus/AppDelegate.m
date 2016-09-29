@@ -24,8 +24,8 @@
     
     // Override point for customization after application launch.
     
+    // Show login view.
     LoginViewController* loginViewController = [[LoginViewController alloc] init];
-    
     
     UINavigationController* navController =
         [[UINavigationController alloc] initWithRootViewController: loginViewController];
@@ -33,8 +33,6 @@
     self.window.rootViewController = navController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    return YES;
-    
     return YES;
 }
 
