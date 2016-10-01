@@ -31,4 +31,8 @@
 @property User user;
 @property PriceType amount;
 
+// If this is set to true, that means we are in a popup mode.
+// Meaning, somebody requested a payment.
+@property bool popupMode;
+
 @end

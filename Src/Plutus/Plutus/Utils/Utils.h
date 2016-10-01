@@ -47,7 +47,7 @@ bool validatePassword(NSString* pwd);
 void showTabBarController(UIViewController* vc);
 void configTabBarItem(UITabBarController* tabBar, int index, NSString* name, NSString* icon);
  
-void AlertOk(UIViewController* vc, NSString* title, NSString* text);
+void AlertOk(UIViewController* vc, NSString* title, NSString* text, SEL s);
     
 }
 using namespace utils;

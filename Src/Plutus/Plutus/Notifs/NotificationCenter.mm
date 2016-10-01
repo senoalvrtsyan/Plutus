@@ -32,14 +32,16 @@
 
 -(void)timeout
 {
-    auto r = rand() % 4 + 1;
-    
-    if(r % 4 == 0)
+    auto payments = Service::Instance().GetPendingPayments();
+    if(!payments.empty())
     {
+        const auto payment = payments.front();
+        
         TransferViewController* vc = [[TransferViewController alloc] init];
-        [vc setUser: Service::Instance().Find("seno")];
-        [vc SetAmount: 145000];
-        // [_parent presentViewController: vc animated: YES completion: nil];
+        [vc setPopupMode: YES];
+        [vc setUser: Service::Instance().Find(payment._receiver)];
+        [vc SetAmount: payment._amount];
+        [_parent presentViewController: vc animated: YES completion: nil];
     }
 }
 

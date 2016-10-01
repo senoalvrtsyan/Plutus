@@ -234,6 +234,21 @@ User Service::Find(const Account acc)
     return User();
 }
     
+Account Service::Find(User::Id userId, Account::Type type)
+{
+    auto it = _accounts.find(userId);
+    
+    for(const auto& account : it->second)
+    {
+        if(account._type == type)
+        {
+            return account;
+        }
+    }
+    
+    return Account();
+}
+    
 Payments Service::GetPayments()
 {
     Payments res;
@@ -247,6 +262,19 @@ Payments Service::GetPayments()
                 res.push_back(pay);
             }
         }
+    }
+    
+    return res;
+}
+    
+Payments Service::GetPendingPayments()
+{
+    Payments res;
+    
+    auto r = rand() % 4 + 1;
+    if(r % 3 == 0)
+    {
+        res.push_back(Payment(0, GetAccount(Account::Debit), Find(Find("seno")._userId, Account::Debit), 50500));
     }
     
     return res;

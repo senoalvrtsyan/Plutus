@@ -42,9 +42,14 @@ public:
     User Find(User::Id userId);
     User Find(const Account accId);
     
+    // Find account by user id and type
+    Account Find(User::Id, Account::Type type);
+    
     Payments GetPayments();
+    Payments GetPendingPayments();
     
     bool MakePayment(const Account& account, const User& user, PriceType amount);
+    
     
 private:
     // Autentificated user.

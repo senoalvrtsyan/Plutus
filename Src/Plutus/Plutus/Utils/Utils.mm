@@ -243,7 +243,7 @@ void configTabBarItem(UITabBarController* tabBar, int index, NSString* name, NSS
     [[tabBar.tabBar.items objectAtIndex: index] setTitlePositionAdjustment: titleOffset];
 }
     
-void AlertOk(UIViewController* vc, NSString* title, NSString* text)
+void AlertOk(UIViewController* vc, NSString* title, NSString* text, SEL s)
 {
     UIAlertController* alert = [UIAlertController
                                 alertControllerWithTitle: title
@@ -255,6 +255,11 @@ void AlertOk(UIViewController* vc, NSString* title, NSString* text)
                                 style: UIAlertActionStyleDefault
                                 handler: ^(UIAlertAction * action) {
                                     //Handle your yes please button action here
+                                    
+                                    if(s)
+                                    {
+                                        [vc performSelector: s withObject: nil afterDelay: 0.0];
+                                    }
                                 }];
     
     [alert addAction: okButton];

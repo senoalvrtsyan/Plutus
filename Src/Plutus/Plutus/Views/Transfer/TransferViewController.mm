@@ -22,6 +22,17 @@
 
 @implementation TransferViewController
 
+-(id)init
+{
+    self = [super init];
+    if(self)
+    {
+        // false by default.
+        _popupMode = false;
+    }
+    return self;
+}
+
 -(void)viewDidLoad
 {
     [super viewDidLoad];
@@ -244,10 +255,10 @@
         [self.view addSubview: _picker];
     }
     
+    static const int transferY = pickerY + pickerH + controlH;
     // Approve button.
     {
         // Push transfer button to bottom.
-        static const int transferY = pickerY + pickerH + controlH;
         UIButton* transfer = [[UIButton alloc] initWithFrame: CGRectMake(amountX, transferY, amountW, controlH)];
         [transfer addTarget: self action: @selector(transferAction) forControlEvents: UIControlEventTouchUpInside];
         transfer.backgroundColor = theme::brandColor4();
@@ -256,6 +267,25 @@
         
         [self.view addSubview: transfer];
     }
+    
+    // Take care of popup mode
+    if(_popupMode)
+    {
+        // Take care of cancel button.
+        static const int cancelY = transferY + controlH + 8;
+        UIButton* cancel = [[UIButton alloc] initWithFrame: CGRectMake(amountX, cancelY, amountW, controlH)];
+        [cancel addTarget: self action: @selector(closeAction) forControlEvents: UIControlEventTouchUpInside];
+        cancel.backgroundColor = theme::brandColor2();
+        [cancel setBackgroundImage: imageWithColor(theme::brandColor5()) forState: UIControlStateHighlighted];
+        [cancel setTitle: @"Cancel" forState: UIControlStateNormal];
+        
+        [self.view addSubview: cancel];
+    }
+}
+
+-(void)closeAction
+{
+    [[self presentingViewController] dismissViewControllerAnimated: YES completion: nil];
 }
 
 -(void)doneWithNumberPad
@@ -358,13 +388,12 @@
                                     // TODO: check balance on transfer.
                                     if(Service::Instance().MakePayment(selectedAcc, _user, ToPrice(removeCurrencyFormat(ToStdString(_amountTextField.text)))))
                                     {
-                                        _amountTextField.text = @"";
                                         // msgbox::inform ok
-                                        AlertOk(self, @"Success", @"Your payment was a success.");
+                                        AlertOk(self, @"Success", @"Your payment was a success.", @selector(successAction));
                                     }
                                     else
                                     {
-                                        AlertOk(self, @"Failure", @"Your payment was a failure.");
+                                        AlertOk(self, @"Failure", @"Your payment was a failure.", nil);
                                     }
                                 }];
 
@@ -375,6 +404,16 @@
     
     // iOS bug, need to do this here.
     [alert.view setTintColor: theme::brandColor4()];
+}
+
+-(void)successAction
+{
+    _amountTextField.text = @"";
+    
+    if(_popupMode)
+    {
+        [self closeAction];
+    }
 }
 
 @end
