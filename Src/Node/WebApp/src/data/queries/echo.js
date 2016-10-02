@@ -8,19 +8,18 @@
  */
 
 import {
-  GraphQLObjectType as ObjectType,
-  GraphQLID as ID,
   GraphQLString as StringType,
-  GraphQLNonNull as NonNull,
 } from 'graphql';
 
-const UserType = new ObjectType({
-  name: 'User',
-  fields: {
-    id: { type: new NonNull(ID) },
-    email: { type: StringType },
-    username: { type: StringType }
-  },
-});
+const echo = {
+  type: StringType,
+  description: "Echo what you enter",
+  args: {
+        message: {type: StringType}
+      },
+  resolve: function(root, {message}) {
+        return `recieved ${message}`;
+      },
+};
 
-export default UserType;
+export default echo;

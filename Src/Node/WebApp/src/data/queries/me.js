@@ -9,12 +9,26 @@
 
 import UserType from '../types/UserType';
 
+/*
 const me = {
   type: UserType,
   resolve({ request }) {
     return request.user && {
       id: request.user.id,
       email: request.user.email,
+      username: request.user.username
+    };
+  },
+};
+*/
+
+const me = {
+  type: UserType,
+  resolve({ request }) {
+    return {
+      id: "101",
+      email: "hovgrig@gmail.com",
+      username: "hovgrig"
     };
   },
 };
