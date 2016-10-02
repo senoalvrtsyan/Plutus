@@ -302,20 +302,25 @@
     if(Service::Instance().SignUp(user))
     {
         // No matter what, login here.
-        if(Service::Instance().SignIn(user))
-        {
-            // Awesome, set the user and show the maintab controller itself.
-            Service::Instance().SetUser(user);
-            showTabBarController(self);
-        }
-        else
-        {
-            // TODO: alert.
-        }
+        Service::Instance().SignIn(user, self);
     }
     else
     {
         // TODO: alert.
+    }
+}
+
+-(void)handleSignIn:(NSNumber*)res
+{
+    if([res boolValue])
+    {
+        // Awesome, set the user and show the maintab controller itself.
+        Service::Instance().SetUser([super GetUser]);
+        showTabBarController(self);
+    }
+    else
+    {
+        // TODO: show alert
     }
 }
 

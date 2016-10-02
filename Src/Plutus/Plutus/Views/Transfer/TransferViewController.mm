@@ -360,7 +360,7 @@
     std::ostringstream oss;
     oss << "Transfering " << ToStdString(_amountTextField.text) << " from ";
     // Add account type
-    const int row = [_picker selectedRowInComponent: 0];
+    const auto row = [_picker selectedRowInComponent: 0];
     const Account selectedAcc = Service::Instance().GetAccounts()[row];
     oss <<  ToStdString(selectedAcc._type);
     oss << ": ";

@@ -10,6 +10,10 @@
 
 #include <sstream>
 
+#import <Foundation/Foundation.h>
+
+#import "Utils.h"
+
 namespace ios
 {
 
@@ -162,24 +166,80 @@ bool Service::SignUp(User& user)
     return true;
 }
 
-bool Service::SignIn(const User& user)
+void Service::SignIn(const User& user, UIViewController* vc)
 {
     if(user._username.empty() || user._password.empty())
     {
-        return false;
+        return;
     }
     
-    // TODO: implement.
-    for(const auto& item: _users)
-    {
-        if(item._username == user._username && item._password == user._password)
-        {
-            SetUser(item);
-            return true;
-        }
-    }
-
-    return false;
+    NSString* grapqlBaseURL = @"http://192.168.1.2:3001/graphql?query=";
+    NSString* queryString = [NSString stringWithFormat: @"{authenticate(username: \"%@\", password: \"%@\")}", ToNSString(user._username), ToNSString(user._password)];
+    
+    NSCharacterSet* expectedCharSet = [NSCharacterSet URLQueryAllowedCharacterSet];
+    NSString* requestString = [[grapqlBaseURL stringByAppendingString: queryString] stringByAddingPercentEncodingWithAllowedCharacters: expectedCharSet];
+    NSURL* url = [NSURL URLWithString: requestString];
+    
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] init];
+    [request setURL: url];
+    [request setHTTPMethod: @"GET"];
+    
+    // Send request
+    NSURLSession* session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest: request
+            completionHandler:^(NSData* data,
+                                NSURLResponse* response,
+                                NSError* error)
+            {
+                if(!error)
+                {
+                    // Success
+                    if ([response isKindOfClass:[NSHTTPURLResponse class]])
+                    {
+                        NSError* jsonError;
+                        NSDictionary* jsonResponse = [NSJSONSerialization JSONObjectWithData:data options: 0 error: &jsonError];
+                        
+                        if(!jsonError)
+                        {
+                            // Success Parsing JSON
+                            // Log NSDictionary response:
+                            NSLog(@"%@", jsonResponse);
+                            
+                            if(vc != nil)
+                            {
+                                id data = [jsonResponse objectForKey: @"data"];
+                                if(data)
+                                {
+                                    const bool res = [[data objectForKey: @"authenticate"] isEqualToString: @"true"];
+                                    
+                                    [vc performSelectorOnMainThread: @selector(handleSignIn:) withObject: [NSNumber numberWithBool: res] waitUntilDone: NO];
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // Error Parsing JSON
+                            NSLog(@"error : %@", @"Error Parsing JSON");
+                            NSLog(@"RESPONSE: %@", response);
+                            NSLog(@"DATA: %@", data);
+                        }
+                    }
+                    else
+                    {
+                        // Web server is returning an error
+                        // Error Parsing JSON
+                        NSLog(@"error : %@", @"Web server is returning an error");
+                        NSLog(@"RESPONSE: %@", response);
+                        NSLog(@"DATA: %@", data);
+                    }
+                }
+                else
+                {
+                    // Fail
+                    NSLog(@"error : %@", error.description);
+                }
+                
+            }] resume];
 }
     
 bool Service::Exists(const std::string& username)

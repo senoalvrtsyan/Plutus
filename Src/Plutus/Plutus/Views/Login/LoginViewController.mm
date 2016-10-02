@@ -131,7 +131,12 @@
     user._username = ToStdString(_login.text);
     user._password = ToStdString(_password.text);
     
-    if(Service::Instance().SignIn(user))
+    Service::Instance().SignIn(user, self);
+}
+
+-(void)handleSignIn:(NSNumber*)res
+{
+    if([res boolValue])
     {
         showTabBarController(self);
     }
