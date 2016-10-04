@@ -21,10 +21,10 @@ const schema = new Schema({
   query: new ObjectType({
     name: 'Query',
     fields: {
+      content,
       me,
       echo,
       authenticate,
-      content
     },
   }),
 });

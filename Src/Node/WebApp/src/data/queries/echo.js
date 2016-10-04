@@ -11,6 +11,7 @@ import {
   GraphQLString as StringType,
 } from 'graphql';
 
+// Test field.
 const echo = {
   type: StringType,
   description: "Echo what you enter",

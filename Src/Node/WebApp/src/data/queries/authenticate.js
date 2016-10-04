@@ -11,21 +11,47 @@ import {
   GraphQLString as StringType,
 } from 'graphql';
 
+
+import UserType from '../types/UserType';
+
 const authenticate = {
-  type: StringType,
-  description: "Return true if successful",
+  type: UserType,
+  description: "Return user if auth is successful",
   args: {
         username: {type: StringType},
-        password: {type: StringType}
+        password: {type: StringType},
       },
-  resolve: function(root, {username, password}) {
-  		if((username == 'hov' || username == 'kor' || username == 'seno') && password == 'pwd')
+  resolve: function(root, { username, password }) {
+  		if(username == 'hov' && password == 'pwd')
   		{
-  			return 'true';
+  			return {
+      			id: "101",
+      			name: "Hovhannes Grigoryan",
+      			username: "hov",
+      			email: "hovgrig@gmail.com",
+    			};
+  		}
+  		else if (username == 'kor' && password == 'pwd')
+  		{
+  			return {
+      			id: "102",
+      			name: "Koriun Aslanyan",
+      			username: "kor",
+      			email: "kor@gmail.com",
+    			};
+  		}
+  		else if (username == 'seno' && password == 'pwd')
+  		{
+  			return {
+      			id: "103",
+      			name: "Senik Alvrtyan",
+      			username: "seno",
+      			email: "seno@gmail.com",
+    			};
   		}
   		else
   		{
-  			return 'false';
+  			return null;
   		}
       },
 };

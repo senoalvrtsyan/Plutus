@@ -22,6 +22,7 @@ const me = {
 };
 */
 
+// Test field.
 const me = {
   type: UserType,
   resolve({ request }) {
