@@ -137,6 +137,17 @@ std::string ToStdString(const Account& account)
     return res;
 }
     
+User::Id ToUserId(const std::string& str)
+{
+    User::Id res;
+    
+    std::stringstream ss;
+    ss << str;
+    ss >> res;
+    
+    return res;
+}
+    
 std::string atUsername(const std::string& str)
 {
     std::string res = "@";

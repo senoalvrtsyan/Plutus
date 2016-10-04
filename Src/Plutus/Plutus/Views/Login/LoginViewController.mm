@@ -30,12 +30,6 @@
 -(void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Set background color of the view.
-    //self.view.backgroundColor = backgroundColor();
-    
-    // Create the view contorls.
-    [self createControls];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -44,12 +38,6 @@
     
     // Show the keyboard.
     [_login becomeFirstResponder];
-}
-
--(void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)createControls
@@ -132,18 +120,6 @@
     user._password = ToStdString(_password.text);
     
     Service::Instance().SignIn(user, self);
-}
-
--(void)handleSignIn:(NSNumber*)res
-{
-    if([res boolValue])
-    {
-        showTabBarController(self);
-    }
-    else
-    {
-        // TODO: show alert
-    }
 }
 
 -(void)signupAction

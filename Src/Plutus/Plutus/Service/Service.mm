@@ -10,8 +10,6 @@
 
 #include <sstream>
 
-#import <Foundation/Foundation.h>
-
 #import "Utils.h"
 
 namespace ios
@@ -166,15 +164,15 @@ bool Service::SignUp(User& user)
     return true;
 }
 
-void Service::SignIn(const User& user, UIViewController* vc)
+void Service::SignIn(const User& user, LoginBaseViewController* vc)
 {
     if(user._username.empty() || user._password.empty())
     {
         return;
     }
     
-    NSString* grapqlBaseURL = @"http://192.168.1.2:3001/graphql?query=";
-    NSString* queryString = [NSString stringWithFormat: @"{authenticate(username: \"%@\", password: \"%@\")}", ToNSString(user._username), ToNSString(user._password)];
+    NSString* grapqlBaseURL = @"http://192.168.1.4:3001/graphql?query=";
+    NSString* queryString = [NSString stringWithFormat: @"{ authenticate(username: \"%@\", password: \"%@\") { id, name, username, email } }", ToNSString(user._username), ToNSString(user._password)];
     
     NSCharacterSet* expectedCharSet = [NSCharacterSet URLQueryAllowedCharacterSet];
     NSString* requestString = [[grapqlBaseURL stringByAppendingString: queryString] stringByAddingPercentEncodingWithAllowedCharacters: expectedCharSet];
@@ -207,13 +205,54 @@ void Service::SignIn(const User& user, UIViewController* vc)
                             
                             if(vc != nil)
                             {
+                                /*
+                                 Example data:
+                                 {
+                                    "data": {
+                                        "authenticate": {
+                                            "id": "102",
+                                            "name": "Koriun Aslanyan",
+                                            "username": "kor",
+                                            "email": "kor@gmail.com"
+                                        }
+                                    }
+                                 }
+                                 */
+                                bool res = false;
                                 id data = [jsonResponse objectForKey: @"data"];
-                                if(data)
+                                if(data != [NSNull null])
                                 {
-                                    const bool res = [[data objectForKey: @"authenticate"] isEqualToString: @"true"];
-                                    
-                                    [vc performSelectorOnMainThread: @selector(handleSignIn:) withObject: [NSNumber numberWithBool: res] waitUntilDone: NO];
+                                    id usr = [data objectForKey: @"authenticate"];
+                                    if(usr != [NSNull null])
+                                    {
+                                        // Get fields.
+                                        id userId = [usr objectForKey: @"id"];
+                                        id username = [usr objectForKey: @"username"];
+                                        id name = [usr objectForKey: @"name"];
+                                        id email = [usr objectForKey: @"email"];
+                                        
+                                        if(userId != [NSNull null] &&
+                                           username != [NSNull null] &&
+                                           name != [NSNull null] &&
+                                           email != [NSNull null]
+                                           )
+                                        {
+                                            // Construct the user.
+                                            User u;
+                                            u._userId = ToUserId(std::string([((NSString*)userId) UTF8String]));
+                                            u._username = std::string([((NSString*)username) UTF8String]);
+                                            u._name = std::string([((NSString*)name) UTF8String]);
+                                            u._email = std::string([((NSString*)email) UTF8String]);
+                                            
+                                            // Awesome, set the user as a central user for the service.
+                                            Service::Instance().SetUser(u);
+                                            res = true;
+                                        }
+                                    }
                                 }
+                                
+                                // Notify the caller.
+                                [vc performSelectorOnMainThread: @selector(handleSignIn:) withObject: [NSNumber numberWithBool: res] waitUntilDone: NO];
                             }
                         }
                         else

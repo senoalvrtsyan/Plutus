@@ -11,6 +11,7 @@
 #include <string>
 
 #include "Account.h"
+#include "User.h"
 
 namespace ios
 {
@@ -32,6 +33,7 @@ std::string ToStdString(const Account& account);
 // Debit: 100100101 -> 100100101
 Account::Id ToAccountId(const std::string& accountStr);
 
+User::Id ToUserId(const std::string& str);
     
 std::string atUsername(const std::string& str);
     
@@ -51,5 +53,5 @@ void AlertOk(UIViewController* vc, NSString* title, NSString* text, SEL s);
     
 }
 using namespace utils;
-
 }
+using namespace ios;

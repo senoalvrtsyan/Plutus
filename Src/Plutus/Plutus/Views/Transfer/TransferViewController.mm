@@ -317,8 +317,10 @@
     NSString* title = @"";
     
     const auto& accs = Service::Instance().GetAccounts();
-    title = ToNSString(ToStdString(accs[row]));
-    
+    if(row < accs.size())
+    {
+        title = ToNSString(ToStdString(accs[row]));
+    }
     NSAttributedString* attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName: theme::textColor()}];
     
     return attString;
@@ -360,8 +362,14 @@
     std::ostringstream oss;
     oss << "Transfering " << ToStdString(_amountTextField.text) << " from ";
     // Add account type
-    const auto row = [_picker selectedRowInComponent: 0];
-    const Account selectedAcc = Service::Instance().GetAccounts()[row];
+    const int row = [_picker selectedRowInComponent: 0];
+    const auto& accs = Service::Instance().GetAccounts();
+    if(row >= accs.size())
+    {
+        return;
+    }
+    
+    const Account selectedAcc = accs[row];
     oss <<  ToStdString(selectedAcc._type);
     oss << ": ";
     // Add account number.

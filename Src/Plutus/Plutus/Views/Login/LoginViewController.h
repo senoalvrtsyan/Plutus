@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginViewController : UIViewController
+#import "LoginBaseViewController.h"
+
+@interface LoginViewController : LoginBaseViewController
 
 @property UITextField* login;
 @property UITextField* password;

@@ -26,9 +26,6 @@
     
     // Set background color of the view.
     self.view.backgroundColor = theme::whiteColor();
-    
-    // Create the view contorls.
-    [self createControls];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -307,20 +304,6 @@
     else
     {
         // TODO: alert.
-    }
-}
-
--(void)handleSignIn:(NSNumber*)res
-{
-    if([res boolValue])
-    {
-        // Awesome, set the user and show the maintab controller itself.
-        Service::Instance().SetUser([super GetUser]);
-        showTabBarController(self);
-    }
-    else
-    {
-        // TODO: show alert
     }
 }
 

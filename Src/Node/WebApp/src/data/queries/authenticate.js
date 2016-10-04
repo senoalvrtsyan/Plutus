@@ -25,7 +25,7 @@ const authenticate = {
   		if(username == 'hov' && password == 'pwd')
   		{
   			return {
-      			id: "101",
+      			id: "1",
       			name: "Hovhannes Grigoryan",
       			username: "hov",
       			email: "hovgrig@gmail.com",
@@ -34,7 +34,7 @@ const authenticate = {
   		else if (username == 'kor' && password == 'pwd')
   		{
   			return {
-      			id: "102",
+      			id: "2",
       			name: "Koriun Aslanyan",
       			username: "kor",
       			email: "kor@gmail.com",
@@ -43,7 +43,7 @@ const authenticate = {
   		else if (username == 'seno' && password == 'pwd')
   		{
   			return {
-      			id: "103",
+      			id: "3",
       			name: "Senik Alvrtyan",
       			username: "seno",
       			email: "seno@gmail.com",

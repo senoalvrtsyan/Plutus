@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "LoginBaseViewController.h"
+
 #include "User.h"
 
-@interface SignupViewControllerBase : UIViewController
+@interface SignupViewControllerBase : LoginBaseViewController
     <UITextFieldDelegate>
 
 -(NSString*)labelText;

@@ -12,7 +12,7 @@
 #include "Account.h"
 #include "Payment.h"
 
-#import <UIKIt/UIKit.h>
+#import "LoginBaseViewController.h"
 
 namespace ios
 {
@@ -37,7 +37,7 @@ public:
     Account GetAccount(Account::Type type);
     
     bool SignUp(User& user);
-    void SignIn(const User& user, UIViewController* vc = nil);
+    void SignIn(const User& user, LoginBaseViewController* vc);
     
     bool Exists(const std::string& username);
     User Find(const std::string& username);
