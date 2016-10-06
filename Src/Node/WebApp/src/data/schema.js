@@ -12,19 +12,21 @@ import {
   GraphQLObjectType as ObjectType,
 } from 'graphql';
 
+import content from './queries/content';
+import authenticate from './queries/authenticate';
+import accounts from './queries/accounts';
 import me from './queries/me';
 import echo from './queries/echo';
-import authenticate from './queries/authenticate';
-import content from './queries/content';
 
 const schema = new Schema({
   query: new ObjectType({
     name: 'Query',
     fields: {
       content,
+      authenticate,
+      accounts,
       me,
       echo,
-      authenticate,
     },
   }),
 });
