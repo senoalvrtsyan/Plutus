@@ -312,7 +312,7 @@
     return 2;
 }
 
--(NSAttributedString*)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
+-(NSAttributedString*)pickerView:(UIPickerView*)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     NSString* title = @"";
     
@@ -327,10 +327,7 @@
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    //const auto& accs = Service::Instance().GetAccounts();
-    //accs[row]._accountId;
-}
+{}
 
 -(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
@@ -362,7 +359,7 @@
     std::ostringstream oss;
     oss << "Transfering " << ToStdString(_amountTextField.text) << " from ";
     // Add account type
-    const int row = [_picker selectedRowInComponent: 0];
+    const auto row = [_picker selectedRowInComponent: 0];
     const auto& accs = Service::Instance().GetAccounts();
     if(row >= accs.size())
     {

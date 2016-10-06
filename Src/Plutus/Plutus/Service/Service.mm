@@ -85,7 +85,7 @@ Accounts Service::GetAccounts()
 {
     Accounts res;
     
-    auto userId = GetUser()._userId;
+    const auto userId = GetUser()._userId;
     
     auto it = _accounts.find(userId);
     if(it != _accounts.end())
