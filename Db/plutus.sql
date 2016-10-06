@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `plutus` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `plutus`;
--- MySQL dump 10.13  Distrib 5.5.16, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.7.12, for osx10.9 (x86_64)
 --
 -- Host: localhost    Database: plutus
 -- ------------------------------------------------------
--- Server version	5.5.25a
+-- Server version	5.7.15
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,7 +41,7 @@ CREATE TABLE `accounts` (
 
 LOCK TABLES `accounts` WRITE;
 /*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
-INSERT INTO `accounts` VALUES ('100100101',1,1,75000.0000,NULL),('100100102',1,2,240000.0000,400000.0000);
+INSERT INTO `accounts` VALUES ('100100101',2,1,75000.0000,NULL),('100100102',3,1,75000.0000,NULL),('100100103',4,1,75000.0000,NULL),('200100101',2,2,240000.0000,400000.0000),('200100102',3,2,NULL,500000.0000),('200100103',4,2,432432.0000,600000.0000);
 /*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +60,7 @@ CREATE TABLE `payment` (
   `datetime` datetime NOT NULL,
   PRIMARY KEY (`idpayment`),
   UNIQUE KEY `idpayment_UNIQUE` (`idpayment`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (1,'100100101','100100102',15000.0000,'2016-09-17 17:25:31');
+INSERT INTO `payment` VALUES (1,'100100101','100100102',15000.0000,'2016-09-17 17:25:31'),(2,'200100101','200100103',190000.0000,'2016-10-06 17:25:31');
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `idusers_UNIQUE` (`idusers`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Emily Ratajkowski','emily','emily@emily.com','pwd','123456789','Westminster, United Kingdom','FV525452',123456789,123987456,'1991-06-07');
+INSERT INTO `users` VALUES (1,'Emily Ratajkowski','emily','emily@emily.com','pwd','123456789','Westminster, United Kingdom','FV525452',123456789,123987456,'1991-06-07'),(2,'Hovhannes Grigoryan','hov','hovgrig@gmail.com','pwd','37491305404','Yerevan, Armenia',NULL,NULL,NULL,NULL),(3,'Koriun Aslanyan','kor','kor@gmail.com','pwd',NULL,NULL,NULL,NULL,NULL,NULL),(4,'Senik Alvrtsyan','seno','seno@gmail.com','pwd',NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,4 +126,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-17 17:27:39
+-- Dump completed on 2016-10-06 21:06:56
