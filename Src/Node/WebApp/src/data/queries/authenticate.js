@@ -11,8 +11,9 @@ import {
   GraphQLString as StringType,
 } from 'graphql';
 
-
 import UserType from '../types/UserType';
+
+var mysql      = require('mysql');
 
 const authenticate = {
   type: UserType,
@@ -22,38 +23,43 @@ const authenticate = {
         password: {type: StringType},
       },
   resolve: function(root, { username, password }) {
-  		if(username == 'hov' && password == 'pwd')
-  		{
-  			return {
-      			id: "1",
-      			name: "Hovhannes Grigoryan",
-      			username: "hov",
-      			email: "hovgrig@gmail.com",
-    			};
-  		}
-  		else if (username == 'kor' && password == 'pwd')
-  		{
-  			return {
-      			id: "2",
-      			name: "Koriun Aslanyan",
-      			username: "kor",
-      			email: "kor@gmail.com",
-    			};
-  		}
-  		else if (username == 'seno' && password == 'pwd')
-  		{
-  			return {
-      			id: "3",
-      			name: "Senik Alvrtyan",
-      			username: "seno",
-      			email: "seno@gmail.com",
-    			};
-  		}
-  		else
-  		{
-  			return null;
-  		}
-      },
+
+  	return new Promise(function(resolve, reject) {
+  		var connection = mysql.createConnection({
+  						host     : 'localhost',
+  						user     : 'root',
+  						password : 'Macmysqlpwd0', // Read from config?
+  						database : 'plutus'
+						});
+		// Make the query.
+		var sql = 'select idusers, name, username, email from plutus.users where binary username = ? and password = ?';
+		var params = [username, password];
+		connection.query(sql, params, function(err, rows, fields) {
+  			if(!err) {
+
+	  			if(rows.length == 1) {	
+
+	  				// Here is our single resoult.
+  					var row = rows[0];
+
+  					resolve({
+      					id: row.idusers,
+      					name: row.name,
+      					username: row.username,
+      					email: row.email
+    				});
+  				}
+  				else {
+  					resolve(null);
+  				}	
+  			}
+  			else {
+  			console.log('MySQL error: ', err);
+  			resolve(null);
+  			}
+  		});
+  	});
+    },
 };
 
 export default authenticate;
