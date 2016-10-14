@@ -25,12 +25,8 @@ const authenticate = {
   resolve: function(root, { username, password }) {
 
   	return new Promise(function(resolve, reject) {
-  		var connection = mysql.createConnection({
-  						host     : 'localhost',
-  						user     : 'root',
-  						password : 'Macmysqlpwd0', // Read from config?
-  						database : 'plutus'
-						});
+
+		var connection = mysql.globalConnection;
 		// Make the query.
 		var sql = 'select idusers, name, username, email from plutus.users where binary username = ? and password = ?';
 		var params = [username, password];

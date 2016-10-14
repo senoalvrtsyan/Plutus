@@ -27,6 +27,18 @@ import { port, auth, analytics } from './config';
 const server = global.server = express();
 
 //
+// SQL connection
+//
+var mysql = require('mysql'); 
+var connection = mysql.createConnection({
+              host     : 'localhost',
+              user     : 'root',
+              password : 'Macmysqlpwd0',
+              database : 'plutus'
+            });
+mysql.globalConnection = connection; //store the connection
+
+//
 // API routing
 //
 

@@ -27,12 +27,7 @@ const accounts = {
 
     return new Promise(function(resolve, reject) {
     
-      var connection = mysql.createConnection({
-              host     : 'localhost',
-              user     : 'root',
-              password : 'Macmysqlpwd0', // Read from config?
-              database : 'plutus'
-            });
+      var connection = mysql.globalConnection;
 
       // Make the query.
       var sql = 'select idaccounts, iduser, type, balance, `limit` from plutus.accounts where iduser = ?';
