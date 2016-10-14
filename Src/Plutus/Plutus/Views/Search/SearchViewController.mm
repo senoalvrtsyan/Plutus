@@ -101,13 +101,10 @@
 
 -(void)textFieldDidChange
 {
-    _actionBtn.enabled = [self userExists];
-}
-
--(BOOL)userExists
-{
     std::string username = ToStdString(_textField.text);
-    return Service::Instance().Exists(username);
+    [Service2::Instance() Find: username completionHandler: ^(UserWrapper* w){
+        _actionBtn.enabled = !w.data.empty();
+    }];
 }
 
 -(void)searchAction

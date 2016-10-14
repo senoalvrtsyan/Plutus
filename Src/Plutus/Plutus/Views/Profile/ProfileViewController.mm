@@ -110,7 +110,7 @@
     static const int debitNumberY = debitLabelY;
     _debitNumber = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, debitNumberY, debitNumberW, controlH)];
     
-    [Service2::Instance() GetAccount: Account::Debit withCompletion:^(AccountWrapper* w){
+    [Service2::Instance() GetAccount: Account::Debit completionHandler:^(AccountWrapper* w){
             _debitNumber.text = ToNSString(w.data._accountId);
     }];
     
@@ -149,7 +149,7 @@
     // Take care of debit account number.
     UILabel* creditNumber = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, creditLabelY, debitNumberW, controlH)];
     
-    [Service2::Instance() GetAccount: Account::Debit withCompletion:^(AccountWrapper* w){
+    [Service2::Instance() GetAccount: Account::Debit completionHandler:^(AccountWrapper* w){
             creditNumber.text = ToNSString(w.data._accountId);
     }];
     
@@ -163,7 +163,7 @@
     static const int creditLimitY = creditLabelY + 18;
     _creditLimit = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, creditLimitY, debitBalanceW, controlH)];
     
-    [Service2::Instance() GetAccount: Account::Credit withCompletion:^(AccountWrapper* w){
+    [Service2::Instance() GetAccount: Account::Credit completionHandler:^(AccountWrapper* w){
             NSString* val = ToCurrencyNSString(ToNSString(ToStdString(w.data._limit)));
             
             std::stringstream oss;
@@ -203,11 +203,11 @@
 
 -(void)updateData
 {
-    [Service2::Instance() GetAccount: Account::Debit withCompletion:^(AccountWrapper* w){
+    [Service2::Instance() GetAccount: Account::Debit completionHandler:^(AccountWrapper* w){
             _debitBalance.text  = ToCurrencyNSString(ToNSString(ToStdString(w.data._balance)));
     }];
     
-    [Service2::Instance() GetAccount: Account::Credit withCompletion:^(AccountWrapper* w){
+    [Service2::Instance() GetAccount: Account::Credit completionHandler:^(AccountWrapper* w){
             _creditBalance.text = ToCurrencyNSString(ToNSString(ToStdString(w.data._balance)));
     }];
 }

@@ -299,7 +299,9 @@
     if(Service::Instance().SignUp(user))
     {
         // No matter what, login here.
-        Service::Instance().SignIn(user, self);
+        [Service2::Instance() SignIn:user completionHandler: ^(BOOL res){
+            [self handleSignIn: res];
+        }];
     }
     else
     {

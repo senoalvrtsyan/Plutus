@@ -29,9 +29,9 @@
     // Childs implement this.
 }
 
--(void)handleSignIn:(NSNumber*)res
+-(void)handleSignIn:(BOOL)res
 {
-    if([res boolValue])
+    if(res)
     {
         showTabBarController(self);
     }

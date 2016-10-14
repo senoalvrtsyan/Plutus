@@ -119,7 +119,9 @@
     user._username = ToStdString(_login.text);
     user._password = ToStdString(_password.text);
     
-    Service::Instance().SignIn(user, self);
+    [Service2::Instance() SignIn:user completionHandler: ^(BOOL res){
+        [self handleSignIn: res];
+    }];
 }
 
 -(void)signupAction

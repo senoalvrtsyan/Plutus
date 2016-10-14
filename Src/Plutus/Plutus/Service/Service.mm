@@ -24,6 +24,9 @@
 @implementation AccountWrapper
 @end
 
+@implementation UserWrapper
+@end
+
 /* Objective-C service implementation */
 
 @implementation ServiceImpl
@@ -34,7 +37,7 @@
     return url;
 }
 
--(void)Query:(NSString*)query withCompletion:(parseCompletion)compblock
+-(void)Query:(NSString*)query completionHandler:(parseCompletion)compblock
 {
     NSCharacterSet* expectedCharSet = [NSCharacterSet URLQueryAllowedCharacterSet];
     NSString* requestString = [[[self GraphQlBaseURL] stringByAppendingString: query] stringByAddingPercentEncodingWithAllowedCharacters: expectedCharSet];
@@ -109,7 +112,7 @@
     [NSString stringWithFormat: @"{ accounts( userid: %lu ) { id, userid, type, balance, limit } }", [self GetUser]._userId];
     
     // Make the actual query.
-    [Service2::Instance() Query: queryString withCompletion:^(NSDictionary* jsonResponse) {
+    [self Query: queryString completionHandler:^(NSDictionary* jsonResponse) {
         
         /* Example responce:
          {
@@ -179,7 +182,7 @@
     }];
 }
 
--(void)GetAccount:(Account::Type)type withCompletion:(getAccountCompletion)compblock
+-(void)GetAccount:(Account::Type)type completionHandler:(getAccountCompletion)compblock
 {
     [self GetAccounts: ^(AccountsWrapper* w){
         
@@ -197,6 +200,132 @@
         AccountWrapper* a = [[AccountWrapper alloc] init];
         a.data = res;
         compblock(a);
+    }];
+}
+
+-(void)SignIn:(const User&)user completionHandler:(signInCompletion)compblock
+{
+    if(user._username.empty() || user._password.empty())
+    {
+        compblock(NO);
+    }
+    
+    // Construct the query string.
+    NSString* queryString = [NSString stringWithFormat: @"{ authenticate(username: \"%@\", password: \"%@\") { id, name, username, email } }", ToNSString(user._username), ToNSString(user._password)];
+    
+    // Do the actual query here.
+    [self Query: queryString completionHandler:^(NSDictionary* jsonResponse) {
+        
+        /* Example responce:
+         {
+         "data":
+         {
+         "authenticate":
+         {
+         "id": "102",
+         "name": "Koriun Aslanyan",
+         "username": "kor",
+         "email": "kor@gmail.com"
+         }
+         }
+         } */
+        bool res = false;
+        id data = [jsonResponse objectForKey: @"data"];
+        if(data != [NSNull null])
+        {
+            id usr = [data objectForKey: @"authenticate"];
+            if(usr != [NSNull null])
+            {
+                // Get fields.
+                id userId = [usr objectForKey: @"id"];
+                id username = [usr objectForKey: @"username"];
+                id name = [usr objectForKey: @"name"];
+                id email = [usr objectForKey: @"email"];
+                
+                if(userId != [NSNull null] &&
+                   username != [NSNull null] &&
+                   name != [NSNull null] &&
+                   email != [NSNull null]
+                   )
+                {
+                    // Construct the user.
+                    User u;
+                    u._userId = ToId(std::string([((NSString*)userId) UTF8String]));
+                    u._username = std::string([((NSString*)username) UTF8String]);
+                    u._name = std::string([((NSString*)name) UTF8String]);
+                    u._email = std::string([((NSString*)email) UTF8String]);
+                    
+                    // Awesome, set the user as a central user for the service.
+                    [Service2::Instance() SetUser: u];
+                    res = true;
+                }
+            }
+        }
+        
+        // We just love main thread :)
+        dispatch_async(dispatch_get_main_queue(), ^{
+            compblock(res);
+        });
+    }];
+}
+
+-(void)Find:(const std::string&)username completionHandler:(findUserCompletion)compblock
+{
+    // Construct the query string.
+    NSString* queryString = [NSString stringWithFormat: @"{ finduser(username: \"%@\") { id name username email } }",
+                             ToNSString(username)];
+    
+    // Do the actual query here.
+    
+    [self Query: queryString completionHandler: ^(NSDictionary* jsonResponse) {
+        
+        /* Example responce:
+         {
+         "data":
+         {
+         "finduser":
+         {
+         "id": "102",
+         "name": "Koriun Aslanyan",
+         "username": "kor",
+         "email": "kor@gmail.com"
+         }
+         }
+         } */
+        User u;
+        id data = [jsonResponse objectForKey: @"data"];
+        if(data != [NSNull null])
+        {
+            id usr = [data objectForKey: @"finduser"];
+            if(usr != [NSNull null])
+            {
+                // Get fields.
+                id userId = [usr objectForKey: @"id"];
+                id username = [usr objectForKey: @"username"];
+                id name = [usr objectForKey: @"name"];
+                id email = [usr objectForKey: @"email"];
+                
+                if(userId != [NSNull null] &&
+                   username != [NSNull null] &&
+                   name != [NSNull null] &&
+                   email != [NSNull null]
+                   )
+                {
+                    // Construct the user.
+                    u._userId = ToId(std::string([((NSString*)userId) UTF8String]));
+                    u._username = std::string([((NSString*)username) UTF8String]);
+                    u._name = std::string([((NSString*)name) UTF8String]);
+                    u._email = std::string([((NSString*)email) UTF8String]);
+                }
+            }
+        }
+        
+        // We just love main thread :)
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UserWrapper* uw = [[UserWrapper alloc] init];
+            uw.data = u;
+            compblock(uw);
+        });
     }];
 }
 
@@ -324,82 +453,6 @@ bool Service::SignUp(User& user)
     // TODO: implement.
     return true;
 }
-
-void Service::SignIn(const User& user, NSObject* obj)
-{
-    if(user._username.empty() || user._password.empty())
-    {
-        return;
-    }
-    
-    // Construct the query string.
-    NSString* queryString = [NSString stringWithFormat: @"{ authenticate(username: \"%@\", password: \"%@\") { id, name, username, email } }", ToNSString(user._username), ToNSString(user._password)];
-    
-    // Do the actual query here.
-    [Service2::Instance() Query: queryString withCompletion:^(NSDictionary* jsonResponse) {
-        
-        /* Example responce:
-         {
-            "data":
-            {
-                "authenticate":
-                {
-                    "id": "102",
-                    "name": "Koriun Aslanyan",
-                    "username": "kor",
-                    "email": "kor@gmail.com"
-                }
-            }
-         } */
-        bool res = false;
-        id data = [jsonResponse objectForKey: @"data"];
-        if(data != [NSNull null])
-        {
-            id usr = [data objectForKey: @"authenticate"];
-            if(usr != [NSNull null])
-            {
-                // Get fields.
-                id userId = [usr objectForKey: @"id"];
-                id username = [usr objectForKey: @"username"];
-                id name = [usr objectForKey: @"name"];
-                id email = [usr objectForKey: @"email"];
-                
-                if(userId != [NSNull null] &&
-                   username != [NSNull null] &&
-                   name != [NSNull null] &&
-                   email != [NSNull null]
-                   )
-                {
-                    // Construct the user.
-                    User u;
-                    u._userId = ToId(std::string([((NSString*)userId) UTF8String]));
-                    u._username = std::string([((NSString*)username) UTF8String]);
-                    u._name = std::string([((NSString*)name) UTF8String]);
-                    u._email = std::string([((NSString*)email) UTF8String]);
-                    
-                    // Awesome, set the user as a central user for the service.
-                    [Service2::Instance() SetUser: u];
-                    res = true;
-                }
-            }
-        }
-        
-        // Notify the caller.
-        [obj performSelectorOnMainThread: @selector(handleSignIn:) withObject: [NSNumber numberWithBool: res] waitUntilDone: NO];
-    }];
-}
-    
-bool Service::Exists(const std::string& username)
-{
-    for(const auto& user : _users)
-    {
-        if(user._username == username)
-        {
-            return true;
-        }
-    }
-    return false;
-}
     
 User Service::Find(const std::string& username)
 {
@@ -424,7 +477,7 @@ User Service::Find(User::Id userId)
     }
     return User();
 }
-    
+
 User Service::Find(const Account acc)
 {
     for(const auto& item : _accounts)
@@ -440,22 +493,7 @@ User Service::Find(const Account acc)
     }
     return User();
 }
-    
-Account Service::Find(User::Id userId, Account::Type type)
-{
-    auto it = _accounts.find(userId);
-    
-    for(const auto& account : it->second)
-    {
-        if(account._type == type)
-        {
-            return account;
-        }
-    }
-    
-    return Account();
-}
-    
+
 Payments Service::GetPayments()
 {
     Payments res;

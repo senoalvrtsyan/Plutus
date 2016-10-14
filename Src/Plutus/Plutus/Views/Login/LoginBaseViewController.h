@@ -10,6 +10,6 @@
 
 @interface LoginBaseViewController : UIViewController
 
--(void)handleSignIn:(NSNumber*)res;
+-(void)handleSignIn:(BOOL)res;
 
 @end

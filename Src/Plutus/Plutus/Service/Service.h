@@ -24,16 +24,21 @@
 @property Account data;
 @end
 
+@interface UserWrapper : NSObject
+@property User data;
+@end
+
 /* Objective-C service implementation */
 
 typedef void(^parseCompletion)(NSDictionary*);
-
 typedef void(^getAccountsCompletion)(AccountsWrapper*);
 typedef void(^getAccountCompletion)(AccountWrapper*);
+typedef void(^signInCompletion)(BOOL);
+typedef void(^findUserCompletion)(UserWrapper*);
 
 @interface ServiceImpl : NSObject
 
--(void)Query:(NSString*)query withCompletion:(parseCompletion)compblock;
+-(void)Query:(NSString*)query completionHandler:(parseCompletion)compblock;
 
 // Call after login/signup.
 -(void)SetUser:(const User&)user;
@@ -41,8 +46,11 @@ typedef void(^getAccountCompletion)(AccountWrapper*);
 -(User&)GetUser;
 
 -(void)GetAccounts:(getAccountsCompletion)compblock;
+-(void)GetAccount:(Account::Type)type completionHandler:(getAccountCompletion)compblock;
 
--(void)GetAccount:(Account::Type)type withCompletion:(getAccountCompletion)compblock;
+-(void)SignIn:(const User&)user completionHandler:(signInCompletion)compblock;
+
+-(void)Find:(const std::string&)username completionHandler:(findUserCompletion)compblock;
 
 // Autentificated user.
 @property User user;
@@ -68,15 +76,10 @@ public:
     void populateTestData();
     
     bool SignUp(User& user);
-    void SignIn(const User& user, NSObject* obj);
     
-    bool Exists(const std::string& username);
     User Find(const std::string& username);
     User Find(User::Id userId);
     User Find(const Account accId);
-    
-    // Find account by user id and type
-    Account Find(User::Id, Account::Type type);
     
     Payments GetPayments();
     Payments GetPendingPayments();
