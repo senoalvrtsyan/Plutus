@@ -137,7 +137,7 @@ std::string ToStdString(const Account& account)
     return res;
 }
     
-User::Id ToUserId(const std::string& str)
+IdType ToId(const std::string& str)
 {
     User::Id res;
     

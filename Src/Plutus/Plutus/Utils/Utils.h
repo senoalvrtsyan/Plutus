@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #include <string>
+#include <sstream>
 
 #include "Account.h"
 #include "User.h"
@@ -17,6 +18,22 @@ namespace ios
 {
 namespace utils
 {
+
+// The fuck we need boost, if we can have poost :D
+namespace poost
+{
+
+template <typename O, typename I>
+O lexical_cast(const I& i)
+{
+    O res;
+    std::stringstream ss;
+    ss << i;
+    ss >> res;
+    return res;
+}
+    
+}
 
 std::string ToStdString(NSString* str);
 NSString* ToNSString(const std::string& str);
@@ -33,7 +50,7 @@ std::string ToStdString(const Account& account);
 // Debit: 100100101 -> 100100101
 Account::Id ToAccountId(const std::string& accountStr);
 
-User::Id ToUserId(const std::string& str);
+IdType ToId(const std::string& str);
     
 std::string atUsername(const std::string& str);
     

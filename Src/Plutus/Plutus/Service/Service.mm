@@ -12,8 +12,209 @@
 
 #import "Utils.h"
 
+// Silent undefined selector warnings since we work with NSObject interface.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+
+/* NSObject interface wrappers */
+
+@implementation AccountsWrapper
+@end
+
+@implementation AccountWrapper
+@end
+
+/* Objective-C service implementation */
+
+@implementation ServiceImpl
+
+-(NSString*)GraphQlBaseURL
+{
+    static NSString* url = @"http://192.168.1.3:3000/graphql?query=";
+    return url;
+}
+
+-(void)Query:(NSString*)query withCompletion:(parseCompletion)compblock
+{
+    NSCharacterSet* expectedCharSet = [NSCharacterSet URLQueryAllowedCharacterSet];
+    NSString* requestString = [[[self GraphQlBaseURL] stringByAppendingString: query] stringByAddingPercentEncodingWithAllowedCharacters: expectedCharSet];
+    NSURL* url = [NSURL URLWithString: requestString];
+    
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] init];
+    [request setURL: url];
+    [request setHTTPMethod: @"GET"];
+    
+    // Send request
+    NSURLSession* session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest: request
+                completionHandler:^(NSData* data,
+                                    NSURLResponse* response,
+                                    NSError* error)
+      {
+          if(!error)
+          {
+              // Success
+              if ([response isKindOfClass:[NSHTTPURLResponse class]])
+              {
+                  NSError* jsonError;
+                  NSDictionary* jsonResponse = [NSJSONSerialization JSONObjectWithData:data options: 0 error: &jsonError];
+                  
+                  if(!jsonError)
+                  {
+                      // Success Parsing JSON
+                      // Log NSDictionary response:
+                      NSLog(@"%@", jsonResponse);
+                      
+                      compblock(jsonResponse);
+                  }
+                  else
+                  {
+                      // Error Parsing JSON
+                      NSLog(@"error : %@", @"Error Parsing JSON");
+                      NSLog(@"RESPONSE: %@", response);
+                      NSLog(@"DATA: %@", data);
+                  }
+              }
+              else
+              {
+                  // Web server is returning an error
+                  // Error Parsing JSON
+                  NSLog(@"error : %@", @"Web server is returning an error");
+                  NSLog(@"RESPONSE: %@", response);
+                  NSLog(@"DATA: %@", data);
+              }
+          }
+          else
+          {
+              // Fail
+              NSLog(@"error : %@", error.description);
+          }
+      }] resume];
+}
+
+-(void)SetUser:(const User&)user
+{
+    _user = user;
+}
+
+-(User&)GetUser
+{
+    return _user;
+}
+
+-(void)GetAccounts:(getAccountsCompletion)compblock;
+{
+    // Construct query string.
+    NSString* queryString =
+    [NSString stringWithFormat: @"{ accounts( userid: %lu ) { id, userid, type, balance, limit } }", [self GetUser]._userId];
+    
+    // Make the actual query.
+    [Service2::Instance() Query: queryString withCompletion:^(NSDictionary* jsonResponse) {
+        
+        /* Example responce:
+         {
+         "data":
+         {
+         "accounts": [
+         {
+         "id": "100100101",
+         "userid": "2",
+         "type": 1,
+         "balance": 75000,
+         "limit": null
+         },
+         {
+         "id": "200100101",
+         "userid": "2",
+         "type": 2,
+         "balance": 240000,
+         "limit": 400000
+         }]
+         }
+         }
+         */
+        id data = [jsonResponse objectForKey: @"data"];
+        if(data != [NSNull null])
+        {
+            id accs = [data objectForKey: @"accounts"];
+            if(accs != [NSNull null])
+            {
+                Accounts res;
+                for(NSDictionary* acc in accs)
+                {
+                    // Get fields.
+                    id accId = [acc objectForKey: @"id"];
+                    id userId = [acc objectForKey: @"userid"];
+                    id accType = [acc objectForKey: @"type"];
+                    id balance = [acc objectForKey: @"balance"];
+                    id limit = [acc objectForKey: @"limit"];
+                    
+                    if(userId != [NSNull null] &&
+                       accId != [NSNull null] &&
+                       accType != [NSNull null] &&
+                       balance != [NSNull null]) // Limit can be null
+                    {
+                        Account acc;
+                        acc._accountId = std::string([((NSString*)accId) UTF8String]);
+                        acc._userId = ToId(std::string([((NSString*)userId) UTF8String]));
+                        acc._type = static_cast<Account::Type>([(NSNumber*)accType integerValue]);
+                        acc._balance = poost::lexical_cast<PriceType>([(NSNumber*)balance floatValue]);
+                        if(limit != [NSNull null])
+                        {
+                            acc._limit = poost::lexical_cast<PriceType>([(NSNumber*)limit floatValue]);
+                        }
+                        
+                        res.push_back(acc);
+                    }
+                }
+                
+                // We just love main thread :)
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    AccountsWrapper* w = [[AccountsWrapper alloc] init];
+                    w.data = res;
+                    compblock(w);
+                });
+            }
+        }
+    }];
+}
+
+-(void)GetAccount:(Account::Type)type withCompletion:(getAccountCompletion)compblock
+{
+    [self GetAccounts: ^(AccountsWrapper* w){
+        
+        Account res;
+        
+        for(const auto& item : w.data)
+        {
+            if(item._type == type)
+            {
+                res = item;
+                break;
+            }
+        }
+        
+        AccountWrapper* a = [[AccountWrapper alloc] init];
+        a.data = res;
+        compblock(a);
+    }];
+}
+
+@end
+
 namespace ios
 {
+
+namespace Service2
+{
+
+ServiceImpl* Instance()
+{
+    static ServiceImpl* s = [[ServiceImpl alloc] init];
+    return s;
+}
+
+}
 
 Service& Service::Instance()
 {
@@ -71,46 +272,6 @@ Service::Service()
     populateTestData();
 }
 
-void Service::SetUser(const User& user)
-{
-    _user = user;
-}
-    
-User& Service::GetUser()
-{
-    return _user;
-}
-
-Accounts Service::GetAccounts()
-{
-    Accounts res;
-    
-    const auto userId = GetUser()._userId;
-    
-    auto it = _accounts.find(userId);
-    if(it != _accounts.end())
-    {
-        return it->second;
-    }
-    
-    return res;
-}
-    
-Account Service::GetAccount(Account::Type type)
-{
-    auto accounts = GetAccounts();
-    
-    for(const auto& item : accounts)
-    {
-        if(item._type == type)
-        {
-            return item;
-        }
-    }
-    
-    return Account();
-}
-    
 bool Service::SignUp(User& user)
 {
     if(user._username.empty() ||
@@ -164,121 +325,68 @@ bool Service::SignUp(User& user)
     return true;
 }
 
-void Service::SignIn(const User& user, LoginBaseViewController* vc)
+void Service::SignIn(const User& user, NSObject* obj)
 {
     if(user._username.empty() || user._password.empty())
     {
         return;
     }
     
-    NSString* grapqlBaseURL = @"http://192.168.1.4:3001/graphql?query=";
+    // Construct the query string.
     NSString* queryString = [NSString stringWithFormat: @"{ authenticate(username: \"%@\", password: \"%@\") { id, name, username, email } }", ToNSString(user._username), ToNSString(user._password)];
     
-    NSCharacterSet* expectedCharSet = [NSCharacterSet URLQueryAllowedCharacterSet];
-    NSString* requestString = [[grapqlBaseURL stringByAppendingString: queryString] stringByAddingPercentEncodingWithAllowedCharacters: expectedCharSet];
-    NSURL* url = [NSURL URLWithString: requestString];
-    
-    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] init];
-    [request setURL: url];
-    [request setHTTPMethod: @"GET"];
-    
-    // Send request
-    NSURLSession* session = [NSURLSession sharedSession];
-    [[session dataTaskWithRequest: request
-            completionHandler:^(NSData* data,
-                                NSURLResponse* response,
-                                NSError* error)
+    // Do the actual query here.
+    [Service2::Instance() Query: queryString withCompletion:^(NSDictionary* jsonResponse) {
+        
+        /* Example responce:
+         {
+            "data":
             {
-                if(!error)
+                "authenticate":
                 {
-                    // Success
-                    if ([response isKindOfClass:[NSHTTPURLResponse class]])
-                    {
-                        NSError* jsonError;
-                        NSDictionary* jsonResponse = [NSJSONSerialization JSONObjectWithData:data options: 0 error: &jsonError];
-                        
-                        if(!jsonError)
-                        {
-                            // Success Parsing JSON
-                            // Log NSDictionary response:
-                            NSLog(@"%@", jsonResponse);
-                            
-                            if(vc != nil)
-                            {
-                                /*
-                                 Example data:
-                                 {
-                                    "data": {
-                                        "authenticate": {
-                                            "id": "102",
-                                            "name": "Koriun Aslanyan",
-                                            "username": "kor",
-                                            "email": "kor@gmail.com"
-                                        }
-                                    }
-                                 }
-                                 */
-                                bool res = false;
-                                id data = [jsonResponse objectForKey: @"data"];
-                                if(data != [NSNull null])
-                                {
-                                    id usr = [data objectForKey: @"authenticate"];
-                                    if(usr != [NSNull null])
-                                    {
-                                        // Get fields.
-                                        id userId = [usr objectForKey: @"id"];
-                                        id username = [usr objectForKey: @"username"];
-                                        id name = [usr objectForKey: @"name"];
-                                        id email = [usr objectForKey: @"email"];
-                                        
-                                        if(userId != [NSNull null] &&
-                                           username != [NSNull null] &&
-                                           name != [NSNull null] &&
-                                           email != [NSNull null]
-                                           )
-                                        {
-                                            // Construct the user.
-                                            User u;
-                                            u._userId = ToUserId(std::string([((NSString*)userId) UTF8String]));
-                                            u._username = std::string([((NSString*)username) UTF8String]);
-                                            u._name = std::string([((NSString*)name) UTF8String]);
-                                            u._email = std::string([((NSString*)email) UTF8String]);
-                                            
-                                            // Awesome, set the user as a central user for the service.
-                                            Service::Instance().SetUser(u);
-                                            res = true;
-                                        }
-                                    }
-                                }
-                                
-                                // Notify the caller.
-                                [vc performSelectorOnMainThread: @selector(handleSignIn:) withObject: [NSNumber numberWithBool: res] waitUntilDone: NO];
-                            }
-                        }
-                        else
-                        {
-                            // Error Parsing JSON
-                            NSLog(@"error : %@", @"Error Parsing JSON");
-                            NSLog(@"RESPONSE: %@", response);
-                            NSLog(@"DATA: %@", data);
-                        }
-                    }
-                    else
-                    {
-                        // Web server is returning an error
-                        // Error Parsing JSON
-                        NSLog(@"error : %@", @"Web server is returning an error");
-                        NSLog(@"RESPONSE: %@", response);
-                        NSLog(@"DATA: %@", data);
-                    }
+                    "id": "102",
+                    "name": "Koriun Aslanyan",
+                    "username": "kor",
+                    "email": "kor@gmail.com"
                 }
-                else
-                {
-                    // Fail
-                    NSLog(@"error : %@", error.description);
-                }
+            }
+         } */
+        bool res = false;
+        id data = [jsonResponse objectForKey: @"data"];
+        if(data != [NSNull null])
+        {
+            id usr = [data objectForKey: @"authenticate"];
+            if(usr != [NSNull null])
+            {
+                // Get fields.
+                id userId = [usr objectForKey: @"id"];
+                id username = [usr objectForKey: @"username"];
+                id name = [usr objectForKey: @"name"];
+                id email = [usr objectForKey: @"email"];
                 
-            }] resume];
+                if(userId != [NSNull null] &&
+                   username != [NSNull null] &&
+                   name != [NSNull null] &&
+                   email != [NSNull null]
+                   )
+                {
+                    // Construct the user.
+                    User u;
+                    u._userId = ToId(std::string([((NSString*)userId) UTF8String]));
+                    u._username = std::string([((NSString*)username) UTF8String]);
+                    u._name = std::string([((NSString*)name) UTF8String]);
+                    u._email = std::string([((NSString*)email) UTF8String]);
+                    
+                    // Awesome, set the user as a central user for the service.
+                    [Service2::Instance() SetUser: u];
+                    res = true;
+                }
+            }
+        }
+        
+        // Notify the caller.
+        [obj performSelectorOnMainThread: @selector(handleSignIn:) withObject: [NSNumber numberWithBool: res] waitUntilDone: NO];
+    }];
 }
     
 bool Service::Exists(const std::string& username)
@@ -351,10 +459,11 @@ Account Service::Find(User::Id userId, Account::Type type)
 Payments Service::GetPayments()
 {
     Payments res;
-    
+
+    /* TODO
     for(const auto& pay : _payments)
     {
-        for(const auto& acc : GetAccounts())
+        for(const auto& acc : GetAccounts(nil))
         {
             if(pay._sender == acc)
             {
@@ -362,6 +471,7 @@ Payments Service::GetPayments()
             }
         }
     }
+     */
     
     return res;
 }
@@ -373,7 +483,7 @@ Payments Service::GetPendingPayments()
     auto r = rand() % 4 + 1;
     if(r % 3 == 0)
     {
-        res.push_back(Payment(0, GetAccount(Account::Debit), Find(Find("seno")._userId, Account::Debit), 50500));
+        // res.push_back(Payment(0, GetAccount(Account::Debit), Find(Find("seno")._userId, Account::Debit), 50500));
     }
     
     return res;
@@ -418,5 +528,13 @@ bool Service::MakePayment(const Account& account, const User& user, PriceType am
     }
     return false;
 }
+    
+NSString* Service::GraphQlBaseURL() const
+{
+    static NSString* graphqlBaseURL = @"http://192.168.1.3:3000/graphql?query=";
+    return graphqlBaseURL;
+}
 
 }
+
+#pragma clang diagnostic pop

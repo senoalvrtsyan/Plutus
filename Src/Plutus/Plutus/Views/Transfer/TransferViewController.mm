@@ -41,6 +41,11 @@
     
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer: tap];
+    
+    [Service2::Instance() GetAccounts: ^(AccountsWrapper* w){
+        _accounts = w.data;
+        [_picker reloadAllComponents];
+    }];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -125,7 +130,7 @@
         // Take care of full name.
         static const int nameX = 4;
         UILabel* name = [[UILabel alloc] initWithFrame: CGRectMake(nameX, nameY, nameW, controlH)];
-        name.text = ToNSString(Service::Instance().GetUser()._name);
+        name.text = ToNSString([Service2::Instance() GetUser]._name);
         name.textColor = theme::textColor();
         name.font = [UIFont boldSystemFontOfSize: name.font.pointSize - 3];
         name.textAlignment = NSTextAlignmentCenter;
@@ -142,7 +147,7 @@
         // Take care of username.
         static const int usernameX = nameX + nameW / 2 - usernameW / 2;
         UILabel* username = [[UILabel alloc] initWithFrame: CGRectMake(usernameX, usernameY, usernameW, controlH)];
-        username.text = ToNSString(atUsername(Service::Instance().GetUser()._username));
+        username.text = ToNSString(atUsername([Service2::Instance() GetUser]._username));
         username.textColor = theme::lightGrayColor();
         username.font = [UIFont systemFontOfSize: name.font.pointSize - 2]; // A bit smaller font
         username.textAlignment = NSTextAlignmentCenter;
@@ -316,10 +321,9 @@
 {
     NSString* title = @"";
     
-    const auto& accs = Service::Instance().GetAccounts();
-    if(row < accs.size())
+    if(row < _accounts.size())
     {
-        title = ToNSString(ToStdString(accs[row]));
+        title = ToNSString(ToStdString(_accounts[row]));
     }
     NSAttributedString* attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName: theme::textColor()}];
     
@@ -360,13 +364,12 @@
     oss << "Transfering " << ToStdString(_amountTextField.text) << " from ";
     // Add account type
     const auto row = [_picker selectedRowInComponent: 0];
-    const auto& accs = Service::Instance().GetAccounts();
-    if(row >= accs.size())
+    if(row >= _accounts.size())
     {
         return;
     }
     
-    const Account selectedAcc = accs[row];
+    const Account selectedAcc = _accounts[row];
     oss <<  ToStdString(selectedAcc._type);
     oss << ": ";
     // Add account number.

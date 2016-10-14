@@ -11,6 +11,7 @@
 #import "CommonViewController.h"
 
 #include "User.h"
+#include "Account.h"
 
 @interface TransferViewController : CommonViewController
     <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
@@ -30,6 +31,8 @@
 
 @property User user;
 @property PriceType amount;
+
+@property Accounts accounts;
 
 // If this is set to true, that means we are in a popup mode.
 // Meaning, somebody requested a payment.

@@ -14,8 +14,48 @@
 
 #import "LoginBaseViewController.h"
 
+/* NSObject interface wrappers */
+
+@interface AccountsWrapper : NSObject
+@property Accounts data;
+@end
+
+@interface AccountWrapper : NSObject
+@property Account data;
+@end
+
+/* Objective-C service implementation */
+
+typedef void(^parseCompletion)(NSDictionary*);
+
+typedef void(^getAccountsCompletion)(AccountsWrapper*);
+typedef void(^getAccountCompletion)(AccountWrapper*);
+
+@interface ServiceImpl : NSObject
+
+-(void)Query:(NSString*)query withCompletion:(parseCompletion)compblock;
+
+// Call after login/signup.
+-(void)SetUser:(const User&)user;
+// Tell us who is the user.
+-(User&)GetUser;
+
+-(void)GetAccounts:(getAccountsCompletion)compblock;
+
+-(void)GetAccount:(Account::Type)type withCompletion:(getAccountCompletion)compblock;
+
+// Autentificated user.
+@property User user;
+
+@end
+
 namespace ios
 {
+
+namespace Service2
+{
+    ServiceImpl* Instance();
+}
 
 // Class provides access to Plutus backend.
 class Service
@@ -27,17 +67,8 @@ public:
     
     void populateTestData();
     
-    // Call after login/signup.
-    void SetUser(const User& user);
-    
-    // Tell us who is the user.
-    User& GetUser();
-    
-    Accounts GetAccounts();
-    Account GetAccount(Account::Type type);
-    
     bool SignUp(User& user);
-    void SignIn(const User& user, LoginBaseViewController* vc);
+    void SignIn(const User& user, NSObject* obj);
     
     bool Exists(const std::string& username);
     User Find(const std::string& username);
@@ -51,12 +82,13 @@ public:
     Payments GetPendingPayments();
     
     bool MakePayment(const Account& account, const User& user, PriceType amount);
+
+private:
+    NSString* GraphQlBaseURL() const;
     
+    // void Query(NSString* query, NSObject* obj, parseSelector, );
     
 private:
-    // Autentificated user.
-    User _user;
-    
     // TODO: TMP data storages.
     Users _users;
     AccountsMap _accounts;

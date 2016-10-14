@@ -12,6 +12,11 @@ namespace common
 {
 
 Account::Account()
+    : _accountId()
+    , _userId(0)
+    , _balance(0)
+    , _type(Undefined)
+    , _limit(0)
 {}
     
 Account::Account(Id accountId,

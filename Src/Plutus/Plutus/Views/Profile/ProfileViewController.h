@@ -13,6 +13,8 @@
 @interface ProfileViewController : UIViewController
 
 @property UILabel* debitBalance;
+@property UILabel* debitNumber;
+
 @property UILabel* creditBalance;
 @property UILabel* creditLimit;
 
