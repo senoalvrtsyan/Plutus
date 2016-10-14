@@ -15,6 +15,7 @@ import {
 import content from './queries/content';
 import authenticate from './queries/authenticate';
 import accounts from './queries/accounts';
+import finduser from './queries/finduser';
 import me from './queries/me';
 import echo from './queries/echo';
 
@@ -25,6 +26,7 @@ const schema = new Schema({
       content,
       authenticate,
       accounts,
+      finduser,
       me,
       echo,
     },
