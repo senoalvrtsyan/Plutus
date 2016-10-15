@@ -342,7 +342,7 @@
 -(void)MakePaymentFromAccount:(const Account&)account toUser:(const User&)user withAmount:(PriceType)amount completionHandler:(paymentCompletion)compblock
 {
     // Construct the query string.
-    NSString* queryString = [NSString stringWithFormat: @"mutation test { makePayment( account: \"%@\" userId: %lu amount: %f ) }",
+    NSString* queryString = [NSString stringWithFormat: @"mutation { makePayment( account: \"%@\" userId: %lu amount: %f ) }",
                              ToNSString(account._accountId), user._userId, amount];
     
     // Do the actual query here.

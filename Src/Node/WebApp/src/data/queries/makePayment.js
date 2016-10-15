@@ -39,15 +39,11 @@ const makePayment = {
     connection.query(sql, params, function(err, rows, fields) {
       if(!err) {
 
-        console.log('1 is good!!!');
-
         if(rows.length == 1) {  
 
           // Here is our single result.
           reciverAccount = rows[0].idaccounts;
           
-          console.log('1 is still good!!!', reciverAccount);
-
           // TODO: check if there are availible founds first!
 
           // 2. Now when we have the account we can start deducing the amount from sender account.
@@ -55,8 +51,6 @@ const makePayment = {
           var params = [amount, account];
           connection.query(sql, params, function(err, rows, fields) {
             if(!err) {
-
-                console.log('2 is good!!!');
 
               // 3. Cool, now add amount to reciver account.
               var sql = 'update plutus.accounts set balance = balance + ? where binary idaccounts = ?';
