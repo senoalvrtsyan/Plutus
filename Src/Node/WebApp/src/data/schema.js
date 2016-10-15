@@ -12,12 +12,16 @@ import {
   GraphQLObjectType as ObjectType,
 } from 'graphql';
 
+// Queries
 import content from './queries/content';
 import authenticate from './queries/authenticate';
 import accounts from './queries/accounts';
 import finduser from './queries/finduser';
 import me from './queries/me';
 import echo from './queries/echo';
+
+// Mutations
+import makePayment from './queries/makePayment';
 
 const schema = new Schema({
   query: new ObjectType({
@@ -29,6 +33,12 @@ const schema = new Schema({
       finduser,
       me,
       echo,
+    },
+  }),
+  mutation: new ObjectType({
+    name: 'Mutation',
+    fields: {
+      makePayment,
     },
   }),
 });
