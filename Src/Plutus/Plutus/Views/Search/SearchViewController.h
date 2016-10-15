@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#include "User.h"
+
 @interface SearchViewController : UIViewController
     <UITextFieldDelegate>
 
 @property UITextField* textField;
 @property UIButton* actionBtn;
+
+@property User currentUser;
 
 @end

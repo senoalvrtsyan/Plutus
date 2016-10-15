@@ -394,15 +394,18 @@
                                 handler: ^(UIAlertAction * action) {
                                     //Handle your yes please button action here
                                     // TODO: check balance on transfer.
-                                    if(Service::Instance().MakePayment(selectedAcc, _user, ToPrice(removeCurrencyFormat(ToStdString(_amountTextField.text)))))
-                                    {
-                                        // msgbox::inform ok
-                                        AlertOk(self, @"Success", @"Your payment was a success.", @selector(successAction));
-                                    }
-                                    else
-                                    {
-                                        AlertOk(self, @"Failure", @"Your payment was a failure.", nil);
-                                    }
+                                    [Service2::Instance() MakePaymentFromAccount: selectedAcc toUser: _user withAmount:ToPrice(removeCurrencyFormat(ToStdString(_amountTextField.text))) completionHandler: ^(BOOL res){
+                                    
+                                        if(res)
+                                        {
+                                            // msgbox::inform ok
+                                            AlertOk(self, @"Success", @"Your payment was a success.", @selector(successAction));
+                                        }
+                                        else
+                                        {
+                                            AlertOk(self, @"Failure", @"Your payment was a failure.", nil);
+                                        }
+                                    }];
                                 }];
 
     [alert addAction:noButton];

@@ -104,15 +104,19 @@
     std::string username = ToStdString(_textField.text);
     [Service2::Instance() Find: username completionHandler: ^(UserWrapper* w){
         _actionBtn.enabled = !w.data.empty();
+        
+        _currentUser = w.data;
     }];
 }
 
 -(void)searchAction
 {
-    TransferViewController* vc = [[TransferViewController alloc] init];
-    std::string username = ToStdString(_textField.text);
-    [vc setUser: Service::Instance().Find(username)];
-    [self.navigationController pushViewController: vc animated: YES];
+    if(!_currentUser.empty())
+    {
+        TransferViewController* vc = [[TransferViewController alloc] init];
+        [vc setUser: _currentUser];
+        [self.navigationController pushViewController: vc animated: YES];
+    }
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField*)textField

@@ -35,10 +35,14 @@ typedef void(^getAccountsCompletion)(AccountsWrapper*);
 typedef void(^getAccountCompletion)(AccountWrapper*);
 typedef void(^signInCompletion)(BOOL);
 typedef void(^findUserCompletion)(UserWrapper*);
+typedef void(^paymentCompletion)(BOOL);
 
 @interface ServiceImpl : NSObject
 
+-(void)QueryImpl:(NSString*)query isGet:(BOOL)bGet completionHandler:(parseCompletion)compblock;
+
 -(void)Query:(NSString*)query completionHandler:(parseCompletion)compblock;
+-(void)Mutate:(NSString*)query completionHandler:(parseCompletion)compblock;
 
 // Call after login/signup.
 -(void)SetUser:(const User&)user;
@@ -51,6 +55,8 @@ typedef void(^findUserCompletion)(UserWrapper*);
 -(void)SignIn:(const User&)user completionHandler:(signInCompletion)compblock;
 
 -(void)Find:(const std::string&)username completionHandler:(findUserCompletion)compblock;
+
+-(void)MakePaymentFromAccount:(const Account&)account toUser:(const User&)user withAmount:(PriceType)amount completionHandler:(paymentCompletion)compblock;
 
 // Autentificated user.
 @property User user;
@@ -76,21 +82,13 @@ public:
     void populateTestData();
     
     bool SignUp(User& user);
-    
-    User Find(const std::string& username);
+
     User Find(User::Id userId);
     User Find(const Account accId);
     
     Payments GetPayments();
     Payments GetPendingPayments();
-    
-    bool MakePayment(const Account& account, const User& user, PriceType amount);
 
-private:
-    NSString* GraphQlBaseURL() const;
-    
-    // void Query(NSString* query, NSObject* obj, parseSelector, );
-    
 private:
     // TODO: TMP data storages.
     Users _users;

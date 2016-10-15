@@ -33,11 +33,11 @@
 
 -(NSString*)GraphQlBaseURL
 {
-    static NSString* url = @"http://192.168.1.3:3000/graphql?query=";
+    static NSString* url = @"http://192.168.1.4:3000/graphql?query=";
     return url;
 }
 
--(void)Query:(NSString*)query completionHandler:(parseCompletion)compblock
+-(void)QueryImpl:(NSString*)query isGet:(BOOL)bGet completionHandler:(parseCompletion)compblock
 {
     NSCharacterSet* expectedCharSet = [NSCharacterSet URLQueryAllowedCharacterSet];
     NSString* requestString = [[[self GraphQlBaseURL] stringByAppendingString: query] stringByAddingPercentEncodingWithAllowedCharacters: expectedCharSet];
@@ -45,7 +45,7 @@
     
     NSMutableURLRequest* request = [[NSMutableURLRequest alloc] init];
     [request setURL: url];
-    [request setHTTPMethod: @"GET"];
+    [request setHTTPMethod: bGet ? @"GET" : @"POST"];
     
     // Send request
     NSURLSession* session = [NSURLSession sharedSession];
@@ -93,6 +93,16 @@
               NSLog(@"error : %@", error.description);
           }
       }] resume];
+}
+
+-(void)Query:(NSString*)query completionHandler:(parseCompletion)compblock
+{
+    [self QueryImpl: query isGet: YES completionHandler: compblock];
+}
+
+-(void)Mutate:(NSString*)query completionHandler:(parseCompletion)compblock
+{
+    [self QueryImpl: query isGet: NO completionHandler: compblock];
 }
 
 -(void)SetUser:(const User&)user
@@ -329,6 +339,39 @@
     }];
 }
 
+-(void)MakePaymentFromAccount:(const Account&)account toUser:(const User&)user withAmount:(PriceType)amount completionHandler:(paymentCompletion)compblock
+{
+    // Construct the query string.
+    NSString* queryString = [NSString stringWithFormat: @"mutation test { makePayment( account: \"%@\" userId: %lu amount: %f ) }",
+                             ToNSString(account._accountId), user._userId, amount];
+    
+    // Do the actual query here.
+    [self Mutate: queryString completionHandler: ^(NSDictionary* jsonResponse) {
+        
+        /* Example responce:
+         {
+         "data": {
+            "makePayment": true
+         }
+         } */
+        bool res = false;
+        id data = [jsonResponse objectForKey: @"data"];
+        if(data != [NSNull null])
+        {
+            id status = [data objectForKey: @"makePayment"];
+            if(status != [NSNull null])
+            {
+                res = [(NSNumber*)status boolValue];
+            }
+        }
+        
+        // We just love main thread :)
+        dispatch_async(dispatch_get_main_queue(), ^{
+            compblock(res);
+        });
+    }];
+}
+
 @end
 
 namespace ios
@@ -454,18 +497,6 @@ bool Service::SignUp(User& user)
     return true;
 }
     
-User Service::Find(const std::string& username)
-{
-    for(const auto& user : _users)
-    {
-        if(user._username == username)
-        {
-            return user;
-        }
-    }
-    return User();
-}
-    
 User Service::Find(User::Id userId)
 {
     for(const auto& user : _users)
@@ -525,52 +556,6 @@ Payments Service::GetPendingPayments()
     }
     
     return res;
-}
-    
-bool Service::MakePayment(const Account& account, const User& user, PriceType amount)
-{
-    // Find accounts for the users.
-    auto it = _accounts.find(account._userId);
-    auto it2 = _accounts.find(user._userId);
-    
-    if(it != _accounts.end() && it2 != _accounts.end())
-    {
-        Accounts& accs = it->second;
-        for(Account& acc : accs)
-        {
-            if(acc == account)
-            {
-                // Deduce from balance.
-                acc._balance -= amount;
-    
-                // Add to balance.
-                Accounts& accs = it2->second;
-                for(Account& acc2 : accs)
-                {
-                    // Always transfer tod ebit.
-                    if(acc2._type == Account::Debit)
-                    {
-                        acc2._balance += amount;
-                        
-                        _payments.push_back(Payment(_payments.size(), acc, acc2, amount));
-                        // Record the payment.
-                        return true;
-                    }
-                }
-                
-                // Reverting the payemnt here.
-                acc._balance += amount;
-                return false;
-            }
-        }
-    }
-    return false;
-}
-    
-NSString* Service::GraphQlBaseURL() const
-{
-    static NSString* graphqlBaseURL = @"http://192.168.1.3:3000/graphql?query=";
-    return graphqlBaseURL;
 }
 
 }
