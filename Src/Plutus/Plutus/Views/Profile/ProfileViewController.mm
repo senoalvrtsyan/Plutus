@@ -171,7 +171,7 @@
             _creditLimit.text = ToNSString(oss.str());
     }];
     
-    _creditLimit.textColor = theme::grayColor();
+    _creditLimit.textColor = theme::brandColor4();
     _creditLimit.font = [UIFont systemFontOfSize: name.font.pointSize - 7];
     _creditLimit.textAlignment = NSTextAlignmentRight;
     

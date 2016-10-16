@@ -95,6 +95,7 @@
     _textField.autocorrectionType = UITextAutocorrectionTypeNo;
     _textField.returnKeyType = [self returnKeyType];
     _textField.delegate = self;
+    _textField.secureTextEntry = [self secureTextEntry];
     
     [self.view addSubview: _textField];
 }
@@ -127,6 +128,11 @@
 -(UITextAutocapitalizationType)textFieldAutocapitalizationType
 {
     return UITextAutocapitalizationTypeNone;
+}
+
+-(BOOL)secureTextEntry
+{
+    return NO;
 }
 
 -(void)nextAction
@@ -290,23 +296,30 @@
     return UIReturnKeyJoin;
 }
 
+-(BOOL)secureTextEntry
+{
+    return YES;
+}
+
 -(void)nextAction
 {
     User user = [super GetUser];
     user._password = ToStdString(super.textField.text);
     
     // Cool now we have user object constucted, try to sign-up with service.
-    if(Service::Instance().SignUp(user))
-    {
-        // No matter what, login here.
-        [Service2::Instance() SignIn:user completionHandler: ^(BOOL res){
-            [self handleSignIn: res];
-        }];
-    }
-    else
-    {
-        // TODO: alert.
-    }
+    [Service2::Instance() SignUp: user completionHandler: ^(BOOL res) {
+        if(res)
+        {
+            // No matter what, login here.
+            [Service2::Instance() SignIn:user completionHandler: ^(BOOL res){
+                [self handleSignIn: res];
+            }];
+        }
+        else
+        {
+            // TODO: alert.
+        }
+    }];
 }
 
 -(BOOL)validateInput

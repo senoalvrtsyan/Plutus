@@ -34,6 +34,7 @@ typedef void(^parseCompletion)(NSDictionary*);
 typedef void(^getAccountsCompletion)(AccountsWrapper*);
 typedef void(^getAccountCompletion)(AccountWrapper*);
 typedef void(^signInCompletion)(BOOL);
+typedef void(^signUpCompletion)(BOOL);
 typedef void(^findUserCompletion)(UserWrapper*);
 typedef void(^paymentCompletion)(BOOL);
 
@@ -53,6 +54,7 @@ typedef void(^paymentCompletion)(BOOL);
 -(void)GetAccount:(Account::Type)type completionHandler:(getAccountCompletion)compblock;
 
 -(void)SignIn:(const User&)user completionHandler:(signInCompletion)compblock;
+-(void)SignUp:(User&)user completionHandler:(signUpCompletion)compblock;
 
 -(void)Find:(const std::string&)username completionHandler:(findUserCompletion)compblock;
 
@@ -80,8 +82,6 @@ public:
     Service();
     
     void populateTestData();
-    
-    bool SignUp(User& user);
 
     User Find(User::Id userId);
     User Find(const Account accId);

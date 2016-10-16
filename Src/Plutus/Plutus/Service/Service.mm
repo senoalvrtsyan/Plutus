@@ -33,7 +33,7 @@
 
 -(NSString*)GraphQlBaseURL
 {
-    static NSString* url = @"http://192.168.1.4:3000/graphql?query=";
+    static NSString* url = @"http://192.168.1.3:3000/graphql?query=";
     return url;
 }
 
@@ -266,7 +266,77 @@
                     u._email = std::string([((NSString*)email) UTF8String]);
                     
                     // Awesome, set the user as a central user for the service.
-                    [Service2::Instance() SetUser: u];
+                    [self SetUser: u];
+                    res = true;
+                }
+            }
+        }
+        
+        // We just love main thread :)
+        dispatch_async(dispatch_get_main_queue(), ^{
+            compblock(res);
+        });
+    }];
+}
+
+-(void)SignUp:(User&)user completionHandler:(signUpCompletion)compblock
+{
+    if(user._username.empty() ||
+       user._password.empty() ||
+       user._name. empty() ||
+       user._email.empty())
+    {
+        compblock(NO);
+    }
+    
+    // Construct the query string.
+    NSString* queryString = [NSString stringWithFormat:
+                             @"mutation { signUp(name: \"%@\", username: \"%@\", email: \"%@\", password: \"%@\") { id name username email } }",
+                             ToNSString(user._name), ToNSString(user._username), ToNSString(user._email), ToNSString(user._password)];
+    
+    // Do the actual query here.
+    [self Mutate: queryString completionHandler:^(NSDictionary* jsonResponse) {
+        
+        /* Example responce:
+         {
+         "data": {
+            "signUp": {
+                "id": "27",
+                "name": "Super men",
+                "username": "sm",
+                "email": "sm@gmail.com"
+                }
+            }
+         } */
+        bool res = false;
+        id data = [jsonResponse objectForKey: @"data"];
+        if(data != [NSNull null])
+        {
+            id usr = [data objectForKey: @"signUp"];
+            if(usr != [NSNull null])
+            {
+                // Get fields.
+                id userId = [usr objectForKey: @"id"];
+                id username = [usr objectForKey: @"username"];
+                id name = [usr objectForKey: @"name"];
+                id email = [usr objectForKey: @"email"];
+                
+                if(userId != [NSNull null] &&
+                   username != [NSNull null] &&
+                   name != [NSNull null] &&
+                   email != [NSNull null]
+                   )
+                {
+                    // Construct the user.
+                    User u;
+                    u._userId = ToId(std::string([((NSString*)userId) UTF8String]));
+                    u._username = std::string([((NSString*)username) UTF8String]);
+                    u._name = std::string([((NSString*)name) UTF8String]);
+                    u._email = std::string([((NSString*)email) UTF8String]);
+                    
+                    // No need to do anything with user here, after signup we will be sending login normally.
+                    // User info is not used herr is iOS client for now.
+                    
                     res = true;
                 }
             }
@@ -442,59 +512,6 @@ Service::Service()
 {
     // TODO: remove
     populateTestData();
-}
-
-bool Service::SignUp(User& user)
-{
-    if(user._username.empty() ||
-       user._password.empty() ||
-       user._name.empty() ||
-       user._email.empty())
-    {
-        return false;
-    }
-    
-    // Init user id.
-    user._userId = _users.size() + 1;
-    
-    _users.push_back(user);
-    
-    long max = 0;
-    for(const auto& item : _accounts)
-    {
-        for(const auto& item2 : item.second)
-        {
-            long accId = 0;
-            std::stringstream ss;
-            ss << item2._accountId;
-            ss >> accId;
-            
-            if(max < accId)
-            {
-                max  = accId;
-            }
-        }
-    }
-
-    Account::Id debitId;
-    Account::Id creditId;
-    
-    std::stringstream ss;
-    ss << max;
-    ss >> debitId;
-    
-    std::stringstream ss2;
-    ss2 << max + 1;
-    ss2 >> creditId;
-    
-    Accounts accs;
-    accs.push_back(Account(debitId, user._userId, 75000));
-    accs.push_back(Account(creditId, user._userId, 140000, Account::Credit, 400000));
-    
-    _accounts[user._userId] = accs;
-    
-    // TODO: implement.
-    return true;
 }
     
 User Service::Find(User::Id userId)
