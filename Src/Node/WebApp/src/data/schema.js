@@ -22,6 +22,7 @@ import echo from './queries/echo';
 
 // Mutations
 import makePayment from './queries/makePayment';
+import signUp from './queries/signUp';
 
 const schema = new Schema({
   query: new ObjectType({
@@ -39,6 +40,7 @@ const schema = new Schema({
     name: 'Mutation',
     fields: {
       makePayment,
+      signUp,
     },
   }),
 });
