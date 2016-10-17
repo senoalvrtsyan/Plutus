@@ -42,11 +42,17 @@ const accounts = {
             // Here is our single resoult.
             var row = rows[i];
 
+            var balance = row.balance;
+            if(row.type == 2/*credit*/)
+            {
+              balance = row.limit - row.balance;
+            }
+
             res.push({
                 id: row.idaccounts,
                 userid: row.iduser,
                 type: row.type,
-                balance: row.balance,
+                balance: balance,
                 limit: row.limit
             });
           }

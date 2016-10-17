@@ -31,77 +31,19 @@ const makePayment = {
     return new Promise(function(resolve, reject) {
 
     var connection = mysql.globalConnection;
-
-    // 1. First of all, get the debit account of the reciving user so we can make a payment.
-    var reciverAccount = "";
-    var sql = 'SELECT idaccounts FROM plutus.accounts where iduser = ? and type = ?';
-    var params = [userId, 1/*debit*/];
-    connection.query(sql, params, function(err, rows, fields) {
+    // Call db procedure . 
+    var sql = 'CALL plutus.MakePayment(?, ?, ?)';
+    var params = [account, userId, amount];
+    connection.query(sql, params, function(err, rows) {
       if(!err) {
-
-        if(rows.length == 1) {  
-
-          // Here is our single result.
-          reciverAccount = rows[0].idaccounts;
-          
-          // TODO: check if there are availible founds first!
-
-          // 2. Now when we have the account we can start deducing the amount from sender account.
-          var sql = 'update plutus.accounts set balance = balance - ? where binary idaccounts = ?';
-          var params = [amount, account];
-          connection.query(sql, params, function(err, rows, fields) {
-            if(!err) {
-
-              // 3. Cool, now add amount to reciver account.
-              var sql = 'update plutus.accounts set balance = balance + ? where binary idaccounts = ?';
-              var params = [amount, reciverAccount];
-              connection.query(sql, params, function(err, rows, fields) {
-              if(!err) {
-                
-                // 3. Register the payment into DB.
-                var sql =
-                  'INSERT INTO plutus.payment (sender, receiver, amount, datetime) VALUES (?, ?, ?, \'2016-10-06 17:25:31\')';
-                var params = [account, reciverAccount, amount];
-                connection.query(sql, params, function(err, rows, fields) {
-                  if(!err) {
-
-                    resolve(true);
-
-                  }
-                  else {
-                    console.log('MySQL error: ', err);
-                    resolve(false);
-                  } 
-                });
-
-
-              }
-              else {
-                console.log('MySQL error: ', err);
-                resolve(false);
-              } 
-            });
-
-
-            }
-            else {
-              console.log('MySQL error: ', err);
-              resolve(false);
-            }
-          });
-
-
-        }
-        else {
-          resolve(false);
-        }
+          resolve(true);
       }
       else {
         console.log('MySQL error: ', err);
         resolve(false);
       }
     });
-  });
+   });
   },
 };
 
