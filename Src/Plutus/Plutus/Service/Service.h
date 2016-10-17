@@ -80,8 +80,6 @@ public:
     static Service& Instance();
     
     Service();
-    
-    void populateTestData();
 
     User Find(User::Id userId);
     User Find(const Account accId);
