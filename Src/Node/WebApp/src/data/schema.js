@@ -18,6 +18,7 @@ import authenticate from './queries/authenticate';
 import accounts from './queries/accounts';
 import finduser from './queries/finduser';
 import paymentHistory from './queries/paymentHistory';
+import getPaymentRequest from './queries/getPaymentRequest';
 //import me from './queries/me';
 //import echo from './queries/echo';
 
@@ -34,6 +35,7 @@ const schema = new Schema({
       accounts,
       finduser,
       paymentHistory,
+      getPaymentRequest,
 //    me,
 //    echo,
     },
