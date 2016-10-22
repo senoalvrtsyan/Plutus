@@ -11,6 +11,7 @@
 #include "User.h"
 #include "Account.h"
 #include "Payment.h"
+#include "PaymentRecord.h"
 
 #import "LoginBaseViewController.h"
 
@@ -28,6 +29,10 @@
 @property User data;
 @end
 
+@interface PaymentRecordsWrapper : NSObject
+@property PaymentRecords data;
+@end
+
 /* Objective-C service implementation */
 
 typedef void(^parseCompletion)(NSDictionary*);
@@ -37,6 +42,7 @@ typedef void(^signInCompletion)(BOOL);
 typedef void(^signUpCompletion)(BOOL);
 typedef void(^findUserCompletion)(UserWrapper*);
 typedef void(^paymentCompletion)(BOOL);
+typedef void(^PaymentHistoryCompletion)(PaymentRecordsWrapper*);
 
 @interface ServiceImpl : NSObject
 
@@ -59,6 +65,8 @@ typedef void(^paymentCompletion)(BOOL);
 -(void)Find:(const std::string&)username completionHandler:(findUserCompletion)compblock;
 
 -(void)MakePaymentFromAccount:(const Account&)account toUser:(const User&)user withAmount:(PriceType)amount completionHandler:(paymentCompletion)compblock;
+
+-(void)GetPaymentHistory:(bool)sent completionHandler:(PaymentHistoryCompletion)compblock;
 
 // Autentificated user.
 @property User user;

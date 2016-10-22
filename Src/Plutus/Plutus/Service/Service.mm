@@ -8,6 +8,7 @@
 
 #include "Service.h"
 
+#include <iostream>
 #include <sstream>
 
 #import "Utils.h"
@@ -27,13 +28,16 @@
 @implementation UserWrapper
 @end
 
+@implementation PaymentRecordsWrapper
+@end
+
 /* Objective-C service implementation */
 
 @implementation ServiceImpl
 
 -(NSString*)GraphQlBaseURL
 {
-    static NSString* url = @"http://192.168.1.3:3000/graphql?query=";
+    static NSString* url = @"http://192.168.1.4:3000/graphql?query=";
     return url;
 }
 
@@ -442,6 +446,77 @@
     }];
 }
 
+-(void)GetPaymentHistory:(bool)sent completionHandler:(PaymentHistoryCompletion)compblock
+{
+    // Construct query string.
+    NSString* queryString =
+    [NSString stringWithFormat: @"{ paymentHistory(userid: %lu, sent: %u) { account type name username amount sent} }",
+        [self GetUser]._userId, (unsigned)sent];
+    
+    // Make the actual query.
+    [self Query: queryString completionHandler:^(NSDictionary* jsonResponse) {
+        
+        /* Example responce:
+         {
+            "data": {
+                "paymentHistory": [
+                {
+                    "account": "200100102",
+                    "name": "Hovhannes Grigoryan",
+                    "username": "hov",
+                    "amount": 778
+                }
+                ]
+            }
+         }
+         */
+        id data = [jsonResponse objectForKey: @"data"];
+        if(data != [NSNull null])
+        {
+            id accs = [data objectForKey: @"paymentHistory"];
+            if(accs != [NSNull null])
+            {
+                PaymentRecords res;
+                for(NSDictionary* acc in accs)
+                {
+                    // Get fields.
+                    id accId = [acc objectForKey: @"account"];
+                    id type = [acc objectForKey: @"type"];
+                    id name = [acc objectForKey: @"name"];
+                    id username = [acc objectForKey: @"username"];
+                    id amount = [acc objectForKey: @"amount"];
+                    id sent = [acc objectForKey: @"sent"];
+                    
+                    if(accId != [NSNull null] &&
+                       type != [NSNull null] &&
+                       name != [NSNull null] &&
+                       username != [NSNull null] &&
+                       amount != [NSNull null] &&
+                       sent != [NSNull null])
+                    {
+                        bool bSent = [(NSNumber*)sent integerValue];
+                        
+                        PaymentRecord r(ToStdString((NSString*)accId),
+                                        static_cast<Account::Type>([(NSNumber*)type integerValue]),
+                                        ToStdString((NSString*)name),
+                                        ToStdString((NSString*)username),
+                                        poost::lexical_cast<PriceType>([(NSNumber*)amount floatValue]),
+                                        bSent);
+                        res.push_back(r);
+                    }
+                }
+                
+                // We just love main thread :)
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    PaymentRecordsWrapper* w = [[PaymentRecordsWrapper alloc] init];
+                    w.data = res;
+                    compblock(w);
+                });
+            }
+        }
+    }];
+}
+
 @end
 
 namespace ios
@@ -498,20 +573,6 @@ User Service::Find(const Account acc)
 Payments Service::GetPayments()
 {
     Payments res;
-
-    /* TODO
-    for(const auto& pay : _payments)
-    {
-        for(const auto& acc : GetAccounts(nil))
-        {
-            if(pay._sender == acc)
-            {
-                res.push_back(pay);
-            }
-        }
-    }
-     */
-    
     return res;
 }
     

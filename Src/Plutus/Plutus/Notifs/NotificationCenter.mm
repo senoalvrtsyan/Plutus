@@ -38,7 +38,7 @@
         const auto payment = payments.front();
         
         TransferViewController* vc = [[TransferViewController alloc] init];
-        [vc setPopupMode: YES];
+        [vc setMode: TransferViewMode::RequestPopup];
         [vc setUser: Service::Instance().Find(payment._receiver)];
         [vc SetAmount: payment._amount];
         [_parent presentViewController: vc animated: YES completion: nil];

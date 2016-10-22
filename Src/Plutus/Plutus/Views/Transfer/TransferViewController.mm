@@ -27,17 +27,25 @@
     self = [super init];
     if(self)
     {
-        // false by default.
-        _popupMode = false;
+        // We are not sure by default.
+        _mode = TransferViewMode::Undefined;
     }
     return self;
 }
 
 -(void)viewDidLoad
 {
-    [super viewDidLoad];
-    
-    self.title = @"Transfer";
+    switch (_mode)
+    {
+        case TransferViewMode::CreateRequest:
+            self.title = @"Request";
+            break;
+        case TransferViewMode::Transfer:
+        case TransferViewMode::RequestPopup:
+        default:
+            self.title = @"Transfer";
+            break;
+    }
     
     UITapGestureRecognizer* tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer: tap];
@@ -46,6 +54,8 @@
         _accounts = w.data;
         [_picker reloadAllComponents];
     }];
+    
+    [super viewDidLoad];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -248,6 +258,7 @@
     static const int pickerH = 3 * controlH;
     static const int pickerY = amountY + controlH - 1;
     // Choose the account.
+    if(_mode == TransferViewMode::Transfer || _mode == TransferViewMode::RequestPopup)
     {
         // Add picker.
         _picker = [[UIPickerView alloc] initWithFrame: CGRectMake(amountX, pickerY, amountW, pickerH)];
@@ -268,13 +279,13 @@
         [transfer addTarget: self action: @selector(transferAction) forControlEvents: UIControlEventTouchUpInside];
         transfer.backgroundColor = theme::brandColor4();
         [transfer setBackgroundImage: imageWithColor(theme::brandColor5()) forState: UIControlStateHighlighted];
-        [transfer setTitle: @"Transfer" forState: UIControlStateNormal];
+        [transfer setTitle: self.title forState: UIControlStateNormal];
         
         [self.view addSubview: transfer];
     }
     
     // Take care of popup mode
-    if(_popupMode)
+    if(_mode == TransferViewMode::RequestPopup) // User should be able to cancel the request.
     {
         // Take care of cancel button.
         static const int cancelY = transferY + controlH + 8;
@@ -421,7 +432,7 @@
 {
     _amountTextField.text = @"";
     
-    if(_popupMode)
+    if(_mode == TransferViewMode::RequestPopup)
     {
         [self closeAction];
     }

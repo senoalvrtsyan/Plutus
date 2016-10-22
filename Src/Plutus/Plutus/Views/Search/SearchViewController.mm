@@ -88,22 +88,33 @@
     static const int btnW = textFieldW;
     static const int btnY = textFieldY + controlH + 20;
     static const int btnX = textFieldX;
-    _actionBtn = [[UIButton alloc] initWithFrame: CGRectMake(btnX, btnY, btnW, controlH)];
-    [_actionBtn addTarget: self action: @selector(searchAction) forControlEvents: UIControlEventTouchUpInside];
-    [_actionBtn setBackgroundImage: imageWithColor(theme::brandColor4()) forState: UIControlStateNormal];
-    [_actionBtn setBackgroundImage: imageWithColor(theme::brandColor5()) forState: UIControlStateHighlighted];
-    [_actionBtn setBackgroundImage: imageWithColor(theme::grayColor()) forState: UIControlStateDisabled];
-    [_actionBtn setTitle: @"Transfer" forState: UIControlStateNormal];
-    _actionBtn.enabled = NO;
+    _transferBtn = [[UIButton alloc] initWithFrame: CGRectMake(btnX, btnY, btnW, controlH)];
+    [_transferBtn addTarget: self action: @selector(searchAction) forControlEvents: UIControlEventTouchUpInside];
+    [_transferBtn setBackgroundImage: imageWithColor(theme::brandColor4()) forState: UIControlStateNormal];
+    [_transferBtn setBackgroundImage: imageWithColor(theme::brandColor5()) forState: UIControlStateHighlighted];
+    [_transferBtn setBackgroundImage: imageWithColor(theme::grayColor()) forState: UIControlStateDisabled];
+    [_transferBtn setTitle: @"Transfer" forState: UIControlStateNormal];
+    _transferBtn.enabled = NO;
     
-    [self.view addSubview: _actionBtn];
+    [self.view addSubview: _transferBtn];
+    
+    // Take care of request payment button.
+    _requestBtn = [[UIButton alloc] initWithFrame: CGRectMake(textFieldX, btnY + controlH + 10, btnW, controlH)];
+    [_requestBtn addTarget: self action: @selector(requestAction) forControlEvents: UIControlEventTouchUpInside];
+    [_requestBtn setBackgroundImage: imageWithColor(theme::brandColor4()) forState: UIControlStateNormal];
+    [_requestBtn setBackgroundImage: imageWithColor(theme::brandColor5()) forState: UIControlStateHighlighted];
+    [_requestBtn setBackgroundImage: imageWithColor(theme::grayColor()) forState: UIControlStateDisabled];
+    [_requestBtn setTitle: @"Request" forState: UIControlStateNormal];
+    _requestBtn.enabled = NO;
+    
+    [self.view addSubview: _requestBtn];
 }
 
 -(void)textFieldDidChange
 {
     std::string username = ToStdString(_textField.text);
     [Service2::Instance() Find: username completionHandler: ^(UserWrapper* w){
-        _actionBtn.enabled = !w.data.empty();
+        _transferBtn.enabled = _requestBtn.enabled = !w.data.empty();
         
         _currentUser = w.data;
     }];
@@ -114,6 +125,18 @@
     if(!_currentUser.empty())
     {
         TransferViewController* vc = [[TransferViewController alloc] init];
+        [vc setMode: TransferViewMode::Transfer];
+        [vc setUser: _currentUser];
+        [self.navigationController pushViewController: vc animated: YES];
+    }
+}
+
+-(void)requestAction
+{
+    if(!_currentUser.empty())
+    {
+        TransferViewController* vc = [[TransferViewController alloc] init];
+        [vc setMode: TransferViewMode::CreateRequest];
         [vc setUser: _currentUser];
         [self.navigationController pushViewController: vc animated: YES];
     }
@@ -121,7 +144,7 @@
 
 -(BOOL)textFieldShouldReturn:(UITextField*)textField
 {
-    if(_actionBtn.enabled)
+    if(_transferBtn.enabled)
     {
         [self searchAction];
         return YES;

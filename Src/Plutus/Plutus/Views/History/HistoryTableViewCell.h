@@ -8,18 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-#include "Payment.h"
+#include "PaymentRecord.h"
 
 @interface HistoryTableViewCell : UITableViewCell
 
 @property UIImageView* side;
+@property UILabel* name;
 @property UILabel* username;
-@property UILabel* userAccount;
-@property UILabel* userAccountType;
 @property UILabel* amount;
 
-@property Payment payment;
+-(void)SetData:(const PaymentRecord&)data;
 
--(void)SetPayment:(const Payment&)payment;
+@property PaymentRecord data;
 
 @end

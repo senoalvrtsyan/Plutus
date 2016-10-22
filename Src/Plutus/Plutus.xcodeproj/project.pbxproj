@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1101CA7E1DBB7C7600E0879E /* PaymentRecord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1101CA7C1DBB7C7600E0879E /* PaymentRecord.cpp */; };
 		1102DE321D9D7DE300DF47EE /* NotificationCenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1102DE311D9D7DE300DF47EE /* NotificationCenter.mm */; };
 		113FF74E1D89CE8D00138593 /* clipboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 113FF74B1D89CE8D00138593 /* clipboard@2x.png */; };
 		113FF7501D89CE8D00138593 /* paper-plane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 113FF74D1D89CE8D00138593 /* paper-plane@2x.png */; };
@@ -44,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1101CA7C1DBB7C7600E0879E /* PaymentRecord.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PaymentRecord.cpp; sourceTree = "<group>"; };
+		1101CA7D1DBB7C7600E0879E /* PaymentRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentRecord.h; sourceTree = "<group>"; };
 		1102DE2E1D9D7DAD00DF47EE /* NotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationCenter.h; path = Notifs/NotificationCenter.h; sourceTree = "<group>"; };
 		1102DE311D9D7DE300DF47EE /* NotificationCenter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NotificationCenter.mm; path = Notifs/NotificationCenter.mm; sourceTree = "<group>"; };
 		113FF74B1D89CE8D00138593 /* clipboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clipboard@2x.png"; path = "../../../Graphics/icon/clipboard@2x.png"; sourceTree = "<group>"; };
@@ -276,6 +279,8 @@
 		11D5A9B41D92912C002A15EF /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				1101CA7C1DBB7C7600E0879E /* PaymentRecord.cpp */,
+				1101CA7D1DBB7C7600E0879E /* PaymentRecord.h */,
 				11CDFB621D9680D7001A9B48 /* Payment.cpp */,
 				11CDFB631D9680D7001A9B48 /* Payment.h */,
 				116FC8C31D95A11400F4291C /* Types.h */,
@@ -409,6 +414,7 @@
 				11D5A9B31D929030002A15EF /* Service.mm in Sources */,
 				1161BE6A1D855A3800D5A28A /* ProfileViewController.mm in Sources */,
 				1102DE321D9D7DE300DF47EE /* NotificationCenter.mm in Sources */,
+				1101CA7E1DBB7C7600E0879E /* PaymentRecord.cpp in Sources */,
 				11AC19251DA4077B0005D62D /* SignupViewController.mm in Sources */,
 				11ED67281D81E03500DC5CEB /* Utils.mm in Sources */,
 				11EB976D1D8D97F700B536EB /* HistoryTableViewCell.mm in Sources */,

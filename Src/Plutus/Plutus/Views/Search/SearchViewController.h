@@ -14,7 +14,8 @@
     <UITextFieldDelegate>
 
 @property UITextField* textField;
-@property UIButton* actionBtn;
+@property UIButton* transferBtn;
+@property UIButton* requestBtn;
 
 @property User currentUser;
 

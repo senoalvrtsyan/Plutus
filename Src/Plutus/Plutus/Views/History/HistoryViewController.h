@@ -8,11 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+#include "PaymentRecord.h"
+
 #import "CommonViewController.h"
 
 @interface HistoryViewController : CommonViewController
     <UITableViewDataSource, UITableViewDelegate>
 
 @property UITableView* tableView;
+
+@property bool sentMode;
+@property PaymentRecords sentPayments;
+@property PaymentRecords receivedPayments;
 
 @end

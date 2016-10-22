@@ -27,13 +27,22 @@
     [super viewDidLoad];
     
     self.title = @"History";
+    _sentMode = true;
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear: animated];
     
-    [_tableView reloadData];
+    [Service2::Instance() GetPaymentHistory: true completionHandler: ^(PaymentRecordsWrapper* w){
+        _sentPayments = w.data;
+    
+        [Service2::Instance() GetPaymentHistory: false completionHandler: ^(PaymentRecordsWrapper* w){
+            _receivedPayments = w.data;
+        
+            [_tableView reloadData];
+        }];
+    }];
 }
 
 -(void)didReceiveMemoryWarning
@@ -44,11 +53,29 @@
 
 -(void)createControls
 {
+    // Take care of segmented control.
     static const int viewW = self.view.frame.size.width;
+    static const int topBarH = [UIApplication sharedApplication].statusBarFrame.size.height + self.navigationController.navigationBar.frame.size.height;
+    static const int bottomBarH = self.tabBarController.tabBar.frame.size.height;
+    static const int segW = viewW - 20;
+    static const int segH = controlH - 10;
+    static const int segX = (viewW - segW) / 2; // center
+    static const int segY = topBarH + 6;
+    
+    NSArray* segments = [NSArray arrayWithObjects: @"Sent", @"Received", nil];
+    UISegmentedControl* segmentedControl = [[UISegmentedControl alloc] initWithItems: segments];
+    segmentedControl.frame = CGRectMake(segX, segY, segW, segH);
+    segmentedControl.selectedSegmentIndex = 0;
+    segmentedControl.tintColor = theme::brandColor4();
+    [segmentedControl addTarget: self action: @selector(segmentChanged:) forControlEvents: UIControlEventValueChanged];
+    
+    [self.view addSubview: segmentedControl];
+    
+    // Take care of table view.
     static const int tableX = 0;
-    static const int tabley = 0;
-    static const int tableH = self.view.frame.size.height;
-    _tableView = [[UITableView alloc] initWithFrame: CGRectMake(tableX, tabley, viewW, tableH)];
+    static const int tableY = segY + segH + 6;
+    static const int tableH = self.view.frame.size.height - bottomBarH - tableY;
+    _tableView = [[UITableView alloc] initWithFrame: CGRectMake(tableX, tableY, viewW, tableH)];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.allowsSelection = NO;
@@ -56,10 +83,18 @@
     [self.view addSubview: _tableView];
 }
 
+-(void)segmentChanged:(id)sender
+{
+    // Get the segment control.
+    UISegmentedControl* segment = sender;
+    _sentMode = !(bool)(segment.selectedSegmentIndex);
+    
+    [_tableView reloadData];
+}
+
 -(NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    auto res = Service::Instance().GetPayments().size();
-    return res;
+    return _sentMode ? _sentPayments.size() : _receivedPayments.size();
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -80,9 +115,7 @@
         cell = [[HistoryTableViewCell alloc] initWithStyle: UITableViewCellStyleSubtitle reuseIdentifier: ucid];
     }
     
-    Payment pay = Service::Instance().GetPayments()[indexPath.row];
-    [cell SetPayment: pay];
-
+    [cell SetData: _sentMode ? _sentPayments[indexPath.row] : _receivedPayments[indexPath.row]];
     return cell;
 }
 

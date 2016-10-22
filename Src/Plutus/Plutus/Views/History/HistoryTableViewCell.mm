@@ -63,15 +63,6 @@
     
     // Take care of the side.
     _side = [[UIImageView alloc] init];
-    bool send = rand() % 2;
-    if(send)
-    {
-        _side.image = [UIImage imageNamed: @"arrow-right2_red"];
-    }
-    else
-    {
-        _side.image = [UIImage imageNamed: @"arrow-left"];
-    }
     [self addSubview: _side];
     
     // Take care of username
@@ -83,24 +74,17 @@
     [self addSubview: _username];
     
     // Take care of user account.
-    _userAccount = [[UILabel alloc] init];
-    _userAccount.textColor = self.textLabel.textColor;
-    _userAccount.font = self.textLabel.font;
-    _userAccount.textAlignment = NSTextAlignmentRight;
+    _name = [[UILabel alloc] init];
+    _name.textColor = self.textLabel.textColor;
+    _name.font = self.textLabel.font;
+    _name.textAlignment = NSTextAlignmentRight;
+    _name.adjustsFontSizeToFitWidth = YES;
     
-    [self addSubview: _userAccount];
-    
-    // Take care of user account type.
-    _userAccountType = [[UILabel alloc] init];
-    _userAccountType.textColor = theme::grayColor();
-    _userAccountType.font = self.detailTextLabel.font;
-    _userAccountType.textAlignment = NSTextAlignmentRight;
-    
-    [self addSubview: _userAccountType];
+    [self addSubview: _name];
     
     // Take care of amount.
     _amount = [[UILabel alloc] init];
-    _amount.textColor = send ? theme::grayColor() : theme::brandColor4();
+    _amount.textColor = _data._sent ? theme::grayColor() : theme::brandColor4();
     _amount.font = [UIFont boldSystemFontOfSize: _amount.font.pointSize + 2];
     _amount.textAlignment = NSTextAlignmentCenter;
     
@@ -112,7 +96,7 @@
     [super layoutSubviews];
     
     static const int viewW = [[UIScreen mainScreen] bounds].size.width;
-    static const int myAccW = viewW / 3;
+    static const int myAccW = viewW / 2;
     static const int myAccH = 20;
     static const int myAccTypeH = 10;
     static const int myAccTypeY = historyCellH - myAccTypeH - 5;
@@ -138,25 +122,38 @@
     static const int usernameY = myAccY - controlH + 10;
     [_username setFrame: CGRectMake(usernameX, usernameY, myAccW, controlH)];
     
-    // Take care of user account.
+    // Take care of name.
     static const int userAccountX = viewW - myAccW - 10;
-    [_userAccount setFrame: CGRectMake(userAccountX, myAccY, myAccW, myAccH)];
-
-    // Take care of user account type.
-    [_userAccountType setFrame: CGRectMake(userAccountX, myAccTypeY, myAccW, myAccTypeH)];
+    [_name setFrame: CGRectMake(userAccountX, myAccY, myAccW, myAccH)];
 }
 
--(void)SetPayment:(const Payment&)payment
+-(void)SetData:(const PaymentRecord&)data
 {
-    _payment = payment;
+    _data = data;
+
+    // Take care of side.
+    if(_data._sent)
+    {
+        _side.image = [UIImage imageNamed: @"arrow-right2_red"];
+    }
+    else
+    {
+        _side.image = [UIImage imageNamed: @"arrow-left"];
+    }
     
-    self.textLabel.text = ToNSString(_payment._sender._accountId);
-    self.detailTextLabel.text = ToNSString(ToStdString(_payment._sender._type));
+    // Take care of account.
+    self.textLabel.text = ToNSString(_data._accountId);
     
-    _username.text = ToNSString(atUsername(Service::Instance().Find(_payment._receiver)._username));
-    _userAccount.text = ToNSString(_payment._receiver._accountId);
-    _userAccountType.text = ToNSString(ToStdString(_payment._receiver._type));
-    _amount.text = ToCurrencyNSString(ToNSString(ToStdString(_payment._amount)));
+    // Take care of account type.
+    self.detailTextLabel.text = ToNSString(ToStdString(_data._accountType));
+    
+    // Take care of username.
+    NSString* un = @"@";
+    _username.text = [un stringByAppendingString: ToNSString(_data._username)];
+    
+    _name.text = ToNSString(_data._name);
+    
+    _amount.text = ToCurrencyNSString(ToNSString(ToStdString(_data._amount)));
 }
 
 @end

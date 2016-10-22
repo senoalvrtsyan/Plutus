@@ -13,6 +13,18 @@
 #include "User.h"
 #include "Account.h"
 
+struct TransferViewMode
+{
+    enum Value
+    {
+        Undefined = 0,
+        Transfer,           // User wants to transfer money for someone else.
+        CreateRequest,      // User creates a request of payment for someone.
+        RequestPopup,       // User got a popup request to make a payment
+        Count
+    };
+};
+
 @interface TransferViewController : CommonViewController
     <UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate>
 
@@ -34,8 +46,7 @@
 
 @property Accounts accounts;
 
-// If this is set to true, that means we are in a popup mode.
-// Meaning, somebody requested a payment.
-@property bool popupMode;
+// Descrives the mode of view, one of three, see the enum.
+@property TransferViewMode::Value mode;
 
 @end
