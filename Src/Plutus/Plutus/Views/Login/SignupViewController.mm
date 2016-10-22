@@ -307,11 +307,11 @@
     user._password = ToStdString(super.textField.text);
     
     // Cool now we have user object constucted, try to sign-up with service.
-    [Service2::Instance() SignUp: user completionHandler: ^(BOOL res) {
+    [Service::Instance() SignUp: user completionHandler: ^(BOOL res) {
         if(res)
         {
             // No matter what, login here.
-            [Service2::Instance() SignIn:user completionHandler: ^(BOOL res){
+            [Service::Instance() SignIn:user completionHandler: ^(BOOL res){
                 [self handleSignIn: res];
             }];
         }

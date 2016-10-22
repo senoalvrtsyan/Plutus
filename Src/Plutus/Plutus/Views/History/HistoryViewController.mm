@@ -34,10 +34,10 @@
 {
     [super viewDidAppear: animated];
     
-    [Service2::Instance() GetPaymentHistory: true completionHandler: ^(PaymentRecordsWrapper* w){
+    [Service::Instance() GetPaymentHistory: true completionHandler: ^(PaymentRecordsWrapper* w){
         _sentPayments = w.data;
     
-        [Service2::Instance() GetPaymentHistory: false completionHandler: ^(PaymentRecordsWrapper* w){
+        [Service::Instance() GetPaymentHistory: false completionHandler: ^(PaymentRecordsWrapper* w){
             _receivedPayments = w.data;
         
             [_tableView reloadData];

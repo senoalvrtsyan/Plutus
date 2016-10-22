@@ -76,31 +76,10 @@ typedef void(^PaymentHistoryCompletion)(PaymentRecordsWrapper*);
 namespace ios
 {
 
-namespace Service2
+namespace Service
 {
     ServiceImpl* Instance();
 }
-
-// Class provides access to Plutus backend.
-class Service
-{
-public:
-    static Service& Instance();
-    
-    Service();
-
-    User Find(User::Id userId);
-    User Find(const Account accId);
-    
-    Payments GetPayments();
-    Payments GetPendingPayments();
-
-private:
-    // TODO: TMP data storages.
-    Users _users;
-    AccountsMap _accounts;
-    Payments _payments;
-};
 
 }
 using namespace ios;

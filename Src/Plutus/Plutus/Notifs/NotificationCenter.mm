@@ -32,7 +32,7 @@
 
 -(void)timeout
 {
-    auto payments = Service::Instance().GetPendingPayments();
+    /*auto payments = Service::Instance().GetPendingPayments();
     if(!payments.empty())
     {
         const auto payment = payments.front();
@@ -42,7 +42,7 @@
         [vc setUser: Service::Instance().Find(payment._receiver)];
         [vc SetAmount: payment._amount];
         [_parent presentViewController: vc animated: YES completion: nil];
-    }
+    }*/
 }
 
 @end

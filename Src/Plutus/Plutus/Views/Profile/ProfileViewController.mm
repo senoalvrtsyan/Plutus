@@ -69,7 +69,7 @@
     static const int nameX = (viewW - nameW) / 2; // Centered;;
     static const int nameY = logoY + logoS - 10;
     UILabel* name = [[UILabel alloc] initWithFrame: CGRectMake(nameX, nameY, nameW, controlH)];
-    name.text = ToNSString([Service2::Instance() GetUser]._name);
+    name.text = ToNSString([Service::Instance() GetUser]._name);
     name.textColor = theme::textColor();
     name.font = [UIFont boldSystemFontOfSize: name.font.pointSize];
     name.textAlignment = NSTextAlignmentCenter;
@@ -81,7 +81,7 @@
     static const int usernameX = (viewW - nameW) / 2; // Centered;
     static const int usernameY = nameY + 20;
     UILabel* username = [[UILabel alloc] initWithFrame: CGRectMake(usernameX, usernameY, usernameW, controlH)];
-    username.text = ToNSString(atUsername([Service2::Instance() GetUser]._username));
+    username.text = ToNSString(atUsername([Service::Instance() GetUser]._username));
     username.textColor = theme::lightGrayColor();
     username.font = [UIFont systemFontOfSize: name.font.pointSize - 2]; // A bit smaller font
     username.textAlignment = NSTextAlignmentCenter;
@@ -110,7 +110,7 @@
     static const int debitNumberY = debitLabelY;
     _debitNumber = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, debitNumberY, debitNumberW, controlH)];
     
-    [Service2::Instance() GetAccount: Account::Debit completionHandler:^(AccountWrapper* w){
+    [Service::Instance() GetAccount: Account::Debit completionHandler:^(AccountWrapper* w){
             _debitNumber.text = ToNSString(w.data._accountId);
     }];
     
@@ -149,7 +149,7 @@
     // Take care of debit account number.
     UILabel* creditNumber = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, creditLabelY, debitNumberW, controlH)];
     
-    [Service2::Instance() GetAccount: Account::Debit completionHandler:^(AccountWrapper* w){
+    [Service::Instance() GetAccount: Account::Debit completionHandler:^(AccountWrapper* w){
             creditNumber.text = ToNSString(w.data._accountId);
     }];
     
@@ -163,7 +163,7 @@
     static const int creditLimitY = creditLabelY + 18;
     _creditLimit = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, creditLimitY, debitBalanceW, controlH)];
     
-    [Service2::Instance() GetAccount: Account::Credit completionHandler:^(AccountWrapper* w){
+    [Service::Instance() GetAccount: Account::Credit completionHandler:^(AccountWrapper* w){
             NSString* val = ToCurrencyNSString(ToNSString(ToStdString(w.data._limit)));
             
             std::stringstream oss;
@@ -203,11 +203,11 @@
 
 -(void)updateData
 {
-    [Service2::Instance() GetAccount: Account::Debit completionHandler:^(AccountWrapper* w){
+    [Service::Instance() GetAccount: Account::Debit completionHandler:^(AccountWrapper* w){
             _debitBalance.text  = ToCurrencyNSString(ToNSString(ToStdString(w.data._balance)));
     }];
     
-    [Service2::Instance() GetAccount: Account::Credit completionHandler:^(AccountWrapper* w){
+    [Service::Instance() GetAccount: Account::Credit completionHandler:^(AccountWrapper* w){
             _creditBalance.text = ToCurrencyNSString(ToNSString(ToStdString(w.data._balance)));
     }];
 }

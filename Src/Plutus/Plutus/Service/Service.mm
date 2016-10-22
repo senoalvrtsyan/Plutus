@@ -522,7 +522,7 @@
 namespace ios
 {
 
-namespace Service2
+namespace Service
 {
 
 ServiceImpl* Instance()
@@ -532,63 +532,7 @@ ServiceImpl* Instance()
 }
 
 }
-
-Service& Service::Instance()
-{
-    static Service service;
-    return service;
-}
-
-Service::Service()
-{}
     
-User Service::Find(User::Id userId)
-{
-    for(const auto& user : _users)
-    {
-        if(user._userId == userId)
-        {
-            return user;
-        }
-    }
-    return User();
-}
-
-User Service::Find(const Account acc)
-{
-    for(const auto& item : _accounts)
-    {
-        Accounts accs = item.second;
-        for(const auto& item2 : accs)
-        {
-            if(item2._accountId == acc._accountId)
-            {
-                return Find(item.first);
-            }
-        }
-    }
-    return User();
-}
-
-Payments Service::GetPayments()
-{
-    Payments res;
-    return res;
-}
-    
-Payments Service::GetPendingPayments()
-{
-    Payments res;
-    
-    auto r = rand() % 4 + 1;
-    if(r % 3 == 0)
-    {
-        // res.push_back(Payment(0, GetAccount(Account::Debit), Find(Find("seno")._userId, Account::Debit), 50500));
-    }
-    
-    return res;
-}
-
 }
 
 #pragma clang diagnostic pop

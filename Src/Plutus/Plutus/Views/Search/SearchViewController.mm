@@ -101,7 +101,7 @@
     // Take care of request payment button.
     _requestBtn = [[UIButton alloc] initWithFrame: CGRectMake(textFieldX, btnY + controlH + 10, btnW, controlH)];
     [_requestBtn addTarget: self action: @selector(requestAction) forControlEvents: UIControlEventTouchUpInside];
-    [_requestBtn setBackgroundImage: imageWithColor(theme::brandColor4()) forState: UIControlStateNormal];
+    [_requestBtn setBackgroundImage: imageWithColor(theme::brandColor2()) forState: UIControlStateNormal];
     [_requestBtn setBackgroundImage: imageWithColor(theme::brandColor5()) forState: UIControlStateHighlighted];
     [_requestBtn setBackgroundImage: imageWithColor(theme::grayColor()) forState: UIControlStateDisabled];
     [_requestBtn setTitle: @"Request" forState: UIControlStateNormal];
@@ -113,7 +113,7 @@
 -(void)textFieldDidChange
 {
     std::string username = ToStdString(_textField.text);
-    [Service2::Instance() Find: username completionHandler: ^(UserWrapper* w){
+    [Service::Instance() Find: username completionHandler: ^(UserWrapper* w){
         _transferBtn.enabled = _requestBtn.enabled = !w.data.empty();
         
         _currentUser = w.data;
