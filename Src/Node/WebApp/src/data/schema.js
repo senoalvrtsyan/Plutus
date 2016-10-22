@@ -17,8 +17,9 @@ import content from './queries/content';
 import authenticate from './queries/authenticate';
 import accounts from './queries/accounts';
 import finduser from './queries/finduser';
-import me from './queries/me';
-import echo from './queries/echo';
+import paymentHistory from './queries/paymentHistory';
+//import me from './queries/me';
+//import echo from './queries/echo';
 
 // Mutations
 import makePayment from './queries/makePayment';
@@ -32,8 +33,9 @@ const schema = new Schema({
       authenticate,
       accounts,
       finduser,
-      me,
-      echo,
+      paymentHistory,
+//    me,
+//    echo,
     },
   }),
   mutation: new ObjectType({
