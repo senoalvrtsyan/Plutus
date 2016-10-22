@@ -19,6 +19,8 @@ import accounts from './queries/accounts';
 import finduser from './queries/finduser';
 import paymentHistory from './queries/paymentHistory';
 import getPaymentRequest from './queries/getPaymentRequest';
+import removeRequest from './queries/removeRequest';
+import addRequest from './queries/addRequest';
 //import me from './queries/me';
 //import echo from './queries/echo';
 
@@ -45,6 +47,8 @@ const schema = new Schema({
     fields: {
       makePayment,
       signUp,
+      removeRequest,
+      addRequest,
     },
   }),
 });

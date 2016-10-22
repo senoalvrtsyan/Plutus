@@ -43,6 +43,7 @@ const getPaymentRequest = {
             var row = rows[0];
 
             resolve({
+                requestId: row.id,
                 receiver: row.receiver,
                 sender: row.sender,
                 amount: row.amount,

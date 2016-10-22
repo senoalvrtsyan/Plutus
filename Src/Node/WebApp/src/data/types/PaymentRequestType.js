@@ -20,6 +20,7 @@ import {
 const PaymentRequestType = new ObjectType({
   name: 'PaymentRequest',
   fields: {
+    requestId: { type: ID },
     receiver: { type: ID },
     sender: { type: ID},
     amount: { type: FloatType },
