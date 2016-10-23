@@ -54,7 +54,8 @@ ServiceImpl* Instance()
 
 -(NSString*)GraphQlBaseURL
 {
-    static NSString* url = @"http://192.168.1.4:3000/graphql?query=";
+    //static NSString* url = @"http://192.168.1.4:3000/graphql?query="; // Home
+    static NSString* url = @"http://108.163.174.138:3001/graphql?query="; // Prod
     return url;
 }
 
