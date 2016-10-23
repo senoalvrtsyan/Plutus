@@ -31,11 +31,16 @@ const getPaymentRequest = {
       var connection = mysql.globalConnection;
 
       // Make the query.
-      var sql = 'SELECT * FROM plutus.payment_requests where sender = ?';
+      var sql = 'SELECT * FROM plutus.payment_requests where sender = ? LIMIT 1';
       var params = [userid];
+
+      console.log(userid);
+
       connection.query(sql, params, function(err, rows, fields) {
 
         if(!err) {
+
+          console.log(rows);
 
           if(rows.length == 1) {  
 

@@ -9,6 +9,7 @@
 
 import {
   GraphQLString as StringType,
+  GraphQLID as ID,
 } from 'graphql';
 
 import UserType from '../types/UserType';
@@ -20,15 +21,29 @@ const finduser = {
   description: "Return user if found",
   args: {
         username: {type: StringType},
+        userId: {type: ID},
       },
-  resolve: function(root, { username }) {
+  resolve: function(root, { username, userId }) {
 
     return new Promise(function(resolve, reject) {
 
     var connection = mysql.globalConnection;
+
+    var sql;
+    var params = [];
+
+    if(username != null)
+    {
+      sql = 'select idusers, name, username, email from plutus.users where binary username = ?';
+      params = [username];
+    }
+    else if(userId != null)
+    {
+      sql = 'select idusers, name, username, email from plutus.users where idusers = ?';
+      params = [userId];
+    }
+
     // Make the query.
-    var sql = 'select idusers, name, username, email from plutus.users where binary username = ?';
-    var params = [username];
     connection.query(sql, params, function(err, rows, fields) {
         if(!err) {
 
