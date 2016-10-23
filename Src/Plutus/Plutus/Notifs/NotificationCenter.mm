@@ -32,17 +32,23 @@
 
 -(void)timeout
 {
-    /*auto payments = Service::Instance().GetPendingPayments();
-    if(!payments.empty())
-    {
-        const auto payment = payments.front();
-        
-        TransferViewController* vc = [[TransferViewController alloc] init];
-        [vc setMode: TransferViewMode::RequestPopup];
-        [vc setUser: Service::Instance().Find(payment._receiver)];
-        [vc SetAmount: payment._amount];
-        [_parent presentViewController: vc animated: YES completion: nil];
-    }*/
+    const auto userId = [Service::Instance() GetUser]._userId;
+    
+    [Service::Instance() GetPaymentRequest: userId
+        completionHandler: ^(PaymentRequestWrapper* prw) {
+            if(!prw.data.empty())
+            {
+                [Service::Instance() FindWithId: prw.data._receiver completionHandler:^(UserWrapper* uw) {
+                     TransferViewController* vc = [[TransferViewController alloc] init];
+                     [vc setMode: TransferViewMode::RequestPopup];
+                     [vc setUser: uw.data];
+                     [vc SetAmount: prw.data._amount];
+                     [vc setRequestId: prw.data._requestId];
+                     [_parent presentViewController: vc animated: YES completion: nil];
+                }];
+            }
+    }];
 }
 
 @end
+

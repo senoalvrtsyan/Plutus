@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1101CA7E1DBB7C7600E0879E /* PaymentRecord.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1101CA7C1DBB7C7600E0879E /* PaymentRecord.cpp */; };
 		1102DE321D9D7DE300DF47EE /* NotificationCenter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1102DE311D9D7DE300DF47EE /* NotificationCenter.mm */; };
+		111522671DBCB35900977695 /* PaymentRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 111522651DBCB35900977695 /* PaymentRequest.cpp */; };
 		113FF74E1D89CE8D00138593 /* clipboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 113FF74B1D89CE8D00138593 /* clipboard@2x.png */; };
 		113FF7501D89CE8D00138593 /* paper-plane@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 113FF74D1D89CE8D00138593 /* paper-plane@2x.png */; };
 		113FF7541D89D03500138593 /* wallet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 113FF7531D89D03500138593 /* wallet@2x.png */; };
@@ -49,6 +50,8 @@
 		1101CA7D1DBB7C7600E0879E /* PaymentRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentRecord.h; sourceTree = "<group>"; };
 		1102DE2E1D9D7DAD00DF47EE /* NotificationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationCenter.h; path = Notifs/NotificationCenter.h; sourceTree = "<group>"; };
 		1102DE311D9D7DE300DF47EE /* NotificationCenter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NotificationCenter.mm; path = Notifs/NotificationCenter.mm; sourceTree = "<group>"; };
+		111522651DBCB35900977695 /* PaymentRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PaymentRequest.cpp; sourceTree = "<group>"; };
+		111522661DBCB35900977695 /* PaymentRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentRequest.h; sourceTree = "<group>"; };
 		113FF74B1D89CE8D00138593 /* clipboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clipboard@2x.png"; path = "../../../Graphics/icon/clipboard@2x.png"; sourceTree = "<group>"; };
 		113FF74D1D89CE8D00138593 /* paper-plane@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "paper-plane@2x.png"; path = "../../../Graphics/icon/paper-plane@2x.png"; sourceTree = "<group>"; };
 		113FF7531D89D03500138593 /* wallet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wallet@2x.png"; path = "../../../Graphics/icon/wallet@2x.png"; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 		11D5A9B41D92912C002A15EF /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				111522651DBCB35900977695 /* PaymentRequest.cpp */,
+				111522661DBCB35900977695 /* PaymentRequest.h */,
 				1101CA7C1DBB7C7600E0879E /* PaymentRecord.cpp */,
 				1101CA7D1DBB7C7600E0879E /* PaymentRecord.h */,
 				11CDFB621D9680D7001A9B48 /* Payment.cpp */,
@@ -423,6 +428,7 @@
 				11D5A9B71D92912C002A15EF /* User.cpp in Sources */,
 				11ED672C1D81E15B00DC5CEB /* Theme.mm in Sources */,
 				11A650801D8B1155009D56F2 /* HistoryViewController.mm in Sources */,
+				111522671DBCB35900977695 /* PaymentRequest.cpp in Sources */,
 				11A650781D8AF825009D56F2 /* TransferViewController.mm in Sources */,
 				118704791D78AC6A00D88E6D /* AppDelegate.m in Sources */,
 				118704761D78AC6A00D88E6D /* main.m in Sources */,

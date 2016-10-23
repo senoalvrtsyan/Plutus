@@ -318,6 +318,7 @@
         else
         {
             // TODO: alert.
+            std::cout << "Signup error." << std::endl;
         }
     }];
 }

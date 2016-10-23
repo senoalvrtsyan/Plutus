@@ -12,6 +12,7 @@
 
 #include "User.h"
 #include "Account.h"
+#include "PaymentRequest.h"
 
 struct TransferViewMode
 {
@@ -31,6 +32,8 @@ struct TransferViewMode
 -(void)SetUser:(User)user;
 -(void)SetAmount:(PriceType)amount;
 
+-(void)SetRequestId:(PaymentRequest::Id&)requestId;
+
 @property UIImageView* arrow1;
 @property UIImageView* arrow2;
 @property UIImageView* arrow3;
@@ -43,6 +46,7 @@ struct TransferViewMode
 
 @property User user;
 @property PriceType amount;
+@property IdType requestId;
 
 @property Accounts accounts;
 

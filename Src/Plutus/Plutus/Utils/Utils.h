@@ -10,6 +10,7 @@
 
 #include <string>
 #include <sstream>
+#include <iostream>
 
 #include "Account.h"
 #include "User.h"

@@ -31,6 +31,23 @@
 @implementation PaymentRecordsWrapper
 @end
 
+@implementation PaymentRequestWrapper
+@end
+
+namespace ios
+{
+namespace Service
+{
+
+ServiceImpl* Instance()
+{
+    static ServiceImpl* s = [[ServiceImpl alloc] init];
+    return s;
+}
+
+}
+}
+
 /* Objective-C service implementation */
 
 @implementation ServiceImpl
@@ -72,7 +89,10 @@
                       // Log NSDictionary response:
                       NSLog(@"%@", jsonResponse);
                       
-                      compblock(jsonResponse);
+                      if(compblock)
+                      {
+                          compblock(jsonResponse);
+                      }
                   }
                   else
                   {
@@ -189,7 +209,10 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     AccountsWrapper* w = [[AccountsWrapper alloc] init];
                     w.data = res;
-                    compblock(w);
+                    if(compblock)
+                    {
+                        compblock(w);
+                    }
                 });
             }
         }
@@ -213,7 +236,10 @@
         
         AccountWrapper* a = [[AccountWrapper alloc] init];
         a.data = res;
-        compblock(a);
+        if(compblock)
+        {
+            compblock(a);
+        }
     }];
 }
 
@@ -221,7 +247,10 @@
 {
     if(user._username.empty() || user._password.empty())
     {
-        compblock(NO);
+        if(compblock)
+        {
+            compblock(NO);
+        }
     }
     
     // Construct the query string.
@@ -278,7 +307,10 @@
         
         // We just love main thread :)
         dispatch_async(dispatch_get_main_queue(), ^{
-            compblock(res);
+            if(compblock)
+            {
+                compblock(res);
+            }
         });
     }];
 }
@@ -290,7 +322,10 @@
        user._name. empty() ||
        user._email.empty())
     {
-        compblock(NO);
+        if(compblock)
+        {
+            compblock(NO);
+        }
     }
     
     // Construct the query string.
@@ -348,7 +383,10 @@
         
         // We just love main thread :)
         dispatch_async(dispatch_get_main_queue(), ^{
-            compblock(res);
+            if(compblock)
+            {
+                compblock(res);
+            }
         });
     }];
 }
@@ -408,7 +446,71 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             UserWrapper* uw = [[UserWrapper alloc] init];
             uw.data = u;
-            compblock(uw);
+            if(compblock)
+            {
+                compblock(uw);
+            }
+        });
+    }];
+}
+
+-(void)FindWithId:(User::Id)userId completionHandler:(findUserCompletion)compblock
+{
+    // Construct the query string.
+    NSString* queryString = [NSString stringWithFormat: @"{ finduser(userId: %lu) { id name username email } }",
+                             userId];
+    
+    // Do the actual query here.
+    [self Query: queryString completionHandler: ^(NSDictionary* jsonResponse) {
+        /* Example responce:
+         {
+         "data":
+         {
+         "finduser":
+         {
+         "id": "102",
+         "name": "Koriun Aslanyan",
+         "username": "kor",
+         "email": "kor@gmail.com"
+         }
+         }
+         } */
+        User u;
+        id data = [jsonResponse objectForKey: @"data"];
+        if(data != [NSNull null])
+        {
+            id usr = [data objectForKey: @"finduser"];
+            if(usr != [NSNull null])
+            {
+                // Get fields.
+                id userId = [usr objectForKey: @"id"];
+                id username = [usr objectForKey: @"username"];
+                id name = [usr objectForKey: @"name"];
+                id email = [usr objectForKey: @"email"];
+                
+                if(userId != [NSNull null] &&
+                   username != [NSNull null] &&
+                   name != [NSNull null] &&
+                   email != [NSNull null]
+                   )
+                {
+                    // Construct the user.
+                    u._userId = ToId(std::string([((NSString*)userId) UTF8String]));
+                    u._username = std::string([((NSString*)username) UTF8String]);
+                    u._name = std::string([((NSString*)name) UTF8String]);
+                    u._email = std::string([((NSString*)email) UTF8String]);
+                }
+            }
+        }
+        
+        // We just love main thread :)
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UserWrapper* uw = [[UserWrapper alloc] init];
+            uw.data = u;
+            if(compblock)
+            {
+                compblock(uw);
+            }
         });
     }];
 }
@@ -441,7 +543,10 @@
         
         // We just love main thread :)
         dispatch_async(dispatch_get_main_queue(), ^{
-            compblock(res);
+            if(compblock)
+            {
+                compblock(res);
+            }
         });
     }];
 }
@@ -510,29 +615,144 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     PaymentRecordsWrapper* w = [[PaymentRecordsWrapper alloc] init];
                     w.data = res;
-                    compblock(w);
+                    if(compblock)
+                    {
+                        compblock(w);
+                    }
                 });
             }
         }
     }];
 }
 
-@end
-
-namespace ios
+-(void)GetPaymentRequest:(User::Id)userId completionHandler:(GetPaymentRequestCompletion)compblock
 {
-
-namespace Service
-{
-
-ServiceImpl* Instance()
-{
-    static ServiceImpl* s = [[ServiceImpl alloc] init];
-    return s;
-}
-
-}
+    // Construct the query string.
+    NSString* queryString = [NSString stringWithFormat: @"{ getPaymentRequest(userid: %lu) { requestId receiver sender amount } }", userId];
     
+    // Do the actual query here.
+    [self Query: queryString completionHandler: ^(NSDictionary* jsonResponse) {
+        
+        /* Example responce:
+         {
+         "data": {
+         "getPaymentRequest": {
+         "requestId": "2",
+         "receiver": "3",
+         "sender": "2",
+         "amount": 1000
+         }
+         }
+         }
+         */
+        PaymentRequest res;
+        id data = [jsonResponse objectForKey: @"data"];
+        if(data != [NSNull null])
+        {
+            id usr = [data objectForKey: @"getPaymentRequest"];
+            if(usr != [NSNull null])
+            {
+                // Get fields.
+                id requestId = [usr objectForKey: @"requestId"];
+                id receiver = [usr objectForKey: @"receiver"];
+                id sender = [usr objectForKey: @"sender"];
+                id amount = [usr objectForKey: @"amount"];
+                
+                if(requestId != [NSNull null] &&
+                   receiver != [NSNull null] &&
+                   sender != [NSNull null] &&
+                   amount != [NSNull null])
+                {
+                    res._requestId = [(NSNumber*)requestId integerValue];
+                    res._receiver = [(NSNumber*)receiver integerValue];
+                    res._sender = [(NSNumber*)sender integerValue];
+                    res._amount = [(NSNumber*)amount floatValue];
+                }
+            }
+        }
+        
+        // We just love main thread :)
+        dispatch_async(dispatch_get_main_queue(), ^{
+            PaymentRequestWrapper* w = [[PaymentRequestWrapper alloc] init];
+            w.data = res;
+            if(compblock)
+            {
+                compblock(w);
+            }
+        });
+    }];
 }
+
+-(void)AddPaymentRequest:(User::Id)reciver forUser:(User::Id)sender withAmount:(PriceType)amount completionHandler:(booleanCompletion)compblock
+{
+    // Construct the query string.
+    NSString* queryString = [NSString stringWithFormat: @"mutation { addRequest(receiver: %lu, sender: %lu, amount: %f) }", reciver, sender, amount];
+    
+    // Do the actual query here.
+    [self Mutate: queryString completionHandler: ^(NSDictionary* jsonResponse) {
+        
+        /* Example responce:
+         {
+         "data": {
+         "removeRequest": true
+         }
+         } */
+        bool res = false;
+        id data = [jsonResponse objectForKey: @"data"];
+        if(data != [NSNull null])
+        {
+            id status = [data objectForKey: @"addRequest"];
+            if(status != [NSNull null])
+            {
+                res = [(NSNumber*)status boolValue];
+            }
+        }
+        
+        // We just love main thread :)
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(compblock)
+            {
+                compblock(res);
+            }
+        });
+    }];
+}
+
+-(void)RemovePaymentRequest:(PaymentRequest::Id)requestId completionHandler:(booleanCompletion)compblock
+{
+    // Construct the query string.
+    NSString* queryString = [NSString stringWithFormat: @"mutation { removeRequest(requestId: %lu) }", requestId];
+    
+    // Do the actual query here.
+    [self Mutate: queryString completionHandler: ^(NSDictionary* jsonResponse) {
+        
+        /* Example responce:
+         {
+         "data": {
+         "removeRequest": true
+         }
+         } */
+        bool res = false;
+        id data = [jsonResponse objectForKey: @"data"];
+        if(data != [NSNull null])
+        {
+            id status = [data objectForKey: @"removeRequest"];
+            if(status != [NSNull null])
+            {
+                res = [(NSNumber*)status boolValue];
+            }
+        }
+        
+        // We just love main thread :)
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(compblock)
+            {
+                compblock(res);
+            }
+        });
+    }];
+}
+
+@end
 
 #pragma clang diagnostic pop

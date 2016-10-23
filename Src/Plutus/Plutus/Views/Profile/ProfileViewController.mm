@@ -146,10 +146,10 @@
     
     [self.view addSubview: creditLabel];
     
-    // Take care of debit account number.
+    // Take care of credit account number.
     UILabel* creditNumber = [[UILabel alloc] initWithFrame: CGRectMake(debitNumberX, creditLabelY, debitNumberW, controlH)];
     
-    [Service::Instance() GetAccount: Account::Debit completionHandler:^(AccountWrapper* w){
+    [Service::Instance() GetAccount: Account::Credit completionHandler:^(AccountWrapper* w){
             creditNumber.text = ToNSString(w.data._accountId);
     }];
     

@@ -326,13 +326,27 @@
         // Take care of cancel button.
         static const int cancelY = transferY + controlH + 8;
         UIButton* cancel = [[UIButton alloc] initWithFrame: CGRectMake(amountX, cancelY, amountW, controlH)];
-        [cancel addTarget: self action: @selector(closeAction) forControlEvents: UIControlEventTouchUpInside];
+        [cancel addTarget: self action: @selector(cancelAction) forControlEvents: UIControlEventTouchUpInside];
         cancel.backgroundColor = theme::brandColor2();
         [cancel setBackgroundImage: imageWithColor(theme::brandColor5()) forState: UIControlStateHighlighted];
         [cancel setTitle: @"Cancel" forState: UIControlStateNormal];
         
         [self.view addSubview: cancel];
     }
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return _mode != TransferViewMode::RequestPopup;
+}
+
+-(void)cancelAction
+{
+    [Service::Instance() RemovePaymentRequest: _requestId completionHandler: ^(BOOL res) {
+        // We are good ;)
+    }];
+    
+    [self closeAction];
 }
 
 -(void)closeAction
@@ -449,6 +463,12 @@
                                             {
                                                 // msgbox::inform ok
                                                 AlertOk(self, @"Success", @"Your payment was a success.", @selector(successAction));
+                                                
+                                                // Also remove request when done.
+                                                if(_mode == TransferViewMode::RequestPopup && _requestId != 0)
+                                                {
+                                                    [Service::Instance() RemovePaymentRequest: _requestId completionHandler: nil];
+                                                }
                                             }
                                             else
                                             {
@@ -488,6 +508,18 @@
                                     style: UIAlertActionStyleDefault
                                     handler: ^(UIAlertAction * action) {
                                         //Handle your yes please button action here
+                                        
+                                        [Service::Instance() AddPaymentRequest: [Service::Instance() GetUser]._userId forUser: _user._userId withAmount: ToPrice(removeCurrencyFormat(ToStdString(_amountTextField.text))) completionHandler: ^(BOOL res) {
+                                            if(res)
+                                            {
+                                                // msgbox::inform ok
+                                                AlertOk(self, @"Success", @"Your request is sent", @selector(successAction));
+                                            }
+                                            else
+                                            {
+                                                AlertOk(self, @"Failure", @"Your request failed", nil);
+                                            }
+                                        }];
                                     }];
         
         [alert addAction:noButton];
@@ -508,6 +540,11 @@
     {
         [self closeAction];
     }
+}
+
+-(void)SetRequestId:(PaymentRequest::Id&)requestId
+{
+    _requestId = requestId;
 }
 
 @end
